@@ -16,7 +16,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "../s3url.h"
+#include "../src/s3url.h"
 
 #include <QTest>
 
