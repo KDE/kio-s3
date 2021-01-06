@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: BSD-3-Clause
+# SPDX-FileCopyrightText: 2020 Elvis Angelaccio <elvis.angelaccio@kde.org>
+
 cmake_minimum_required(VERSION 3.0)
 
 set(KIO_S3_VERSION 0.9.70)

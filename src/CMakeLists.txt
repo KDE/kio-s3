@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: BSD-3-Clause
+# SPDX-FileCopyrightText: 2020 Elvis Angelaccio <elvis.angelaccio@kde.org>
+
 set(kio_s3_SRCS kio_s3.cpp s3backend.cpp s3url.cpp)
 
 ecm_qt_declare_logging_category(kio_s3_SRCS
