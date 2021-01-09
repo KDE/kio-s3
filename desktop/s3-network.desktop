@@ -4,8 +4,12 @@
 Icon=folder-network
 Name=Amazon S3
 Name[ca]=Amazon S3
+Name[ca@valencia]=Amazon S3
 Name[es]=Amazon S3
 Name[nl]=Amazon S3
+Name[nn]=Amazon S3
+Name[sl]=Amazon S3
+Name[sv]=Amazon S3
 Name[uk]=Amazon S3
 Name[x-test]=xxAmazon S3xx
 Type=Link
