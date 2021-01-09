@@ -13,23 +13,32 @@
   <extends>org.kde.gwenview.desktop</extends>
   <name>KIO S3</name>
   <name xml:lang="ca">KIO S3</name>
+  <name xml:lang="ca-valencia">KIO S3</name>
   <name xml:lang="es">KIO S3</name>
   <name xml:lang="nl">KIO S3</name>
+  <name xml:lang="nn">KIO S3</name>
+  <name xml:lang="sl">KIO S3</name>
   <name xml:lang="sv">KIO S3</name>
   <name xml:lang="uk">KIO S3</name>
   <name xml:lang="x-test">xxKIO S3xx</name>
   <summary>Amazon S3 integration with KDE Plasma and KDE applications</summary>
   <summary xml:lang="ca">Integració de l'Amazon S3 amb el Plasma del KDE i les aplicacions KDE</summary>
+  <summary xml:lang="ca-valencia">Integració de l'Amazon S3 amb el Plasma del KDE i les aplicacions KDE</summary>
   <summary xml:lang="es">Integración de Amazon S3 con Plasma de KDE y aplicaciones de KDE</summary>
   <summary xml:lang="nl">Amazon S3 integratie met KDE Plasma en KDE toepassingen</summary>
+  <summary xml:lang="nn">Integrering av Amazon S3 med KDE Plasma og KDE-programma</summary>
+  <summary xml:lang="sl">Amazon S3 integracija s KDE Plasma s KDE aplikacijami</summary>
   <summary xml:lang="sv">Amazon S3 integrering med KDE Plasma och KDE program</summary>
   <summary xml:lang="uk">Інтеграція Amazon S3 із Плазмою KDE та програмами KDE</summary>
   <summary xml:lang="x-test">xxAmazon S3 integration with KDE Plasma and KDE applicationsxx</summary>
   <description>
     <p>KIO S3 enables KIO-aware applications (such as Dolphin, Kate or Gwenview) to access and edit Amazon S3 buckets and objects.</p>
     <p xml:lang="ca">El KIO S3 és un esclau del KIO que permet a les aplicacions preparades per al KIO (com el Dolphin, el Kate o el Gwenview) que accedeixin i editin els dipòsits i objectes d'Amazon S3.</p>
+    <p xml:lang="ca-valencia">El KIO S3 és un esclau del KIO que permet a les aplicacions preparades per al KIO (com el Dolphin, el Kate o el Gwenview) que accedisquen i editin els dipòsits i objectes d'Amazon S3.</p>
     <p xml:lang="es">KIO S3 permite a las aplicaciones que usan KIO (como Dolphin, Kate o Gwenview) acceder y editar buckets y objetos de Amazon S3.</p>
     <p xml:lang="nl">KIO S3 schakelt toepassingen in die afweten van KIO (zoals Dolphin, Kate of Gwenview) om Amazon S3 buckets en objects te benaderen en te bewerken.</p>
+    <p xml:lang="nn">KIO S3 lèt program som brukar KIO (for eksempel Dolphin, Kate og Gwenview) få lese- og skrivetilgang til «buckets» og objekt på Amazon S3.</p>
+    <p xml:lang="sl">KIO S3 omogoča aplikacijam, ki se zavedajo KIO (kot so Dolphin, Kate ali Gwenview) dostop in urejanje segmentov in predmetov Amazon S3.</p>
     <p xml:lang="sv">KIO S3 gör det möjligt för program som känner till KIO (såsom Dolphin, Kate eller Gwenview) att komma åt och redigera Amazon S3 spannar och objekt.</p>
     <p xml:lang="uk">KIO S3 надає змогу програмам, які використовують KIO (зокрема Dolphin, Kate та Gwenview) отримувати доступ до кошиків та об'єктів Amazon S3 та редагувати дані у них.</p>
     <p xml:lang="x-test">xxKIO S3 enables KIO-aware applications (such as Dolphin, Kate or Gwenview) to access and edit Amazon S3 buckets and objects.xx</p>
@@ -42,8 +51,11 @@
     <screenshot type="default">
       <caption>Dolphin showing a picture uploaded on an Amazon S3 bucket.</caption>
       <caption xml:lang="ca">El Dolphin mostrant una imatge carregada sobre un dipòsit d'Amazon S3.</caption>
+      <caption xml:lang="ca-valencia">El Dolphin mostrant una imatge carregada sobre un dipòsit d'Amazon S3.</caption>
       <caption xml:lang="es">Dolphin mostrando una imagen enviada a un bucket de Amazon S3.</caption>
       <caption xml:lang="nl">Dolphin die een op een Amazon S3 bucket geüploade afbeelding toont.</caption>
+      <caption xml:lang="nn">Dolphin som viser eit bilete lasta på til ei Amazon S3-«bucket».</caption>
+      <caption xml:lang="sl">Delfin prikazuje sliko naloženo v vedro Amazon S3.</caption>
       <caption xml:lang="sv">Dolphin showing som visar en bild uppladdad till en Amazon S3 spann.</caption>
       <caption xml:lang="uk">Знімок вікна Dolphin із вивантаженням даних до кошика Amazon S3.</caption>
       <caption xml:lang="x-test">xxDolphin showing a picture uploaded on an Amazon S3 bucket.xx</caption>
