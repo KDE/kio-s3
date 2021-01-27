@@ -19,6 +19,7 @@
   <name xml:lang="fr">KIO S3</name>
   <name xml:lang="nl">KIO S3</name>
   <name xml:lang="nn">KIO S3</name>
+  <name xml:lang="pt">KIO S3</name>
   <name xml:lang="pt-BR">KIO S3</name>
   <name xml:lang="sk">KIO S3</name>
   <name xml:lang="sl">KIO S3</name>
@@ -33,6 +34,7 @@
   <summary xml:lang="fr">L'intégration de « Amazon S3 » avec KDE Plasma et les applications Plasma.</summary>
   <summary xml:lang="nl">Amazon S3 integratie met KDE Plasma en KDE toepassingen</summary>
   <summary xml:lang="nn">Integrering av Amazon S3 med KDE Plasma og KDE-programma</summary>
+  <summary xml:lang="pt">Integração do S3 da Amazon com o Plasma do KDE e as aplicações do KDE</summary>
   <summary xml:lang="pt-BR">Integração do Amazon S3 com o KDE Plasma e aplicativos KDE</summary>
   <summary xml:lang="sk">Integrácia Amazon S3 s aplikáciami KDE Plasma a KDE</summary>
   <summary xml:lang="sl">Amazon S3 integracija s KDE Plasma s KDE aplikacijami</summary>
@@ -48,6 +50,7 @@
     <p xml:lang="fr">KIO S3 active les applications compatibles avec « KIO » (comme Dolphin, Kate et Gwenview) pour accéder et modifier des conteneurs et objets « Amazon S3 ».</p>
     <p xml:lang="nl">KIO S3 schakelt toepassingen in die afweten van KIO (zoals Dolphin, Kate of Gwenview) om Amazon S3 buckets en objects te benaderen en te bewerken.</p>
     <p xml:lang="nn">KIO S3 lèt program som brukar KIO (for eksempel Dolphin, Kate og Gwenview) få lese- og skrivetilgang til «buckets» og objekt på Amazon S3.</p>
+    <p xml:lang="pt">O KIO S3 permite às aplicações que suportam o KIO (como o Dolphin, Kate ou Gwenview) acederem e editarem os grupos e objectos do S3.</p>
     <p xml:lang="pt-BR">O KIO S3 habilita os aplicativos que usam KIO (como o Dolphin, Kate ou Gwenview) acessar e editar buckets e objetos Amazon S3.</p>
     <p xml:lang="sk">KIO S3 umožňuje aplikáciám podporujúcim KIO (napríklad Dolphin, Kate alebo Gwenview) prístup a úpravy segmentov a objektov Amazon S3.</p>
     <p xml:lang="sl">KIO S3 omogoča aplikacijam, ki se zavedajo KIO (kot so Dolphin, Kate ali Gwenview) dostop in urejanje segmentov in predmetov Amazon S3.</p>
@@ -69,6 +72,7 @@
       <caption xml:lang="fr">Dolphin affichant une image envoyée vers un conteneur « Amazon S3 ».</caption>
       <caption xml:lang="nl">Dolphin die een op een Amazon S3 bucket geüploade afbeelding toont.</caption>
       <caption xml:lang="nn">Dolphin som viser eit bilete lasta på til ei Amazon S3-«bucket»</caption>
+      <caption xml:lang="pt">O Dolphin a mostrar uma imagem enviada para um grupo de S3 da Amazon.</caption>
       <caption xml:lang="pt-BR">Dolphin mostrando uma imagem enviada no bucket Amazon S3.</caption>
       <caption xml:lang="sk">Dolphin zobrazujúci obrázok nahraný do Amazon S3 bucket-u.</caption>
       <caption xml:lang="sl">Delfin prikazuje sliko naloženo v vedro Amazon S3.</caption>
