@@ -15,6 +15,7 @@
   <name xml:lang="ca">KIO S3</name>
   <name xml:lang="ca-valencia">KIO S3</name>
   <name xml:lang="cs">KIO S3</name>
+  <name xml:lang="de">KIO S3</name>
   <name xml:lang="en-GB">KIO S3</name>
   <name xml:lang="es">KIO S3</name>
   <name xml:lang="fi">KIO S3</name>
@@ -32,6 +33,7 @@
   <summary>Amazon S3 integration with KDE Plasma and KDE applications</summary>
   <summary xml:lang="ca">Integració de l'Amazon S3 amb el Plasma del KDE i les aplicacions KDE</summary>
   <summary xml:lang="ca-valencia">Integració de l'Amazon S3 amb el Plasma del KDE i les aplicacions KDE</summary>
+  <summary xml:lang="de">Integration von Amazon S3 mit Plasma und den KDE-Anwendungen</summary>
   <summary xml:lang="en-GB">Amazon S3 integration with KDE Plasma and KDE applications</summary>
   <summary xml:lang="es">Integración de Amazon S3 con Plasma de KDE y aplicaciones de KDE</summary>
   <summary xml:lang="fi">Amazon S3 -eheytys KDE Plasmaan ja KDE-sovelluksiin</summary>
