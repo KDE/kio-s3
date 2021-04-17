@@ -52,6 +52,7 @@
     <p>KIO S3 enables KIO-aware applications (such as Dolphin, Kate or Gwenview) to access and edit Amazon S3 buckets and objects.</p>
     <p xml:lang="ca">El KIO S3 és un esclau del KIO que permet a les aplicacions preparades per al KIO (com el Dolphin, el Kate o el Gwenview) que accedeixin i editin els dipòsits i objectes d'Amazon S3.</p>
     <p xml:lang="ca-valencia">El KIO S3 és un esclau del KIO que permet a les aplicacions preparades per al KIO (com el Dolphin, el Kate o el Gwenview) que accedisquen i editin els dipòsits i objectes d'Amazon S3.</p>
+    <p xml:lang="de">KIO S3 ist ein Ein-/Ausgabemodul, mit dem Anwendungen wie Dolphin, Kate oder Gwenview auf Container und Objekte in Amazon S3 zugreifen und bearbeiten können.</p>
     <p xml:lang="en-GB">KIO S3 enables KIO-aware applications (such as Dolphin, Kate or Gwenview) to access and edit Amazon S3 buckets and objects.</p>
     <p xml:lang="es">KIO S3 permite a las aplicaciones que usan KIO (como Dolphin, Kate o Gwenview) acceder y editar buckets y objetos de Amazon S3.</p>
     <p xml:lang="fi">KIO S3 mahdollistaa KIO-sovelluksille (kuten Dolphinille, Katelle tai Gwenview’lle) Amazon S3 -säilöjen ja -kohteiden käytön ja muokkauksen.</p>
@@ -76,6 +77,7 @@
       <caption>Dolphin showing a picture uploaded on an Amazon S3 bucket.</caption>
       <caption xml:lang="ca">El Dolphin mostrant una imatge carregada sobre un dipòsit d'Amazon S3.</caption>
       <caption xml:lang="ca-valencia">El Dolphin mostrant una imatge carregada sobre un dipòsit d'Amazon S3.</caption>
+      <caption xml:lang="de">Dolphin mit der Anzeige eines Bilds, das zu  Container in Amazon S3 hochgeladen wurde.</caption>
       <caption xml:lang="en-GB">Dolphin showing a picture uploaded on an Amazon S3 bucket.</caption>
       <caption xml:lang="es">Dolphin mostrando una imagen enviada a un bucket de Amazon S3.</caption>
       <caption xml:lang="fi">Dolphin näyttää Amazon S3 -säilöön lähetetyn kuvan.</caption>
