@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: BSD-3-Clause
 # SPDX-FileCopyrightText: 2020 Elvis Angelaccio <elvis.angelaccio@kde.org>
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.16)
 
 set(KIO_S3_VERSION 0.9.70)
 project(kio-s3 VERSION ${KIO_S3_VERSION})
 
-set(QT_MIN_VERSION 5.9.0)
+set(QT_MIN_VERSION 5.15.0)
 set(KF5_MIN_VERSION 5.71.0)
 
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
