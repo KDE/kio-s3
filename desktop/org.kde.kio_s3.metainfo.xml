@@ -42,7 +42,7 @@
   <summary>Amazon S3 integration with KDE Plasma and KDE applications</summary>
   <summary xml:lang="ar">تكامل أمازون اس٣ مع تطبيقات بلازما و كدي</summary>
   <summary xml:lang="ca">Integració de l'Amazon S3 amb el Plasma del KDE i les aplicacions KDE</summary>
-  <summary xml:lang="ca-valencia">Integració de l'Amazon S3 amb el Plasma de KDE i les aplicacions KDE</summary>
+  <summary xml:lang="ca-valencia">Integració de l'Amazon S3 amb Plasma de KDE i les aplicacions KDE</summary>
   <summary xml:lang="de">Integration von Amazon S3 mit Plasma und den KDE-Anwendungen</summary>
   <summary xml:lang="el">Ενσωμάτωση του Amazon S3 με το KDE Plasma και τις εφαρμογές του KDE</summary>
   <summary xml:lang="en-GB">Amazon S3 integration with KDE Plasma and KDE applications</summary>
@@ -70,7 +70,7 @@
     <p>KIO S3 enables KIO-aware applications (such as Dolphin, Kate or Gwenview) to access and edit Amazon S3 buckets and objects.</p>
     <p xml:lang="ar">يمكّن KIO اس٣ التطبيقات المدركة لـ KIO (مثل دولفين أو كيت أو حونفيو) للوصول إلى حاويات وكائنات أمازون اس٣ وتحريرها.</p>
     <p xml:lang="ca">El KIO S3 és un esclau del KIO que permet a les aplicacions preparades per al KIO (com el Dolphin, el Kate o el Gwenview) que accedeixin i editin els dipòsits i objectes d'Amazon S3.</p>
-    <p xml:lang="ca-valencia">El KIO S3 és un esclau del KIO que permet a les aplicacions preparades per al KIO (com Dolphin, el Kate o el Gwenview) que accedisquen i editin els dipòsits i objectes d'Amazon S3.</p>
+    <p xml:lang="ca-valencia">KIO S3 és un esclau de KIO que permet a les aplicacions preparades per a KIO (com Dolphin, Kate o Gwenview) que accedisquen i editin els dipòsits i objectes d'Amazon S3.</p>
     <p xml:lang="de">KIO S3 ist ein Ein-/Ausgabemodul, mit dem Anwendungen wie Dolphin, Kate oder Gwenview auf Container und Objekte in Amazon S3 zugreifen und bearbeiten können.</p>
     <p xml:lang="el">Το KIO S# επιτρέπει σε εφαρμογές που χρησιμοποιούν το KIO (όπως οι Dolphin, Kate, Gwenview) να έχουν πρόσβαση και να επεξεργάζονται Amazon S3 buckets και αντικείμενα.</p>
     <p xml:lang="en-GB">KIO S3 enables KIO-aware applications (such as Dolphin, Kate or Gwenview) to access and edit Amazon S3 buckets and objects.</p>
