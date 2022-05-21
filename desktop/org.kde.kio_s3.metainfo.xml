@@ -25,6 +25,7 @@
   <name xml:lang="fr">KIO S3</name>
   <name xml:lang="hi">के-आईओ एस३</name>
   <name xml:lang="it">KIO S3</name>
+  <name xml:lang="ka">KIO S3</name>
   <name xml:lang="ko">KIO S3</name>
   <name xml:lang="nl">KIO S3</name>
   <name xml:lang="nn">KIO S3</name>
@@ -53,6 +54,7 @@
   <summary xml:lang="fr">L'intégration de « Amazon S3 » avec KDE Plasma et les applications Plasma.</summary>
   <summary xml:lang="hi">केडीई प्लाज़्मा और केडीई अनुप्रयोगों के साथ एमेज़ॉन एस३ का एकीकरण</summary>
   <summary xml:lang="it">Integrazione di Amazon S3 con KDE Plasma e con le applicazioni di KDE</summary>
+  <summary xml:lang="ka">KDE Plasma და KDE აპლიკაციების Amazon S3-თან ინტეგრაცია</summary>
   <summary xml:lang="ko">KDE Plasma 및 KDE 프로그램과 Amazon S3 통합</summary>
   <summary xml:lang="nl">Amazon S3 integratie met KDE Plasma en KDE toepassingen</summary>
   <summary xml:lang="nn">Integrering av Amazon S3 med KDE Plasma og KDE-programma</summary>
@@ -82,6 +84,7 @@
     <p xml:lang="fr">KIO S3 active les applications compatibles avec « KIO » (comme Dolphin, Kate et Gwenview) pour accéder et modifier des conteneurs et objets « Amazon S3 ».</p>
     <p xml:lang="hi">के-आईओ एस३, के-आईओ अवगत अनुप्रयोगों (जैसे की डॉलफ़िन, केट या ग्वेनव्यू) को एमेज़ॉन एस३ बकेट्स एवं ऑबजेक्टस तक पहुँचने तथा उन्हें सम्पादित करने के लिए सक्षम बनाता है।</p>
     <p xml:lang="it">KIO S3 abilita le applicazioni compatibili con KIO (tipo Dolphin, Kate o Gwenview) all'accesso e alla modifica dei bucket e degli oggetti Amazon S3.</p>
+    <p xml:lang="ka">KIO S3 საშუალებას აძლევს KIO-ჩართულ აპლიკაციებს (როგორებიცაა მაგ. Dolphin, Kate და Gwenview), რომ Amazon S3-ის ობიექტები ნახონ და ჩაასწორონ.</p>
     <p xml:lang="ko">KIO S3은 KIO를 사용할 수 있는 프로그램(Dolphin, Kate, Gwenview 등)에서 Amazon S3 버킷에 저장된 파일을 보고 편집할 수 있습니다.</p>
     <p xml:lang="nl">KIO S3 schakelt toepassingen in die afweten van KIO (zoals Dolphin, Kate of Gwenview) om Amazon S3 buckets en objects te benaderen en te bewerken.</p>
     <p xml:lang="nn">KIO S3 lèt program som brukar KIO (for eksempel Dolphin, Kate og Gwenview) få lese- og skrivetilgang til «buckets» og objekt på Amazon S3.</p>
@@ -117,6 +120,7 @@
       <caption xml:lang="fr">Dolphin affichant une image envoyée vers un conteneur « Amazon S3 ».</caption>
       <caption xml:lang="hi">एमेज़ॉन एस३ बकेट पर डाला गया चित्र दर्शाता डॉल्फ़िन।</caption>
       <caption xml:lang="it">Dolphin che mostra un'immagine caricata in un bucket Amazon S3.</caption>
+      <caption xml:lang="ka">Dolphin-ი აჩვენებს Amazon S3-ზე ატვირთულ გამოსახულებას.</caption>
       <caption xml:lang="ko">Amazon S3 버킷에 업로드된 사진을 표시하는 Dolphin입니다.</caption>
       <caption xml:lang="nl">Dolphin die een op een Amazon S3 bucket geüploade afbeelding toont.</caption>
       <caption xml:lang="nn">Dolphin som viser eit bilete lasta på til ei Amazon S3-«bucket»</caption>
