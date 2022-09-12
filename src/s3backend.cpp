@@ -19,6 +19,8 @@
 #include <aws/s3/model/ListObjectsV2Request.h>
 #include <aws/s3/model/PutObjectRequest.h>
 
+#include <array>
+
 static S3Backend::Result finished() {
     static const S3Backend::Result s_finished = {0, QString()};
     return s_finished; // frontend should emit finished().
