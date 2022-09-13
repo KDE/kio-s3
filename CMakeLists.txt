@@ -7,7 +7,7 @@ set(KIO_S3_VERSION 0.9.70)
 project(kio-s3 VERSION ${KIO_S3_VERSION})
 
 set(QT_MIN_VERSION 5.15.0)
-set(KF5_MIN_VERSION 5.71.0)
+set(KF5_MIN_VERSION 5.96.0)
 
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
@@ -35,7 +35,7 @@ find_package(AWSSDK REQUIRED COMPONENTS
 set_package_properties(AWSSDK PROPERTIES DESCRIPTION "the AWS SDK for C++"
     URL "https://github.com/aws/aws-sdk-cpp"
     TYPE REQUIRED
-    PURPOSE "Needed to build the S3 kioslave")
+    PURPOSE "Needed to build the S3 KIO worker")
 
 find_package(Qt5Test QUIET)
 set_package_properties(Qt5Test PROPERTIES

@@ -30,7 +30,7 @@
 
 <para>KIO S3 allows you to list Amazon S3 buckets and objects, to upload files and folders to a bucket and to delete objects from a bucket. You can also copy folders or objects within S3, as well as move or rename objects.</para>
 
-<para>You can use the s3 kioslave like this:</para>
+<para>You can use the s3 KIO worker like this:</para>
 <para><userinput>s3://</userinput> or <userinput>s3://<replaceable>mybucket/mykey</replaceable></userinput>.</para>
 
 <para>The first URL shows all your S3 buckets.</para>

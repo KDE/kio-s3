@@ -14,7 +14,7 @@
 
 #include <aws/s3/S3Client.h>
 
-class S3Slave;
+class S3Worker;
 
 class S3Backend
 {
@@ -27,7 +27,7 @@ struct Result {
     QString errorMessage;
 };
 
-    S3Backend(S3Slave *q);
+    S3Backend(S3Worker *q);
 
     Q_REQUIRED_RESULT Result listDir(const QUrl &url);
     Q_REQUIRED_RESULT Result stat(const QUrl &url);
@@ -55,7 +55,7 @@ private:
     QString contentType(const S3Url &s3url);
 
     QByteArray m_configProfileName;    // This must be passed to the S3Client objects to get the proper region from ~/.aws/config
-    S3Slave *q = nullptr;
+    S3Worker *q = nullptr;
 };
 
 #endif // S3BACKEND_H

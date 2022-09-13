@@ -28,14 +28,14 @@ static S3Backend::Result finished() {
 
 static S3Backend::Result invalidUrlError() {
     static const S3Backend::Result s_invalidUrlError = {
-        KIO::ERR_SLAVE_DEFINED,
-        xi18nc("@info", "Invalid S3 URI, bucket name is missing from the host.<nl/>A valid S3 URI must be written in the form: <link>%1</link>", "s3://bucket/key")
+        KIO::ERR_WORKER_DEFINED,
+        xi18nc("@info", "Invalid S3 URI, bucket name is missing from the host.<nl/>A valid S3 URI must be written in the form: <link>s3://bucket/key</link>")
     };
 
     return s_invalidUrlError;
 }
 
-S3Backend::S3Backend(S3Slave *q)
+S3Backend::S3Backend(S3Worker *q)
     : q(q)
 {
     Aws::SDKOptions options;
@@ -308,7 +308,7 @@ S3Backend::Result S3Backend::copy(const QUrl &src, const QUrl &dest, int permiss
     auto copyObjectOutcome = client.CopyObject(request);
     if (!copyObjectOutcome.IsSuccess()) {
         qCDebug(S3) << "Could not copy" << src << "to" << dest << "- " << copyObjectOutcome.GetError().GetMessage().c_str();
-        return {KIO::ERR_SLAVE_DEFINED, xi18nc("@info", "Could not copy <link>%1</link> to <link>%2</link>", src.toDisplayString(), dest.toDisplayString())};
+        return {KIO::ERR_WORKER_DEFINED, xi18nc("@info", "Could not copy <link>%1</link> to <link>%2</link>", src.toDisplayString(), dest.toDisplayString())};
     }
 
     return finished();
@@ -420,10 +420,11 @@ void S3Backend::listBucket(const QString &bucketName)
         const auto objects = listObjectsOutcome.GetResult().GetContents();
         for (const auto &object : objects) {
             KIO::UDSEntry entry;
+            const auto objectKey = QString::fromUtf8(object.GetKey().c_str());
             entry.reserve(6);
-            entry.fastInsert(KIO::UDSEntry::UDS_NAME, object.GetKey().c_str());
-            entry.fastInsert(KIO::UDSEntry::UDS_DISPLAY_NAME, object.GetKey().c_str());
-            entry.fastInsert(KIO::UDSEntry::UDS_URL, QStringLiteral("s3://%1/%2").arg(bucketName, object.GetKey().c_str()));
+            entry.fastInsert(KIO::UDSEntry::UDS_NAME, objectKey);
+            entry.fastInsert(KIO::UDSEntry::UDS_DISPLAY_NAME, objectKey);
+            entry.fastInsert(KIO::UDSEntry::UDS_URL, QStringLiteral("s3://%1/%2").arg(bucketName, objectKey));
             entry.fastInsert(KIO::UDSEntry::UDS_FILE_TYPE, S_IFREG);
             entry.fastInsert(KIO::UDSEntry::UDS_SIZE, object.GetSize());
             entry.fastInsert(KIO::UDSEntry::UDS_ACCESS, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH );

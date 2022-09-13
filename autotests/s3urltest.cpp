@@ -28,7 +28,7 @@ void S3UrlTest::testS3Url_data()
     QTest::addColumn<QString>("expectedPrefix");
 
     QTest::newRow("root url")
-            << QUrl("s3:")
+            << QUrl(QStringLiteral("s3:"))
             << false
             << false
             << QString()

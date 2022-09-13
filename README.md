@@ -6,7 +6,7 @@
 KIO S3
 ======
 
-A kio slave for Amazon Simple Storage Service (Amazon S3): https://aws.amazon.com/s3/
+A KIO worker for Amazon Simple Storage Service (Amazon S3): https://aws.amazon.com/s3/
 
 S3 is an object store. It has buckets and objects.
 Buckets contain objects, and objects are made of data (usually a file) and metadata (information about the data).
@@ -14,8 +14,8 @@ Buckets contain objects, and objects are made of data (usually a file) and metad
 BUILDING
 ========
 
-The Amazon AWS SDK for C++ is required to build this slave: https://github.com/aws/aws-sdk-cpp
-The slave requires the `core` and `s3` SDK components.
+The Amazon AWS SDK for C++ is required to build this project: https://github.com/aws/aws-sdk-cpp
+In particular the `core` and `s3` SDK components are required.
 
 USAGE
 =====
@@ -23,7 +23,7 @@ USAGE
 1. Configure AWS credentials and region: https://docs.aws.amazon.com/credref/latest/refdocs/overview.html
 2. Run `dolphin s3://`.
 
-The slave supports S3 URIs with the following format:
+The worker supports S3 URIs with the following format:
 
     s3://mybucket/mykey
 
