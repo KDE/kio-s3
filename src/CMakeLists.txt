@@ -6,7 +6,7 @@ set(kio_s3_SRCS kio_s3.cpp s3backend.cpp s3url.cpp)
 ecm_qt_declare_logging_category(kio_s3_SRCS
     HEADER s3debug.h
     IDENTIFIER S3
-    CATEGORY_NAME kf5.kio.s3)
+    CATEGORY_NAME kf.kio.workers.s3)
 
 kcoreaddons_add_plugin(kio_s3
     SOURCES ${kio_s3_SRCS}
