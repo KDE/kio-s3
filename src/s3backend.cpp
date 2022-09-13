@@ -21,16 +21,11 @@
 
 #include <array>
 
-static S3Backend::Result finished() {
-    static const S3Backend::Result s_finished = {0, QString()};
-    return s_finished; // frontend should emit finished().
-}
-
-static S3Backend::Result invalidUrlError() {
-    static const S3Backend::Result s_invalidUrlError = {
+static KIO::WorkerResult invalidUrlError() {
+    static const auto s_invalidUrlError = KIO::WorkerResult::fail(
         KIO::ERR_WORKER_DEFINED,
         xi18nc("@info", "Invalid S3 URI, bucket name is missing from the host.<nl/>A valid S3 URI must be written in the form: <link>s3://bucket/key</link>")
-    };
+    );
 
     return s_invalidUrlError;
 }
@@ -44,7 +39,7 @@ S3Backend::S3Backend(S3Worker *q)
     m_configProfileName = QByteArray::fromStdString(Aws::Auth::GetConfigProfileFilename());
 }
 
-S3Backend::Result S3Backend::listDir(const QUrl &url)
+KIO::WorkerResult S3Backend::listDir(const QUrl &url)
 {
     const auto s3url = S3Url(url);
     qCDebug(S3) << "Going to list" << s3url;
@@ -52,13 +47,13 @@ S3Backend::Result S3Backend::listDir(const QUrl &url)
     if (s3url.isRoot()) {
         listBuckets();
         listCwdEntry(ReadOnlyCwd);
-        return finished();
+        return KIO::WorkerResult::pass();
     }
 
     if (s3url.isBucket()) {
         listBucket(s3url.bucketName());
         listCwdEntry();
-        return finished();
+        return KIO::WorkerResult::pass();
     }
 
     if (!s3url.isKey()) {
@@ -70,16 +65,16 @@ S3Backend::Result S3Backend::listDir(const QUrl &url)
 
     listKey(s3url);
     listCwdEntry();
-    return finished();
+    return KIO::WorkerResult::pass();
 }
 
-S3Backend::Result S3Backend::stat(const QUrl &url)
+KIO::WorkerResult S3Backend::stat(const QUrl &url)
 {
     const auto s3url = S3Url(url);
     qCDebug(S3) << "Going to stat()" << s3url;
 
     if (s3url.isRoot()) {
-        return finished();
+        return KIO::WorkerResult::pass();
     }
 
     if (s3url.isBucket()) {
@@ -90,7 +85,7 @@ S3Backend::Result S3Backend::stat(const QUrl &url)
         entry.fastInsert(KIO::UDSEntry::UDS_ACCESS, S_IRUSR | S_IRGRP | S_IROTH | S_IXUSR | S_IXGRP | S_IXOTH);
         entry.fastInsert(KIO::UDSEntry::UDS_MIME_TYPE, QStringLiteral("inode/directory"));
         q->statEntry(entry);
-        return finished();
+        return KIO::WorkerResult::pass();
     }
 
     if (!s3url.isKey()) {
@@ -160,19 +155,19 @@ S3Backend::Result S3Backend::stat(const QUrl &url)
         q->statEntry(entry);
     }
 
-    return finished();
+    return KIO::WorkerResult::pass();
 }
 
-S3Backend::Result S3Backend::mimetype(const QUrl &url)
+KIO::WorkerResult S3Backend::mimetype(const QUrl &url)
 {
     const auto s3url = S3Url(url);
     qCDebug(S3) << "Going to get mimetype for" << s3url;
 
     q->mimeType(contentType(s3url));
-    return finished();
+    return KIO::WorkerResult::pass();
 }
 
-S3Backend::Result S3Backend::get(const QUrl &url)
+KIO::WorkerResult S3Backend::get(const QUrl &url)
 {
     const auto s3url = S3Url(url);
     qCDebug(S3) << "Going to get" << s3url;
@@ -207,10 +202,10 @@ S3Backend::Result S3Backend::get(const QUrl &url)
         qCDebug(S3) << "Could not get object with key:" << s3url.key() << " - " << getObjectOutcome.GetError().GetMessage().c_str();
     }
 
-    return finished();
+    return KIO::WorkerResult::pass();
 }
 
-S3Backend::Result S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags flags)
+KIO::WorkerResult S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags flags)
 {
     Q_UNUSED(permissions)
     Q_UNUSED(flags)
@@ -239,7 +234,7 @@ S3Backend::Result S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags
     } while (n > 0);
 
     if (n <= 0) {
-        return {KIO::ERR_CANNOT_WRITE, url.toDisplayString()};
+        return KIO::WorkerResult::fail(KIO::ERR_CANNOT_WRITE, url.toDisplayString());
     }
 
     request.SetBody(putDataStream);
@@ -251,10 +246,10 @@ S3Backend::Result S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags
         qCDebug(S3) << "Could not PUT object with key:" << s3url.key() << " - " << putObjectOutcome.GetError().GetMessage().c_str();
     }
 
-    return finished();
+    return KIO::WorkerResult::pass();
 }
 
-S3Backend::Result S3Backend::copy(const QUrl &src, const QUrl &dest, int permissions, KIO::JobFlags flags)
+KIO::WorkerResult S3Backend::copy(const QUrl &src, const QUrl &dest, int permissions, KIO::JobFlags flags)
 {
     Q_UNUSED(permissions)
     Q_UNUSED(flags)
@@ -264,28 +259,28 @@ S3Backend::Result S3Backend::copy(const QUrl &src, const QUrl &dest, int permiss
     qCDebug(S3) << "Going to copy" << s3src << "to" << s3dest;
 
     if (src == dest) {
-        return {KIO::ERR_FILE_ALREADY_EXIST, QString()};
+        return KIO::WorkerResult::fail(KIO::ERR_FILE_ALREADY_EXIST, QString());
     }
 
     if (s3src.isRoot() || s3src.isBucket()) {
         qCDebug(S3) << "Cannot copy from root or bucket url:" << src;
-        return {KIO::ERR_CANNOT_OPEN_FOR_READING, src.toDisplayString()};
+        return KIO::WorkerResult::fail(KIO::ERR_CANNOT_OPEN_FOR_READING, src.toDisplayString());
     }
 
     if (!s3src.isKey()) {
         qCDebug(S3) << "Cannot copy from invalid S3 url:" << src;
-        return {KIO::ERR_CANNOT_OPEN_FOR_READING, src.toDisplayString()};
+        return KIO::WorkerResult::fail(KIO::ERR_CANNOT_OPEN_FOR_READING, src.toDisplayString());
     }
 
     // TODO: can we copy to isBucket() urls?
     if (s3dest.isRoot() || s3dest.isBucket()) {
         qCDebug(S3) << "Cannot copy to root or bucket url:" << dest;
-        return {KIO::ERR_WRITE_ACCESS_DENIED, dest.toDisplayString()};
+        return KIO::WorkerResult::fail(KIO::ERR_WRITE_ACCESS_DENIED, dest.toDisplayString());
     }
 
     if (!s3dest.isKey()) {
         qCDebug(S3) << "Cannot write to invalid S3 url:" << dest;
-        return {KIO::ERR_WRITE_ACCESS_DENIED, dest.toDisplayString()};
+        return KIO::WorkerResult::fail(KIO::ERR_WRITE_ACCESS_DENIED, dest.toDisplayString());
     }
 
     const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.constData());
@@ -297,7 +292,7 @@ S3Backend::Result S3Backend::copy(const QUrl &src, const QUrl &dest, int permiss
     headObjectRequest.SetKey(s3dest.key().toStdString());
     auto headObjectRequestOutcome = client.HeadObject(headObjectRequest);
     if (headObjectRequestOutcome.IsSuccess()) {
-        return {KIO::ERR_FILE_ALREADY_EXIST, QString()};
+        return KIO::WorkerResult::fail(KIO::ERR_FILE_ALREADY_EXIST, QString());
     }
 
     Aws::S3::Model::CopyObjectRequest request;
@@ -308,28 +303,28 @@ S3Backend::Result S3Backend::copy(const QUrl &src, const QUrl &dest, int permiss
     auto copyObjectOutcome = client.CopyObject(request);
     if (!copyObjectOutcome.IsSuccess()) {
         qCDebug(S3) << "Could not copy" << src << "to" << dest << "- " << copyObjectOutcome.GetError().GetMessage().c_str();
-        return {KIO::ERR_WORKER_DEFINED, xi18nc("@info", "Could not copy <link>%1</link> to <link>%2</link>", src.toDisplayString(), dest.toDisplayString())};
+        return KIO::WorkerResult::fail(KIO::ERR_WORKER_DEFINED, xi18nc("@info", "Could not copy <link>%1</link> to <link>%2</link>", src.toDisplayString(), dest.toDisplayString()));
     }
 
-    return finished();
+    return KIO::WorkerResult::pass();
 }
 
-S3Backend::Result S3Backend::mkdir(const QUrl &url, int permissions)
+KIO::WorkerResult S3Backend::mkdir(const QUrl &url, int permissions)
 {
     Q_UNUSED(url)
     Q_UNUSED(permissions)
     qCDebug(S3) << "Pretending creation of folder" << url;
-    return finished();
+    return KIO::WorkerResult::pass();
 }
 
-S3Backend::Result S3Backend::del(const QUrl &url, bool isFile)
+KIO::WorkerResult S3Backend::del(const QUrl &url, bool isFile)
 {
     Q_UNUSED(isFile)
     const auto s3url = S3Url(url);
     qCDebug(S3) << "Going to delete" << s3url;
 
     if (s3url.isRoot() || s3url.isBucket()) {
-        return {KIO::ERR_CANNOT_DELETE, url.toDisplayString()};
+        return KIO::WorkerResult::fail(KIO::ERR_CANNOT_DELETE, url.toDisplayString());
     }
 
     if (!s3url.isKey()) {
@@ -341,13 +336,13 @@ S3Backend::Result S3Backend::del(const QUrl &url, bool isFile)
 
     // Start recursive delete by using the root prefix.
     if (deletePrefix(client, s3url, s3url.prefix())) {
-        return finished();
+        return KIO::WorkerResult::pass();
     } else {
-        return {KIO::ERR_CANNOT_DELETE, url.toDisplayString()};
+        return KIO::WorkerResult::fail(KIO::ERR_CANNOT_DELETE, url.toDisplayString());
     }
 }
 
-S3Backend::Result S3Backend::rename(const QUrl &src, const QUrl &dest, KIO::JobFlags flags)
+KIO::WorkerResult S3Backend::rename(const QUrl &src, const QUrl &dest, KIO::JobFlags flags)
 {
     Q_UNUSED(flags)
     qCDebug(S3) << "Going to rename" << src << "to" << dest;
@@ -360,21 +355,21 @@ S3Backend::Result S3Backend::rename(const QUrl &src, const QUrl &dest, KIO::JobF
     // Workaround: copy+delete from dolphin...
 
     const auto copyResult = copy(src, dest, -1, flags);
-    if (copyResult.exitCode > 0) {
+    if (!copyResult.success()) {
         qCDebug(S3).nospace() << "Could not copy " << src << " to " << dest << ", aborting rename()";
-        if (copyResult.exitCode == KIO::ERR_FILE_ALREADY_EXIST) {
-            return {KIO::ERR_FILE_ALREADY_EXIST, QString()};
+        if (copyResult.error() == KIO::ERR_FILE_ALREADY_EXIST) {
+            return copyResult;
         }
-        return {KIO::ERR_CANNOT_RENAME, src.toDisplayString()};
+        return KIO::WorkerResult::fail(KIO::ERR_CANNOT_RENAME, src.toDisplayString());
     }
 
     const auto delResult = del(src, false);
-    if (delResult.exitCode > 0) {
+    if (!delResult.success()) {
         qCDebug(S3) << "Could not delete" << src << "after it was copied to" << dest;
-        return {KIO::ERR_CANNOT_RENAME, src.toDisplayString()};
+        return KIO::WorkerResult::fail(KIO::ERR_CANNOT_RENAME, src.toDisplayString());
     }
 
-    return finished();
+    return KIO::WorkerResult::pass();
 }
 
 void S3Backend::listBuckets()

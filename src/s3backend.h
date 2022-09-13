@@ -9,6 +9,7 @@
 #include "s3url.h"
 
 #include <KIO/Job>
+#include <KIO/WorkerBase>
 
 #include <QUrl>
 
@@ -20,24 +21,17 @@ class S3Backend
 {
 public:
 
-struct Result {
-    Result(int code, const QString &message)
-        : exitCode(code), errorMessage(message) {}
-    int exitCode = 0;
-    QString errorMessage;
-};
-
     S3Backend(S3Worker *q);
 
-    Q_REQUIRED_RESULT Result listDir(const QUrl &url);
-    Q_REQUIRED_RESULT Result stat(const QUrl &url);
-    Q_REQUIRED_RESULT Result mimetype(const QUrl &url);
-    Q_REQUIRED_RESULT Result get(const QUrl &url);
-    Q_REQUIRED_RESULT Result put(const QUrl &url, int permissions, KIO::JobFlags flags);
-    Q_REQUIRED_RESULT Result copy(const QUrl &src, const QUrl &dest, int permissions, KIO::JobFlags flags);
-    Q_REQUIRED_RESULT Result mkdir(const QUrl &url, int permissions);
-    Q_REQUIRED_RESULT Result del(const QUrl &url, bool isFile);
-    Q_REQUIRED_RESULT Result rename(const QUrl &src, const QUrl &dest, KIO::JobFlags flags);
+    Q_REQUIRED_RESULT KIO::WorkerResult listDir(const QUrl &url);
+    Q_REQUIRED_RESULT KIO::WorkerResult stat(const QUrl &url);
+    Q_REQUIRED_RESULT KIO::WorkerResult mimetype(const QUrl &url);
+    Q_REQUIRED_RESULT KIO::WorkerResult get(const QUrl &url);
+    Q_REQUIRED_RESULT KIO::WorkerResult put(const QUrl &url, int permissions, KIO::JobFlags flags);
+    Q_REQUIRED_RESULT KIO::WorkerResult copy(const QUrl &src, const QUrl &dest, int permissions, KIO::JobFlags flags);
+    Q_REQUIRED_RESULT KIO::WorkerResult mkdir(const QUrl &url, int permissions);
+    Q_REQUIRED_RESULT KIO::WorkerResult del(const QUrl &url, bool isFile);
+    Q_REQUIRED_RESULT KIO::WorkerResult rename(const QUrl &src, const QUrl &dest, KIO::JobFlags flags);
 
 private:
     Q_DISABLE_COPY(S3Backend)

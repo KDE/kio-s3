@@ -34,8 +34,6 @@ public:
 private:
     Q_DISABLE_COPY(S3Worker)
 
-    KIO::WorkerResult finalize(const S3Backend::Result &result);
-
     QScopedPointer<S3Backend> d { new S3Backend(this) };
 };
 

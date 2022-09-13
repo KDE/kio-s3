@@ -46,56 +46,47 @@ S3Worker::~S3Worker()
 
 KIO::WorkerResult S3Worker::listDir(const QUrl &url)
 {
-    return finalize(d->listDir(url));
+    return d->listDir(url);
 }
 
 KIO::WorkerResult S3Worker::stat(const QUrl &url)
 {
-    return finalize(d->stat(url));
+    return d->stat(url);
 }
 
 KIO::WorkerResult S3Worker::mimetype(const QUrl &url)
 {
-    return finalize(d->mimetype(url));
+    return d->mimetype(url);
 }
 
 KIO::WorkerResult S3Worker::get(const QUrl &url)
 {
-    return finalize(d->get(url));
+    return d->get(url);
 }
 
 KIO::WorkerResult S3Worker::put(const QUrl &url, int permissions, KIO::JobFlags flags)
 {
-    return finalize(d->put(url, permissions, flags));
+    return d->put(url, permissions, flags);
 }
 
 KIO::WorkerResult S3Worker::copy(const QUrl &src, const QUrl &dest, int permissions, KIO::JobFlags flags)
 {
-    return finalize(d->copy(src, dest, permissions, flags));
+    return d->copy(src, dest, permissions, flags);
 }
 
 KIO::WorkerResult S3Worker::mkdir(const QUrl &url, int permissions)
 {
-    return finalize(d->mkdir(url, permissions));
+    return d->mkdir(url, permissions);
 }
 
 KIO::WorkerResult S3Worker::del(const QUrl &url, bool isfile)
 {
-    return finalize(d->del(url, isfile));
+    return d->del(url, isfile);
 }
 
 KIO::WorkerResult S3Worker::rename(const QUrl &src, const QUrl &dest, KIO::JobFlags flags)
 {
-    return finalize(d->rename(src, dest, flags));
-}
-
-KIO::WorkerResult S3Worker::finalize(const S3Backend::Result &result)
-{
-    if (result.exitCode > 0) {
-        return KIO::WorkerResult::fail(result.exitCode, result.errorMessage);
-    }
-
-    return KIO::WorkerResult::pass();
+    return d->rename(src, dest, flags);
 }
 
 #include "kio_s3.moc"
