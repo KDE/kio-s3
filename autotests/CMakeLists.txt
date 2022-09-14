@@ -5,5 +5,5 @@ include(ECMAddTests)
 
 ecm_add_test(
     s3urltest.cpp ../src/s3url.cpp
-    LINK_LIBRARIES Qt5::Test
+    LINK_LIBRARIES Qt5::Test ${AWSSDK_LINK_LIBRARIES}
     TEST_NAME s3urltest)

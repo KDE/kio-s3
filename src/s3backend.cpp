@@ -36,7 +36,7 @@ S3Backend::S3Backend(S3Worker *q)
     Aws::SDKOptions options;
     Aws::InitAPI(options);
 
-    m_configProfileName = QByteArray::fromStdString(Aws::Auth::GetConfigProfileFilename());
+    m_configProfileName = Aws::Auth::GetConfigProfileFilename();
 }
 
 KIO::WorkerResult S3Backend::listDir(const QUrl &url)
@@ -51,7 +51,7 @@ KIO::WorkerResult S3Backend::listDir(const QUrl &url)
     }
 
     if (s3url.isBucket()) {
-        listBucket(s3url.bucketName());
+        listBucket(s3url.BucketName());
         listCwdEntry();
         return KIO::WorkerResult::pass();
     }
@@ -102,26 +102,26 @@ KIO::WorkerResult S3Backend::stat(const QUrl &url)
     const bool isRootKey = pathComponents.isEmpty();
     const auto fileName = isRootKey ? s3url.bucketName() : pathComponents.last();
 
-    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.constData());
+    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.c_str());
     const Aws::S3::S3Client client(clientConfiguration);
 
     Aws::S3::Model::HeadObjectRequest headObjectRequest;
-    headObjectRequest.SetBucket(s3url.bucketName().toStdString());
-    headObjectRequest.SetKey(s3url.key().toStdString());
+    headObjectRequest.SetBucket(s3url.BucketName());
+    headObjectRequest.SetKey(s3url.Key());
 
     auto headObjectRequestOutcome = client.HeadObject(headObjectRequest);
     if (!isRootKey && headObjectRequestOutcome.IsSuccess()) {
-        QString contentType = QString::fromStdString(headObjectRequestOutcome.GetResult().GetContentType());
+        Aws::String contentType = headObjectRequestOutcome.GetResult().GetContentType();
         // This is set by S3 when creating a 0-sized folder from the AWS console. Use the freedesktop mimetype instead.
-        if (contentType == QLatin1String("application/x-directory")) {
-            contentType = QStringLiteral("inode/directory");
+        if (contentType == "application/x-directory") {
+            contentType = "inode/directory";
         }
-        const bool isDir = contentType == QLatin1String("inode/directory");
+        const bool isDir = contentType == "inode/directory";
         KIO::UDSEntry entry;
         entry.reserve(7);
         entry.fastInsert(KIO::UDSEntry::UDS_NAME, fileName);
         entry.fastInsert(KIO::UDSEntry::UDS_DISPLAY_NAME, fileName);
-        entry.fastInsert(KIO::UDSEntry::UDS_MIME_TYPE, contentType);
+        entry.fastInsert(KIO::UDSEntry::UDS_MIME_TYPE, QString::fromLatin1(contentType.c_str(), contentType.size()));
         entry.fastInsert(KIO::UDSEntry::UDS_FILE_TYPE, isDir ? S_IFDIR : S_IFREG);
         entry.fastInsert(KIO::UDSEntry::UDS_SIZE, headObjectRequestOutcome.GetResult().GetContentLength());
         if (isDir) {
@@ -172,14 +172,14 @@ KIO::WorkerResult S3Backend::get(const QUrl &url)
     const auto s3url = S3Url(url);
     qCDebug(S3) << "Going to get" << s3url;
 
-    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.constData());
+    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.c_str());
     const Aws::S3::S3Client client(clientConfiguration);
 
     q->mimeType(contentType(s3url));
 
     Aws::S3::Model::GetObjectRequest objectRequest;
-    objectRequest.SetBucket(s3url.bucketName().toStdString());
-    objectRequest.SetKey(s3url.key().toStdString());
+    objectRequest.SetBucket(s3url.BucketName());
+    objectRequest.SetKey(s3url.Key());
 
     auto getObjectOutcome = client.GetObject(objectRequest);
     if (getObjectOutcome.IsSuccess()) {
@@ -212,12 +212,12 @@ KIO::WorkerResult S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags
     const auto s3url = S3Url(url);
     qCDebug(S3) << "Going to upload data to" << s3url;
 
-    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.constData());
+    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.c_str());
     const Aws::S3::S3Client client(clientConfiguration);
 
     Aws::S3::Model::PutObjectRequest request;
-    request.SetBucket(s3url.bucketName().toStdString());
-    request.SetKey(s3url.key().toStdString());
+    request.SetBucket(s3url.BucketName());
+    request.SetKey(s3url.Key());
 
     const auto putDataStream = std::make_shared<Aws::StringStream>("");
 
@@ -283,22 +283,22 @@ KIO::WorkerResult S3Backend::copy(const QUrl &src, const QUrl &dest, int permiss
         return KIO::WorkerResult::fail(KIO::ERR_WRITE_ACCESS_DENIED, dest.toDisplayString());
     }
 
-    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.constData());
+    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.c_str());
     const Aws::S3::S3Client client(clientConfiguration);
 
     // Check if destination key already exists, otherwise S3 will overwrite it leading to data loss.
     Aws::S3::Model::HeadObjectRequest headObjectRequest;
-    headObjectRequest.SetBucket(s3dest.bucketName().toStdString());
-    headObjectRequest.SetKey(s3dest.key().toStdString());
+    headObjectRequest.SetBucket(s3dest.BucketName());
+    headObjectRequest.SetKey(s3dest.Key());
     auto headObjectRequestOutcome = client.HeadObject(headObjectRequest);
     if (headObjectRequestOutcome.IsSuccess()) {
         return KIO::WorkerResult::fail(KIO::ERR_FILE_ALREADY_EXIST, QString());
     }
 
     Aws::S3::Model::CopyObjectRequest request;
-    request.SetCopySource(QStringLiteral("%1/%2").arg(s3src.bucketName(), s3src.key()).toStdString());
-    request.SetBucket(s3dest.bucketName().toStdString());
-    request.SetKey(s3dest.key().toStdString());
+    request.SetCopySource(s3src.BucketName() + "/" + s3src.Key());
+    request.SetBucket(s3dest.BucketName());
+    request.SetKey(s3dest.Key());
 
     auto copyObjectOutcome = client.CopyObject(request);
     if (!copyObjectOutcome.IsSuccess()) {
@@ -331,11 +331,11 @@ KIO::WorkerResult S3Backend::del(const QUrl &url, bool isFile)
         return invalidUrlError();
     }
 
-    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.constData());
+    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.c_str());
     const Aws::S3::S3Client client(clientConfiguration);
 
     // Start recursive delete by using the root prefix.
-    if (deletePrefix(client, s3url, s3url.prefix())) {
+    if (deletePrefix(client, s3url, s3url.Prefix())) {
         return KIO::WorkerResult::pass();
     } else {
         return KIO::WorkerResult::fail(KIO::ERR_CANNOT_DELETE, url.toDisplayString());
@@ -374,14 +374,14 @@ KIO::WorkerResult S3Backend::rename(const QUrl &src, const QUrl &dest, KIO::JobF
 
 void S3Backend::listBuckets()
 {
-    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.constData());
+    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.c_str());
     const Aws::S3::S3Client client(clientConfiguration);
     const auto listBucketsOutcome = client.ListBuckets();
 
     if (listBucketsOutcome.IsSuccess()) {
         const auto buckets = listBucketsOutcome.GetResult().GetBuckets();
         for (const auto &bucket : buckets) {
-            const auto bucketName = QString::fromStdString(bucket.GetName());
+            const auto bucketName = QString::fromLatin1(bucket.GetName().c_str(), bucket.GetName().size());
             qCDebug(S3) << "Found bucket:" << bucketName;
             KIO::UDSEntry entry;
             entry.reserve(7);
@@ -399,19 +399,20 @@ void S3Backend::listBuckets()
     }
 }
 
-void S3Backend::listBucket(const QString &bucketName)
+void S3Backend::listBucket(const Aws::String &bucketName)
 {
-    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.constData());
+    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.c_str());
     const Aws::S3::S3Client client(clientConfiguration);
 
     Aws::S3::Model::ListObjectsV2Request listObjectsRequest;
-    listObjectsRequest.SetBucket(bucketName.toStdString());
+    listObjectsRequest.SetBucket(bucketName);
     listObjectsRequest.SetDelimiter("/");
 
-    qCDebug(S3) << "Listing objects in bucket" << bucketName << "...";
+    qCDebug(S3) << "Listing objects in bucket" << bucketName.c_str() << "...";
     const auto listObjectsOutcome = client.ListObjectsV2(listObjectsRequest);
     if (listObjectsOutcome.IsSuccess()) {
 
+        const auto bucket = QString::fromLatin1(bucketName.c_str(), bucketName.size());
         const auto objects = listObjectsOutcome.GetResult().GetContents();
         for (const auto &object : objects) {
             KIO::UDSEntry entry;
@@ -419,7 +420,7 @@ void S3Backend::listBucket(const QString &bucketName)
             entry.reserve(6);
             entry.fastInsert(KIO::UDSEntry::UDS_NAME, objectKey);
             entry.fastInsert(KIO::UDSEntry::UDS_DISPLAY_NAME, objectKey);
-            entry.fastInsert(KIO::UDSEntry::UDS_URL, QStringLiteral("s3://%1/%2").arg(bucketName, objectKey));
+            entry.fastInsert(KIO::UDSEntry::UDS_URL, QStringLiteral("s3://%1/%2").arg(bucket, objectKey));
             entry.fastInsert(KIO::UDSEntry::UDS_FILE_TYPE, S_IFREG);
             entry.fastInsert(KIO::UDSEntry::UDS_SIZE, object.GetSize());
             entry.fastInsert(KIO::UDSEntry::UDS_ACCESS, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH );
@@ -429,14 +430,14 @@ void S3Backend::listBucket(const QString &bucketName)
         const auto commonPrefixes = listObjectsOutcome.GetResult().GetCommonPrefixes();
         for (const auto &commonPrefix : commonPrefixes) {
             KIO::UDSEntry entry;
-            QString prefix = QString::fromStdString(commonPrefix.GetPrefix());
+            QString prefix = QString::fromUtf8(commonPrefix.GetPrefix().c_str(), commonPrefix.GetPrefix().size());
             if (prefix.endsWith(QLatin1Char('/'))) {
                 prefix.chop(1);
             }
             entry.reserve(6);
             entry.fastInsert(KIO::UDSEntry::UDS_NAME, prefix);
             entry.fastInsert(KIO::UDSEntry::UDS_DISPLAY_NAME, prefix);
-            entry.fastInsert(KIO::UDSEntry::UDS_URL, QStringLiteral("s3://%1/%2/").arg(bucketName, prefix));
+            entry.fastInsert(KIO::UDSEntry::UDS_URL, QStringLiteral("s3://%1/%2/").arg(bucket, prefix));
             entry.fastInsert(KIO::UDSEntry::UDS_FILE_TYPE, S_IFDIR);
             entry.fastInsert(KIO::UDSEntry::UDS_ACCESS, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IXOTH);
             entry.fastInsert(KIO::UDSEntry::UDS_SIZE, 0);
@@ -450,15 +451,15 @@ void S3Backend::listBucket(const QString &bucketName)
 
 void S3Backend::listKey(const S3Url &s3url)
 {
-    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.constData());
+    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.c_str());
     const Aws::S3::S3Client client(clientConfiguration);
 
     const QString prefix = s3url.prefix();
 
     Aws::S3::Model::ListObjectsV2Request listObjectsRequest;
-    listObjectsRequest.SetBucket(s3url.bucketName().toStdString());
+    listObjectsRequest.SetBucket(s3url.BucketName());
     listObjectsRequest.SetDelimiter("/");
-    listObjectsRequest.SetPrefix(prefix.toStdString());
+    listObjectsRequest.SetPrefix(s3url.Prefix());
 
     qCDebug(S3) << "Listing prefix" << prefix << "...";
     const auto listObjectsOutcome = client.ListObjectsV2(listObjectsRequest);
@@ -470,7 +471,7 @@ void S3Backend::listKey(const S3Url &s3url)
         // if someone has very big folders with more than 1000 files.
         qCDebug(S3) << "Prefix" << prefix << "has" << objects.size() << "objects";
         for (const auto &object : objects) {
-            QString key = QString::fromStdString(object.GetKey());
+            QString key = QString::fromUtf8(object.GetKey().c_str(), object.GetKey().size());
             // Note: key might be empty. 0-sized virtual folders have object.GetKey() equal to prefix.
             key.remove(0, prefix.length());
 
@@ -499,7 +500,7 @@ void S3Backend::listKey(const S3Url &s3url)
         const auto commonPrefixes = listObjectsOutcome.GetResult().GetCommonPrefixes();
         qCDebug(S3) << "Prefix" << prefix << "has" << commonPrefixes.size() << "common prefixes";
         for (const auto &commonPrefix : commonPrefixes) {
-            QString subprefix = QString::fromStdString(commonPrefix.GetPrefix());
+            QString subprefix = QString::fromUtf8(commonPrefix.GetPrefix().c_str(), commonPrefix.GetPrefix().size());
             if (subprefix.endsWith(QLatin1Char('/'))) {
                 subprefix.chop(1);
             }
@@ -537,16 +538,16 @@ void S3Backend::listCwdEntry(CwdAccess access)
     q->listEntry(entry);
 }
 
-bool S3Backend::deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url, const QString &prefix)
+bool S3Backend::deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url, const Aws::String &prefix)
 {
-    qCDebug(S3) << "Going to recursively delete prefix:" << prefix;
+    qCDebug(S3) << "Going to recursively delete prefix:" << prefix.c_str();
     bool outcome = false;
-    const auto bucketName = s3url.bucketName().toStdString();
+    const Aws::String bucketName = s3url.BucketName();
     // In order to recursively delete a folder, we need to list by prefix and manually delete each listed key.
     Aws::S3::Model::ListObjectsV2Request listObjectsRequest;
     listObjectsRequest.SetBucket(bucketName);
     listObjectsRequest.SetDelimiter("/");
-    listObjectsRequest.SetPrefix(prefix.toStdString());
+    listObjectsRequest.SetPrefix(prefix);
     const auto listObjectsOutcome = client.ListObjectsV2(listObjectsRequest);
     if (listObjectsOutcome.IsSuccess()) {
         // TODO: handle listObjectsOutcome.GetResult().GetIsTruncated()
@@ -554,10 +555,10 @@ bool S3Backend::deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url
         // since we filter the keys by the name of the folder, but it won't work
         // if someone has very big folders with more than 1000 files.
         const auto commonPrefixes = listObjectsOutcome.GetResult().GetCommonPrefixes();
-        qCDebug(S3) << "Prefix" << prefix << "has" << commonPrefixes.size() << "common prefixes";
+        qCDebug(S3) << "Prefix" << prefix.c_str() << "has" << commonPrefixes.size() << "common prefixes";
         // Recursively delete folder children.
         for (const auto &commonPrefix : commonPrefixes) {
-            const bool recursiveOutcome = deletePrefix(client, s3url, QString::fromStdString(commonPrefix.GetPrefix()));
+            const bool recursiveOutcome = deletePrefix(client, s3url, commonPrefix.GetPrefix());
             outcome = outcome && recursiveOutcome;
         }
         const auto objects = listObjectsOutcome.GetResult().GetContents();
@@ -576,7 +577,7 @@ bool S3Backend::deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url
         } else { // The prefix was either a file or a folder that contains 0 files.
             Aws::S3::Model::DeleteObjectRequest request;
             request.SetBucket(bucketName);
-            request.SetKey(s3url.key().toStdString());
+            request.SetKey(s3url.Key());
             auto deleteObjectOutcome = client.DeleteObject(request);
             if (!deleteObjectOutcome.IsSuccess()) {
                 qCDebug(S3) << "Could not delete object with key:" << s3url.key() << " - " << deleteObjectOutcome.GetError().GetMessage().c_str();
@@ -585,7 +586,7 @@ bool S3Backend::deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url
         }
         outcome = true;
     } else {
-        qCDebug(S3) << "Could not list prefix:" << prefix;
+        qCDebug(S3) << "Could not list prefix:" << prefix.c_str();
         outcome = false;
     }
 
@@ -596,16 +597,16 @@ QString S3Backend::contentType(const S3Url &s3url)
 {
     QString contentType;
 
-    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.constData());
+    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.c_str());
     const Aws::S3::S3Client client(clientConfiguration);
 
     Aws::S3::Model::HeadObjectRequest headObjectRequest;
-    headObjectRequest.SetBucket(s3url.bucketName().toStdString());
-    headObjectRequest.SetKey(s3url.key().toStdString());
+    headObjectRequest.SetBucket(s3url.BucketName());
+    headObjectRequest.SetKey(s3url.Key());
 
     auto headObjectRequestOutcome = client.HeadObject(headObjectRequest);
     if (headObjectRequestOutcome.IsSuccess()) {
-        contentType = QString::fromStdString(headObjectRequestOutcome.GetResult().GetContentType());
+        contentType = QString::fromLatin1(headObjectRequestOutcome.GetResult().GetContentType().c_str(), headObjectRequestOutcome.GetResult().GetContentType().size());
         qCDebug(S3) << "Key" << s3url.key() << "has Content-Type:" << contentType;
     } else {
         qCDebug(S3) << "Could not get content type for key:" << s3url.key() << " - " << headObjectRequestOutcome.GetError().GetMessage().c_str();

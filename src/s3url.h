@@ -9,6 +9,8 @@
 #include <QDebug>
 #include <QUrl>
 
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 class S3Url
 {
 public:
@@ -21,6 +23,11 @@ public:
     QString key() const;
     QString prefix() const;
     QUrl url() const;
+    // Helpers to convert from QString to Aws::String
+    // The uppercase naming is a trick to have a sort of overload-by-return-type and is consistent with the AWS sdk style (e.g. SetBucket() and SetKey()).
+    Aws::String BucketName() const;
+    Aws::String Key() const;
+    Aws::String Prefix() const;
 
 private:
     const QUrl m_url;
