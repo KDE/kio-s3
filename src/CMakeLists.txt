@@ -10,7 +10,6 @@ ecm_qt_declare_logging_category(kio_s3_SRCS
 
 kcoreaddons_add_plugin(kio_s3
     SOURCES ${kio_s3_SRCS}
-    JSON s3.json
     INSTALL_NAMESPACE kf5/kio)
 
 target_link_libraries(kio_s3
