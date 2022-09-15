@@ -37,6 +37,7 @@ S3Backend::S3Backend(S3Worker *q)
     Aws::InitAPI(options);
 
     m_configProfileName = Aws::Auth::GetConfigProfileFilename();
+    qCDebug(S3) << "S3 backend initialized, config profile name:" << m_configProfileName.c_str();
 }
 
 KIO::WorkerResult S3Backend::listDir(const QUrl &url)
@@ -45,9 +46,12 @@ KIO::WorkerResult S3Backend::listDir(const QUrl &url)
     qCDebug(S3) << "Going to list" << s3url;
 
     if (s3url.isRoot()) {
-        listBuckets();
+        const bool hasBuckets = listBuckets();
         listCwdEntry(ReadOnlyCwd);
-        return KIO::WorkerResult::pass();
+        if (hasBuckets) {
+            return KIO::WorkerResult::pass();
+        }
+        return KIO::WorkerResult::fail(KIO::ERR_WORKER_DEFINED, xi18nc("@info", "Could not find S3 buckets, please check your AWS configuration."));
     }
 
     if (s3url.isBucket()) {
@@ -372,14 +376,16 @@ KIO::WorkerResult S3Backend::rename(const QUrl &src, const QUrl &dest, KIO::JobF
     return KIO::WorkerResult::pass();
 }
 
-void S3Backend::listBuckets()
+bool S3Backend::listBuckets()
 {
     const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.c_str());
     const Aws::S3::S3Client client(clientConfiguration);
     const auto listBucketsOutcome = client.ListBuckets();
+    bool hasBuckets = false;
 
     if (listBucketsOutcome.IsSuccess()) {
         const auto buckets = listBucketsOutcome.GetResult().GetBuckets();
+        hasBuckets = !buckets.empty();
         for (const auto &bucket : buckets) {
             const auto bucketName = QString::fromLatin1(bucket.GetName().c_str(), bucket.GetName().size());
             qCDebug(S3) << "Found bucket:" << bucketName;
@@ -397,6 +403,8 @@ void S3Backend::listBuckets()
     } else {
         qCDebug(S3) << "Could not list buckets:" << listBucketsOutcome.GetError().GetMessage().c_str();
     }
+
+    return hasBuckets;
 }
 
 void S3Backend::listBucket(const Aws::String &bucketName)

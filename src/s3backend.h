@@ -41,7 +41,7 @@ private:
         WritableCwd
     };
 
-    void listBuckets();
+    bool listBuckets();
     void listBucket(const Aws::String &bucketName);
     void listKey(const S3Url &s3url);
     void listCwdEntry(CwdAccess access = WritableCwd);
