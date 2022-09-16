@@ -237,7 +237,8 @@ KIO::WorkerResult S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags
         }
     } while (n > 0);
 
-    if (n <= 0) {
+    if (n < 0) {
+        qCWarning(S3) << "Failed to upload data to" << s3url;
         return KIO::WorkerResult::fail(KIO::ERR_CANNOT_WRITE, url.toDisplayString());
     }
 
