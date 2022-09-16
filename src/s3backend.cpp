@@ -203,7 +203,9 @@ KIO::WorkerResult S3Backend::get(const QUrl &url)
         q->data(QByteArray());
 
     } else {
-        qCDebug(S3) << "Could not get object with key:" << s3url.key() << " - " << getObjectOutcome.GetError().GetMessage().c_str();
+        // NOTE: normally we shouldn't get this error, because KIO does a stat() before the get() and if the url doesn't exist, our stat() assumes it's a folder.
+        // This is why this error is not shown to users in the frontend.
+        qCWarning(S3) << "Could not get object with key:" << s3url.key() << " - " << getObjectOutcome.GetError().GetMessage().c_str();
     }
 
     return KIO::WorkerResult::pass();
