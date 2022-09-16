@@ -8,7 +8,6 @@
             "X-DocPath": "kioslave5/s3/index.html",
             "deleteRecursive": true,
             "deleting": true,
-            "exec": "kf5/kio/s3",
             "input": "none",
             "linking": false,
             "listing": [
