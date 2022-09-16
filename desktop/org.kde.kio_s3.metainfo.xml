@@ -101,9 +101,9 @@
     <p xml:lang="x-test">xxKIO S3 enables KIO-aware applications (such as Dolphin, Kate or Gwenview) to access and edit Amazon S3 buckets and objects.xx</p>
     <p xml:lang="zh-CN">KIO S3 可以让能识别 KIO 的应用程序 (例如 Dolphin、Kate 或 Gwenview) 访问并编辑 Amazon S3 的存储桶和对象。</p>
   </description>
-  <!--  <url type="homepage">https://apps.kde.org/en/kio_s3</url>-->
-  <!--  <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=kio-s3</url>-->
-  <!--   <url type="help">https://docs.kde.org/?application=kioslave5%2Fs3</url> -->
+  <url type="homepage">https://apps.kde.org/en/kio_s3</url>
+  <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=kio-s3</url>
+  <url type="help">https://docs.kde.org/?application=kioslave5%2Fs3</url>
   <update_contact>elvis.angelaccio_at_kde.org</update_contact>
   <screenshots>
     <screenshot type="default">
