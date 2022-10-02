@@ -1,0 +1,42 @@
+# Spanish translations for kio5_s3.po package.
+# Copyright (C) 2021 This file is copyright:
+# This file is distributed under the same license as the kio-s3 package.
+#
+# Automatically generated, 2021.
+# Eloy Cuadra <ecuadra@eloihr.net>, 2021, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: kio5_s3\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-17 00:45+0000\n"
+"PO-Revision-Date: 2022-09-16 19:47+0200\n"
+"Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
+"Language-Team: Spanish <kde-l10n-es@kde.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 22.08.1\n"
+
+#: s3backend.cpp:27
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"Invalid S3 URI, bucket name is missing from the host.<nl/>A valid S3 URI "
+"must be written in the form: <link>s3://bucket/key</link>"
+msgstr ""
+"URI S3 no válido: falta el nombre del depósito del servidor.<nl/>Un URI S3 "
+"válido debe tener la forma: <link>s3://bucket/key</link>"
+
+#: s3backend.cpp:54
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Could not find S3 buckets, please check your AWS configuration."
+msgstr "No se han encontrado depósitos S3. Compruebe la configuración de AWS."
+
+#: s3backend.cpp:313
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Could not copy <link>%1</link> to <link>%2</link>"
+msgstr "No se ha podido copiar <link>%1</link> en <link>%2</link>"

@@ -1,0 +1,38 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kdeorg\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-17 00:45+0000\n"
+"PO-Revision-Date: 2022-09-20 01:57\n"
+"Last-Translator: \n"
+"Language-Team: Chinese Simplified\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: kdeorg\n"
+"X-Crowdin-Project-ID: 269464\n"
+"X-Crowdin-Language: zh-CN\n"
+"X-Crowdin-File: /kf5-trunk/messages/kio-s3/kio5_s3.pot\n"
+"X-Crowdin-File-ID: 25705\n"
+
+#: s3backend.cpp:27
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"Invalid S3 URI, bucket name is missing from the host.<nl/>A valid S3 URI "
+"must be written in the form: <link>s3://bucket/key</link>"
+msgstr ""
+
+#: s3backend.cpp:54
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Could not find S3 buckets, please check your AWS configuration."
+msgstr ""
+
+#: s3backend.cpp:313
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Could not copy <link>%1</link> to <link>%2</link>"
+msgstr "无法复制 <link>%1</link> 到 <link>%2</link>"

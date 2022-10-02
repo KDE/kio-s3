@@ -1,0 +1,44 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kio-s3 package.
+#
+# Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: kio-s3\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-17 00:45+0000\n"
+"PO-Revision-Date: 2021-10-26 12:01-0300\n"
+"Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
+"Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 20.04.2\n"
+
+#: s3backend.cpp:27
+#, fuzzy, kde-kuit-format
+#| msgctxt "@info"
+#| msgid ""
+#| "Invalid S3 URI, bucket name is missing from the host.<nl/>A valid S3 URI "
+#| "must be written in the form: <link>%1</link>"
+msgctxt "@info"
+msgid ""
+"Invalid S3 URI, bucket name is missing from the host.<nl/>A valid S3 URI "
+"must be written in the form: <link>s3://bucket/key</link>"
+msgstr ""
+"URI S3 inválida, o nome do bucket está faltando no host.<nl/>Uma URI S3 "
+"válida deve ser escrita na forma: <link>%1</link>"
+
+#: s3backend.cpp:54
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Could not find S3 buckets, please check your AWS configuration."
+msgstr ""
+
+#: s3backend.cpp:313
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Could not copy <link>%1</link> to <link>%2</link>"
+msgstr "Não foi possível copiar <link>%1</link> para <link>%2</link>"

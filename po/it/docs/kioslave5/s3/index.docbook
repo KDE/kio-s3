@@ -1,0 +1,79 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % addindex "IGNORE">
+<!ENTITY % Italian "INCLUDE">
+]>
+<!--
+    SPDX-License-Identifier: CC0-1.0
+    SPDX-FileCopyrightText: 2020 Elvis Angelaccio <elvis.angelaccio@kde.org>
+-->
+<article lang="&language;" id="s3">
+<title
+>kio-s3</title>
+
+<articleinfo>
+
+<authorgroup>
+  <author
+><firstname
+>Elvis</firstname
+><surname
+>Angelaccio</surname
+> <affiliation
+> <address
+> <email
+>elvis.angelaccio@kde.org</email>
+      </address>
+    </affiliation>
+  </author>
+<othercredit role="translator"
+><firstname
+>Paolo</firstname
+> <surname
+>Zamponi</surname
+> <affiliation
+><address
+><email
+>zapaolo@email.it</email
+></address
+></affiliation
+> <contrib
+>Traduzione del documento</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>05/01/2021</date>
+<releaseinfo
+>kio-s3 0.9.70</releaseinfo>
+
+</articleinfo>
+
+<para
+>KIO S3 ti permette di elencare i bucket e gli oggetti Amazon S3, di caricare file e cartelle in un bucket e di eliminare oggetti da un bucket. Puoi anche copiare cartelle o oggetti dentro S3, o anche spostarli o rinominarli.</para>
+
+<para
+>Puoi usare il kioslave s3 in questo modo:</para>
+<para
+><userinput
+>s3://</userinput
+> oppure <userinput
+>s3://<replaceable
+>miobucket/miachiave</replaceable
+></userinput
+>.</para>
+
+<para
+>Il primo URL mostra tutti i tuoi bucket S3.</para>
+
+<para
+>L'URL <userinput
+>s3://<replaceable
+>miobucket/miachiave</replaceable
+></userinput
+> elenca tutti i file e le cartelle del tuo bucket <userinput
+>miobucket</userinput
+>.</para>
+
+</article>

@@ -1,0 +1,79 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % addindex "IGNORE">
+<!ENTITY % Ukrainian "INCLUDE">
+]>
+<!--
+    SPDX-License-Identifier: CC0-1.0
+    SPDX-FileCopyrightText: 2020 Elvis Angelaccio <elvis.angelaccio@kde.org>
+-->
+<article lang="&language;" id="s3">
+<title
+>kio-s3</title>
+
+<articleinfo>
+
+<authorgroup>
+  <author
+><firstname
+>Elvis</firstname
+><surname
+>Angelaccio</surname
+> <affiliation
+> <address
+> <email
+>elvis.angelaccio@kde.org</email>
+      </address>
+    </affiliation>
+  </author>
+<othercredit role="translator"
+><firstname
+>Юрій</firstname
+><surname
+>Чорноіван</surname
+><affiliation
+><address
+><email
+>yurchor@ukr.net</email
+></address
+></affiliation
+><contrib
+>Переклад українською</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>5 січня 2021 року</date>
+<releaseinfo
+>kio-s3 0.9.70</releaseinfo>
+
+</articleinfo>
+
+<para
+>KIO S3 надає вам змогу отримати список кошиків та об'єктів Amazon S3, вивантажувати файли і теки до кошика та вилучати об'єкти з кошика. Ви також можете копіювати теки або об'єкти у S3, а також пересувати та перейменовувати об'єкти.</para>
+
+<para
+>Скористатися обробником KIO s3 можна так:</para>
+<para
+><userinput
+>s3://</userinput
+> або <userinput
+>s3://<replaceable
+>кошик/ключ</replaceable
+></userinput
+>.</para>
+
+<para
+>Якщо скористатися першим варіантом адреси буде показано усі ваші кошики S3.</para>
+
+<para
+>Використання адреси <userinput
+>s3://<replaceable
+>кошик/ключ</replaceable
+></userinput
+> призведе до виведення списку файлів і тек з вашого кошика <userinput
+>кошик</userinput
+>.</para>
+
+</article>

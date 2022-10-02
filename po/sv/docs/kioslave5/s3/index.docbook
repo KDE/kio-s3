@@ -1,0 +1,79 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % addindex "IGNORE">
+<!ENTITY % Swedish "INCLUDE">
+]>
+<!--
+    SPDX-License-Identifier: CC0-1.0
+    SPDX-FileCopyrightText: 2020 Elvis Angelaccio <elvis.angelaccio@kde.org>
+-->
+<article lang="&language;" id="s3">
+<title
+>kio-s3</title>
+
+<articleinfo>
+
+<authorgroup>
+  <author
+><firstname
+>Elvis</firstname
+><surname
+>Angelaccio</surname
+> <affiliation
+> <address
+> <email
+>elvis.angelaccio@kde.org</email>
+      </address>
+    </affiliation>
+  </author>
+<othercredit role="translator"
+> <firstname
+>Stefan</firstname
+> <surname
+>Asserhäll</surname
+> <affiliation
+><address
+><email
+>stefan.asserhall@bredband.net</email
+></address
+></affiliation
+> <contrib
+>Översättare</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>2021-01-05</date>
+<releaseinfo
+>kio-s3 0.9.70</releaseinfo>
+
+</articleinfo>
+
+<para
+>KIO S3 låter dig lista Amazon S3 spannar och objekt, ladda upp filer och kataloger till en spann och ta bort objekt från en spann. Du kan också kopiera kataloger eller objekt inom S3, samt flytta eller byta namn på objekt.</para>
+
+<para
+>Du kan använda S3 I/O-arbetaren på följande sätt:</para>
+<para
+><userinput
+>s3://</userinput
+> eller <userinput
+>s3://<replaceable
+>min_spann/min_nyckel</replaceable
+></userinput
+>.</para>
+
+<para
+>Den första webbadressen visar alla dina S3 spannar.</para>
+
+<para
+>Webbadressen <userinput
+>s3://<replaceable
+>min_spann/min_nyckel</replaceable
+></userinput
+> listar alla filer och kataloger i spannen <userinput
+>min_spann</userinput
+>.</para>
+
+</article>

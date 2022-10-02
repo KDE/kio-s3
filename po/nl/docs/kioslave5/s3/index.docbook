@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % addindex "IGNORE">
+<!ENTITY % Dutch "INCLUDE">
+]>
+<!--
+    SPDX-License-Identifier: CC0-1.0
+    SPDX-FileCopyrightText: 2020 Elvis Angelaccio <elvis.angelaccio@kde.org>
+-->
+<article lang="&language;" id="s3">
+<title
+>kio-s3</title>
+
+<articleinfo>
+
+<authorgroup>
+  <author
+><firstname
+>Elvis</firstname
+><surname
+>Angelaccio</surname
+> <affiliation
+> <address
+> <email
+>elvis.angelaccio@kde.org</email>
+      </address>
+    </affiliation>
+  </author>
+&Freek.de.Kruijf; 
+</authorgroup>
+
+<date
+>2021-01-05</date>
+<releaseinfo
+>kio-s3 0.9.70</releaseinfo>
+
+</articleinfo>
+
+<para
+>KIO-S3 biedt u het tonen van Amazon S3-buckets en objecten, om bestanden en mappen te uploaden naar een bucket en om objecten uit een bucket te verwijderen. U kunt ook mappen of objecten in S3 kopiëren, evenals objecten verplaatsen of hernoemen.</para>
+
+<para
+>U kunt de s3 KIO-worker als volgt gebruiken:</para>
+<para
+><userinput
+>s3://</userinput
+> of <userinput
+>s3://<replaceable
+>mybucket/mykey</replaceable
+></userinput
+>.</para>
+
+<para
+>De eerste URL toont al uw S3-buckets.</para>
+
+<para
+>De URL <userinput
+>s3://<replaceable
+>mybucket/mykey</replaceable
+></userinput
+> toont alle bestanden en mappen in uw <userinput
+>mybucket</userinput
+> bucket.</para>
+
+</article>

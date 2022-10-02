@@ -1,0 +1,41 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kio-s3 package.
+#
+# Matjaž Jeran <matjaz.jeran@amis.net>, 2021, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: kio-s3\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-17 00:45+0000\n"
+"PO-Revision-Date: 2022-09-17 07:10+0200\n"
+"Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
+"Language-Team: Slovenian <lugos-slo@lugos.si>\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 22.04.1\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
+
+#: s3backend.cpp:27
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"Invalid S3 URI, bucket name is missing from the host.<nl/>A valid S3 URI "
+"must be written in the form: <link>s3://bucket/key</link>"
+msgstr ""
+"Neveljaven naslov S3, pri gostitelju manjka ime vedra.<nl/>Veljaven naslov "
+"S3 mora biti napisano v obliki: <link>s3://vedro/ključ</link>"
+
+#: s3backend.cpp:54
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Could not find S3 buckets, please check your AWS configuration."
+msgstr "Ni bilo mogoč najti vedra S3, preverite vašo konfiguracijo AWS."
+
+#: s3backend.cpp:313
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Could not copy <link>%1</link> to <link>%2</link>"
+msgstr "Ni bilo mogoče kopirati <link>%1</link> v <link>%2</link>"

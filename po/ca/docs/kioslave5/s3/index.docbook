@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % addindex "IGNORE">
+<!ENTITY % Catalan  "INCLUDE">
+]>
+<!--
+    SPDX-License-Identifier: CC0-1.0
+    SPDX-FileCopyrightText: 2020 Elvis Angelaccio <elvis.angelaccio@kde.org>
+-->
+<article lang="&language;" id="s3">
+<title
+>KIO S3</title>
+
+<articleinfo>
+
+<authorgroup>
+  <author
+><firstname
+>Elvis</firstname
+><surname
+>Angelaccio</surname
+> <affiliation
+> <address
+> <email
+>elvis.angelaccio@kde.org</email>
+      </address>
+    </affiliation>
+  </author>
+&traductor.Antoni.Bella; 
+</authorgroup>
+
+<date
+>5 de gener de 2021</date>
+<releaseinfo
+>kio-s3 0.9.70</releaseinfo>
+
+</articleinfo>
+
+<para
+>El KIO S3 permet llistar els dipòsits i objectes d'Amazon S3, carregar fitxers i carpetes a un dipòsit i suprimir objectes d'un dipòsit. També podreu copiar carpetes o objectes dins de S3, així com moure o canviar el nom dels objectes.</para>
+
+<para
+>Podeu utilitzar el procés de treball KIO «s3» de la manera següent:</para>
+<para
+><userinput
+>s3://</userinput
+> o <userinput
+>s3://<replaceable
+>meu_dipòsit/meva_clau</replaceable
+></userinput
+>.</para>
+
+<para
+>El primer &URL; mostrarà tots els vostres dipòsits S3.</para>
+
+<para
+>L'&URL; <userinput
+>s3://<replaceable
+>dipòsit/clau</replaceable
+></userinput
+> llistarà tots els fitxers i carpetes des del dipòsit <userinput
+>meu_dipòsit</userinput
+>.</para>
+
+</article>

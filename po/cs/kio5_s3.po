@@ -1,0 +1,38 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kio-s3 package.
+# Vit Pelcak <vpelcak@suse.cz>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kio-s3\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-17 00:45+0000\n"
+"PO-Revision-Date: 2021-11-01 13:56+0100\n"
+"Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Lokalize 21.08.2\n"
+
+#: s3backend.cpp:27
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"Invalid S3 URI, bucket name is missing from the host.<nl/>A valid S3 URI "
+"must be written in the form: <link>s3://bucket/key</link>"
+msgstr ""
+
+#: s3backend.cpp:54
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Could not find S3 buckets, please check your AWS configuration."
+msgstr ""
+
+#: s3backend.cpp:313
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Could not copy <link>%1</link> to <link>%2</link>"
+msgstr "Nelze zkopírovat <link>%1</link> do <link>%2</link>"

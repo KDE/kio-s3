@@ -1,0 +1,40 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kio-s3 package.
+#
+# Emir SARI <emir_sari@icloud.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: kio-s3\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-17 00:45+0000\n"
+"PO-Revision-Date: 2022-09-14 16:49+0300\n"
+"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 22.08.0\n"
+
+#: s3backend.cpp:27
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"Invalid S3 URI, bucket name is missing from the host.<nl/>A valid S3 URI "
+"must be written in the form: <link>s3://bucket/key</link>"
+msgstr ""
+"Geçersiz S3 URI'si; ana makineden kova adı eksik.<nl/>Geçerli bir S3 URI'si "
+"şöyle yazılmalıdır: <link>s3://bucket/key</link>"
+
+#: s3backend.cpp:54
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Could not find S3 buckets, please check your AWS configuration."
+msgstr "S3 kovaları bulunamadı; lütfen AWS yapılandırmanızı denetleyin."
+
+#: s3backend.cpp:313
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Could not copy <link>%1</link> to <link>%2</link>"
+msgstr "<link>%1</link>, <link>%2</link> konumuna kopyalanamadı"
