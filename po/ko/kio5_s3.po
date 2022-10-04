@@ -1,41 +1,37 @@
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the kio-s3 package.
-# Shinjo Park <kde@peremen.name>, 2021.
+# Shinjo Park <kde@peremen.name>, 2021, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-17 00:45+0000\n"
-"PO-Revision-Date: 2021-11-12 00:12+0100\n"
+"PO-Revision-Date: 2022-10-03 15:50+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
-"Language-Team: Korean <kde-kr@kde.org>\n"
+"Language-Team: Korean <kde-i18n-doc@kde.org>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 21.08.1\n"
+"X-Generator: Lokalize 21.12.3\n"
 
 #: s3backend.cpp:27
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid ""
-#| "Invalid S3 URI, bucket name is missing from the host.<nl/>A valid S3 URI "
-#| "must be written in the form: <link>%1</link>"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Invalid S3 URI, bucket name is missing from the host.<nl/>A valid S3 URI "
 "must be written in the form: <link>s3://bucket/key</link>"
 msgstr ""
 "잘못된 S3 URI: 호스트에 버킷 이름을 지정하지 않았습니다.<nl/>올바른 S3 URI의 "
-"형식은 다음과 같습니다: <link>%1</link>"
+"형식은 다음과 같습니다: <link>s3://bucket/key</link>"
 
 #: s3backend.cpp:54
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
-msgstr ""
+msgstr "S3 버킷을 찾을 수 없습니다. AWS 설정을 확인하십시오."
 
 #: s3backend.cpp:313
 #, kde-kuit-format
