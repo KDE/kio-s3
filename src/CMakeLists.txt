@@ -13,8 +13,8 @@ kcoreaddons_add_plugin(kio_s3
     INSTALL_NAMESPACE kf${QT_MAJOR_VERSION}/kio)
 
 target_link_libraries(kio_s3
-    Qt5::Core
-    Qt5::Network
+    Qt${QT_MAJOR_VERSION}::Core
+    Qt${QT_MAJOR_VERSION}::Network
     KF5::KIOCore
     KF5::KIOWidgets
     KF5::I18n
