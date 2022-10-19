@@ -6,12 +6,3 @@ include:
   - https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/freebsd-qt6.yml
   # The Linux runners are based on Suse which doesn't currently ship aws-sdk-cpp.
   #- https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/linux.yml
-
-suse_tumbleweed_qt515:
-  stage: build
-  image: kdeorg/ci-suse-qt515:latest
-  tags:
-    - Linux
-  interruptible: true
-  script:
-    - /usr/bin/true
