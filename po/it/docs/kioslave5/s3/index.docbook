@@ -54,7 +54,7 @@
 >KIO S3 ti permette di elencare i bucket e gli oggetti Amazon S3, di caricare file e cartelle in un bucket e di eliminare oggetti da un bucket. Puoi anche copiare cartelle o oggetti dentro S3, o anche spostarli o rinominarli.</para>
 
 <para
->Puoi usare il kioslave s3 in questo modo:</para>
+>Puoi usare il KIO worker s3 in questo modo:</para>
 <para
 ><userinput
 >s3://</userinput
