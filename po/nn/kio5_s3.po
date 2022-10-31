@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-17 00:45+0000\n"
-"PO-Revision-Date: 2022-07-27 20:36+0200\n"
+"PO-Revision-Date: 2022-10-30 09:35+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.04.3\n"
+"X-Generator: Lokalize 22.08.2\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -26,12 +26,14 @@ msgid ""
 "Invalid S3 URI, bucket name is missing from the host.<nl/>A valid S3 URI "
 "must be written in the form: <link>s3://bucket/key</link>"
 msgstr ""
+"Ugyldig S3-adresse. Bøttenamn manglar hos verten.<nl/>Ei gyldig S3-adresse "
+"må vera på denne forma: <link>s3://bøtte/nøkkel</link>"
 
 #: s3backend.cpp:54
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
-msgstr ""
+msgstr "Fann ikkje S3-bøtter. Kontroller AWS-oppsettet."
 
 #: s3backend.cpp:313
 #, kde-kuit-format
