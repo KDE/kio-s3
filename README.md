@@ -42,6 +42,10 @@ FEATURES
 KNOW ISSUES
 ===========
 
-- Moving or renaming a folder doesn't work, because folders don't exist in S3. *Workaround*: copy the folder and then delete the original folder.
-- Creating an empty folder is currently not supported. *Workaround*: create it from the S3 web console.
+- Moving or renaming a folder doesn't work, because folders don't exist in S3.
+    - *Workaround*: copy the folder and then delete the original folder.
+- Since folders don't exist in S3, you can type any garbage URL in the Dolphin navigator bar and the worker will pretend that it's a empty folder.
+    - *Workaround*: prefer folder browsing using the Dolphin views, instead of manually typing the URLs in the navigation bar.
+- Creating an empty folder is currently not supported.
+    - *Workaround*: create it from the S3 web console.
 - Listing a folder with more than 1000 files is currently not supported.
