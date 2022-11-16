@@ -58,7 +58,11 @@ if(BUILD_TESTING)
     add_subdirectory(autotests)
 endif()
 add_subdirectory(desktop)
-add_subdirectory(doc)
 add_subdirectory(src)
+
+add_subdirectory(doc)
+kdoctools_install(po)
+
+ki18n_install(po)
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
