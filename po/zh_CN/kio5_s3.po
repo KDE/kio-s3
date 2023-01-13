@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-17 00:45+0000\n"
-"PO-Revision-Date: 2023-01-02 07:17\n"
+"PO-Revision-Date: 2023-01-12 10:35\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -24,12 +24,14 @@ msgid ""
 "Invalid S3 URI, bucket name is missing from the host.<nl/>A valid S3 URI "
 "must be written in the form: <link>s3://bucket/key</link>"
 msgstr ""
+"无效的 S3 URI，主机缺少存储桶名称。<nl/>一个有效的 S3 URI 必须按照此格式填"
+"写：<link>s3://bucket/key</link>"
 
 #: s3backend.cpp:54
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
-msgstr ""
+msgstr "无法找到 S3 存储桶，请检查您的 AWS 配置。"
 
 #: s3backend.cpp:313
 #, kde-kuit-format
