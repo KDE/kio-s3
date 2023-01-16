@@ -13,6 +13,7 @@
   <extends>org.kde.gwenview.desktop</extends>
   <name>KIO S3</name>
   <name xml:lang="ar">اس٣ KIO</name>
+  <name xml:lang="be">KIO S3</name>
   <name xml:lang="ca">KIO S3</name>
   <name xml:lang="ca-valencia">KIO S3</name>
   <name xml:lang="cs">KIO S3</name>
@@ -43,6 +44,7 @@
   <name xml:lang="zh-CN">KIO S3</name>
   <summary>Amazon S3 integration with KDE Plasma and KDE applications</summary>
   <summary xml:lang="ar">تكامل أمازون اس٣ مع تطبيقات بلازما و كدي</summary>
+  <summary xml:lang="be">Інтэграцыя Amazon S3 з KDE Plasma і праграмамі KDE</summary>
   <summary xml:lang="ca">Integració de l'Amazon S3 amb el Plasma del KDE i les aplicacions KDE</summary>
   <summary xml:lang="ca-valencia">Integració d'Amazon S3 amb Plasma de KDE i les aplicacions KDE</summary>
   <summary xml:lang="de">Integration von Amazon S3 mit Plasma und den KDE-Anwendungen</summary>
@@ -73,6 +75,7 @@
   <description>
     <p>KIO S3 enables KIO-aware applications (such as Dolphin, Kate or Gwenview) to access and edit Amazon S3 buckets and objects.</p>
     <p xml:lang="ar">يمكّن KIO اس٣ التطبيقات المدركة لـ KIO (مثل دولفين أو كيت أو حونفيو) للوصول إلى حاويات وكائنات أمازون اس٣ وتحريرها.</p>
+    <p xml:lang="be">KIO S3 дазваляе праграмам, якія працуюць з KIO (напрыклад, Dolphin, Kate або Gwenview), атрымліваць доступ і рэдагаваць файлы ў воблаку Amazon S3.</p>
     <p xml:lang="ca">El KIO S3 és un esclau del KIO que permet a les aplicacions preparades per al KIO (com el Dolphin, el Kate o el Gwenview) que accedeixin i editin els dipòsits i objectes d'Amazon S3.</p>
     <p xml:lang="ca-valencia">KIO S3 és un esclau de KIO que permet a les aplicacions preparades per a KIO (com Dolphin, Kate o Gwenview) que accedisquen i editen els depòsits i objectes d'Amazon S3.</p>
     <p xml:lang="de">KIO S3 ist ein Ein-/Ausgabemodul, mit dem Anwendungen wie Dolphin, Kate oder Gwenview auf Container und Objekte in Amazon S3 zugreifen und bearbeiten können.</p>
@@ -109,6 +112,7 @@
     <screenshot type="default">
       <caption>Dolphin showing a picture uploaded on an Amazon S3 bucket.</caption>
       <caption xml:lang="ar">دولفين يعرض صور مرفوعة على حاوية أمارون اس٣</caption>
+      <caption xml:lang="be">Dolphin паказвае выяву, запампаваную ў кантэйнер Amazon S3.</caption>
       <caption xml:lang="ca">El Dolphin mostrant una imatge carregada sobre un dipòsit d'Amazon S3.</caption>
       <caption xml:lang="ca-valencia">Dolphin mostrant una imatge carregada sobre un depòsit d'Amazon S3.</caption>
       <caption xml:lang="de">Dolphin mit der Anzeige eines Bilds, das zu  Container in Amazon S3 hochgeladen wurde.</caption>
