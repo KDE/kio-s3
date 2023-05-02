@@ -23,6 +23,7 @@
   <name xml:lang="eu">KIO S3</name>
   <name xml:lang="fi">KIO S3</name>
   <name xml:lang="fr">KIO S3</name>
+  <name xml:lang="gl">KIO S3</name>
   <name xml:lang="hi">के-आईओ एस३</name>
   <name xml:lang="it">KIO S3</name>
   <name xml:lang="ka">KIO S3</name>
@@ -52,6 +53,7 @@
   <summary xml:lang="eu">Amazon S3 KDE Plasma eta KDE aplikazioekin bateratzea</summary>
   <summary xml:lang="fi">Amazon S3 -eheytys KDE Plasmaan ja KDE-sovelluksiin</summary>
   <summary xml:lang="fr">L'intégration de « Amazon S3 » avec KDE Plasma et les applications Plasma.</summary>
+  <summary xml:lang="gl">Integración de Amazon S3 con KDE Plasma e as aplicacións de KDE</summary>
   <summary xml:lang="hi">केडीई प्लाज़्मा और केडीई अनुप्रयोगों के साथ एमेज़ॉन एस३ का एकीकरण</summary>
   <summary xml:lang="it">Integrazione di Amazon S3 con KDE Plasma e con le applicazioni di KDE</summary>
   <summary xml:lang="ka">KDE Plasma და KDE აპლიკაციების Amazon S3-თან ინტეგრაცია</summary>
@@ -82,6 +84,7 @@
     <p xml:lang="eu">KIO S3-k, KIO-jakitun diren aplikazioei (Dolphin, Kate edo Gwenview esaterako) Amazon S3 «bucket»ak eta objektuak atzitu eta editatzeko ahalmena ematen die.</p>
     <p xml:lang="fi">KIO S3 mahdollistaa KIO-sovelluksille (kuten Dolphinille, Katelle tai Gwenview’lle) Amazon S3 -säilöjen ja -kohteiden käytön ja muokkauksen.</p>
     <p xml:lang="fr">KIO S3 active les applications compatibles avec « KIO » (comme Dolphin, Kate et Gwenview) pour accéder et modifier des conteneurs et objets « Amazon S3 ».</p>
+    <p xml:lang="gl">KIO S3 permite aos aplicativos que usan KIO (como Dolphin, Kate ou Gwenview) acceder e editar baldes e obxectos de Amazon S3.</p>
     <p xml:lang="hi">के-आईओ एस३, के-आईओ अवगत अनुप्रयोगों (जैसे की डॉलफ़िन, केट या ग्वेनव्यू) को एमेज़ॉन एस३ बकेट्स एवं ऑबजेक्टस तक पहुँचने तथा उन्हें सम्पादित करने के लिए सक्षम बनाता है।</p>
     <p xml:lang="it">KIO S3 abilita le applicazioni compatibili con KIO (tipo Dolphin, Kate o Gwenview) all'accesso e alla modifica dei bucket e degli oggetti Amazon S3.</p>
     <p xml:lang="ka">KIO S3 საშუალებას აძლევს KIO-ჩართულ აპლიკაციებს (როგორებიცაა მაგ. Dolphin, Kate და Gwenview), რომ Amazon S3-ის ობიექტები ნახონ და ჩაასწორონ.</p>
@@ -118,6 +121,7 @@
       <caption xml:lang="eu">Dolphin, Amazon S3 «bucket» batean zama-igotako irudi bat erakusten.</caption>
       <caption xml:lang="fi">Dolphin näyttää Amazon S3 -säilöön lähetetyn kuvan.</caption>
       <caption xml:lang="fr">Dolphin affichant une image envoyée vers un conteneur « Amazon S3 ».</caption>
+      <caption xml:lang="gl">Dolphin mostrando unha imaxe subida a un balde de Amazon S3.</caption>
       <caption xml:lang="hi">एमेज़ॉन एस३ बकेट पर डाला गया चित्र दर्शाता डॉल्फ़िन।</caption>
       <caption xml:lang="it">Dolphin che mostra un'immagine caricata in un bucket Amazon S3.</caption>
       <caption xml:lang="ka">Dolphin-ი აჩვენებს Amazon S3-ზე ატვირთულ გამოსახულებას.</caption>
