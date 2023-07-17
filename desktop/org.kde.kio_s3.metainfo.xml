@@ -85,6 +85,7 @@
     <p xml:lang="de">KIO S3 ist ein Ein-/Ausgabemodul, mit dem Anwendungen wie Dolphin, Kate oder Gwenview auf Container und Objekte in Amazon S3 zugreifen und bearbeiten können.</p>
     <p xml:lang="el">Το KIO S# επιτρέπει σε εφαρμογές που χρησιμοποιούν το KIO (όπως οι Dolphin, Kate, Gwenview) να έχουν πρόσβαση και να επεξεργάζονται Amazon S3 buckets και αντικείμενα.</p>
     <p xml:lang="en-GB">KIO S3 enables KIO-aware applications (such as Dolphin, Kate or Gwenview) to access and edit Amazon S3 buckets and objects.</p>
+    <p xml:lang="eo">KIO S3 ebligas KIO-konsciajn aplikojn (kiel Dolphin, Kate aŭ Gwenview) aliri kaj redakti Amazon S3-sitelojn kaj objektojn.</p>
     <p xml:lang="es">KIO S3 permite a las aplicaciones que usan KIO (como Dolphin, Kate o Gwenview) acceder y editar buckets y objetos de Amazon S3.</p>
     <p xml:lang="eu">KIO S3-k, KIO-jakitun diren aplikazioei (Dolphin, Kate edo Gwenview esaterako) Amazon S3 «bucket»ak eta objektuak atzitu eta editatzeko ahalmena ematen die.</p>
     <p xml:lang="fi">KIO S3 mahdollistaa KIO-sovelluksille (kuten Dolphinille, Katelle tai Gwenview’lle) Amazon S3 -säilöjen ja -kohteiden käytön ja muokkauksen.</p>
