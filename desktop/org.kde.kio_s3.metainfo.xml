@@ -105,7 +105,7 @@
     <p xml:lang="sk">KIO S3 umožňuje aplikáciám podporujúcim KIO (napríklad Dolphin, Kate alebo Gwenview) prístup a úpravy segmentov a objektov Amazon S3.</p>
     <p xml:lang="sl">KIO S3 omogoča aplikacijam, ki se zavedajo KIO (kot so Dolphin, Kate ali Gwenview) dostop in urejanje segmentov in predmetov Amazon S3.</p>
     <p xml:lang="sv">KIO S3 gör det möjligt för program som känner till KIO (såsom Dolphin, Kate eller Gwenview) att komma åt och redigera Amazon S3 spannar och objekt.</p>
-    <p xml:lang="tr">KIO S3, KIO etkin uygulamalarda (Dolphin, Kate veya Gwenview gibi) Amazon S3 kovalarına ve nesnelerine erişim ve düzenleme olanağı verir.</p>
+    <p xml:lang="tr">KIO S3, KIO etkin uygulamalarda (Dolphin, Kate veya Akbakış gibi) Amazon S3 kovalarına ve nesnelerine erişim ve düzenleme olanağı verir.</p>
     <p xml:lang="uk">KIO S3 надає змогу програмам, які використовують KIO (зокрема Dolphin, Kate та Gwenview) отримувати доступ до кошиків та об'єктів Amazon S3 та редагувати дані у них.</p>
     <p xml:lang="x-test">xxKIO S3 enables KIO-aware applications (such as Dolphin, Kate or Gwenview) to access and edit Amazon S3 buckets and objects.xx</p>
     <p xml:lang="zh-CN">KIO S3 可以让能识别 KIO 的应用程序 (例如 Dolphin、Kate 或 Gwenview) 访问并编辑 Amazon S3 的存储桶和对象。</p>
