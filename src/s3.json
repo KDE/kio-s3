@@ -2,8 +2,7 @@
     "KDE-KIO-Protocols": {
         "s3": {
             "Class": ":internet",
-            "ExtraNames": [
-            ],
+            "ExtraNames": [],
             "Icon": "folder-network",
             "X-DocPath": "kioslave5/s3/index.html",
             "deleteRecursive": true,
