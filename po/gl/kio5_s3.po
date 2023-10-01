@@ -31,10 +31,11 @@ msgstr ""
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
-msgstr "Non se poden atopar baldes de S3, comproba a túa configuración de AWS."
+msgstr ""
+"Non é posíbel atopar baldes de S3, comproba a túa configuración de AWS."
 
 #: s3backend.cpp:313
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
-msgstr "Non se puido copiar <link>%1</link> a <link>%2</link>"
+msgstr "Non foi posíbel copiar <link>%1</link> a <link>%2</link>"
