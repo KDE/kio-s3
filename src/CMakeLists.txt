@@ -15,9 +15,9 @@ kcoreaddons_add_plugin(kio_s3
 target_link_libraries(kio_s3
     Qt${QT_MAJOR_VERSION}::Core
     Qt${QT_MAJOR_VERSION}::Network
-    KF5::KIOCore
-    KF5::KIOWidgets
-    KF5::I18n
+    KF${QT_MAJOR_VERSION}::KIOCore
+    KF${QT_MAJOR_VERSION}::KIOWidgets
+    KF${QT_MAJOR_VERSION}::I18n
     ${AWSSDK_LINK_LIBRARIES})
 
 set_target_properties(kio_s3 PROPERTIES OUTPUT_NAME "s3")
