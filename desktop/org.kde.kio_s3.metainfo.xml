@@ -19,6 +19,7 @@
   <name xml:lang="de">KIO S3</name>
   <name xml:lang="el">KIO S3</name>
   <name xml:lang="en-GB">KIO S3</name>
+  <name xml:lang="eo">KIO S3</name>
   <name xml:lang="es">KIO S3</name>
   <name xml:lang="eu">KIO S3</name>
   <name xml:lang="fi">KIO S3</name>
@@ -49,6 +50,7 @@
   <summary xml:lang="de">Integration von Amazon S3 mit Plasma und den KDE-Anwendungen</summary>
   <summary xml:lang="el">Ενσωμάτωση του Amazon S3 με το KDE Plasma και τις εφαρμογές του KDE</summary>
   <summary xml:lang="en-GB">Amazon S3 integration with KDE Plasma and KDE applications</summary>
+  <summary xml:lang="eo">Amazon S3-integriĝo kun KDE Plasma kaj KDE-aplikoj</summary>
   <summary xml:lang="es">Integración de Amazon S3 con Plasma de KDE y aplicaciones de KDE</summary>
   <summary xml:lang="eu">Amazon S3 KDE Plasma eta KDE aplikazioekin bateratzea</summary>
   <summary xml:lang="fi">Amazon S3 -eheytys KDE Plasmaan ja KDE-sovelluksiin</summary>
@@ -117,6 +119,7 @@
       <caption xml:lang="de">Dolphin mit der Anzeige eines Bilds, das zu  Container in Amazon S3 hochgeladen wurde.</caption>
       <caption xml:lang="el">Το Dolphin δείχνει μια εικόνα που έχει σταλεί σε ένα Amazon S3 bucket.</caption>
       <caption xml:lang="en-GB">Dolphin showing a picture uploaded on an Amazon S3 bucket.</caption>
+      <caption xml:lang="eo">Dolfin montrante bildon alŝutitan sur Amazon S3-sitelo.</caption>
       <caption xml:lang="es">Dolphin mostrando una imagen enviada a un bucket de Amazon S3.</caption>
       <caption xml:lang="eu">Dolphin, Amazon S3 «bucket» batean zama-igotako irudi bat erakusten.</caption>
       <caption xml:lang="fi">Dolphin näyttää Amazon S3 -säilöön lähetetyn kuvan.</caption>
