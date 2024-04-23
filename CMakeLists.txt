@@ -37,12 +37,12 @@ set_package_properties(AWSSDK PROPERTIES DESCRIPTION "the AWS SDK for C++"
     TYPE REQUIRED
     PURPOSE "Needed to build the S3 KIO worker")
 
-find_package(Qt5Test QUIET)
-set_package_properties(Qt5Test PROPERTIES
+find_package(Qt${QT_MAJOR_VERSION}Test QUIET)
+set_package_properties(Qt${QT_MAJOR_VERSION}Test PROPERTIES
     TYPE OPTIONAL
     PURPOSE "Required for building tests.")
 
-if(NOT Qt5Test_FOUND)
+if(NOT Qt${QT_MAJOR_VERSION}Test_FOUND)
    set(BUILD_TESTING OFF CACHE BOOL "Build the testing tree.")
 endif()
 
