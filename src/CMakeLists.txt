@@ -10,14 +10,14 @@ ecm_qt_declare_logging_category(kio_s3_SRCS
 
 kcoreaddons_add_plugin(kio_s3
     SOURCES ${kio_s3_SRCS}
-    INSTALL_NAMESPACE kf${QT_MAJOR_VERSION}/kio)
+    INSTALL_NAMESPACE kf6/kio)
 
 target_link_libraries(kio_s3
-    Qt${QT_MAJOR_VERSION}::Core
-    Qt${QT_MAJOR_VERSION}::Network
-    KF${QT_MAJOR_VERSION}::KIOCore
-    KF${QT_MAJOR_VERSION}::KIOWidgets
-    KF${QT_MAJOR_VERSION}::I18n
+    Qt6::Core
+    Qt6::Network
+    KF6::KIOCore
+    KF6::KIOWidgets
+    KF6::I18n
     ${AWSSDK_LINK_LIBRARIES})
 
 set_target_properties(kio_s3 PROPERTIES OUTPUT_NAME "s3")

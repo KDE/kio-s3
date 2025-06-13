@@ -6,8 +6,8 @@ cmake_minimum_required(VERSION 3.16)
 set(KIO_S3_VERSION 0.9.70)
 project(kio-s3 VERSION ${KIO_S3_VERSION})
 
-set(QT_MIN_VERSION 5.15.2)
-set(KF_MIN_VERSION 5.96.0)
+set(QT_MIN_VERSION 6.5.0)
+set(KF_MIN_VERSION 6.0.0)
 
 find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
@@ -19,11 +19,11 @@ include(KDECompilerSettings NO_POLICY_SCOPE)
 include(ECMQtDeclareLoggingCategory)
 include(ECMSetupVersion)
 
-find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
+find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
     Core
     Network)
 
-find_package(KF${QT_MAJOR_VERSION} ${KF_MIN_VERSION} REQUIRED COMPONENTS
+find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS
     DocTools
     I18n
     KIO)
@@ -37,12 +37,12 @@ set_package_properties(AWSSDK PROPERTIES DESCRIPTION "the AWS SDK for C++"
     TYPE REQUIRED
     PURPOSE "Needed to build the S3 KIO worker")
 
-find_package(Qt${QT_MAJOR_VERSION}Test QUIET)
-set_package_properties(Qt${QT_MAJOR_VERSION}Test PROPERTIES
+find_package(Qt6Test QUIET)
+set_package_properties(Qt6Test PROPERTIES
     TYPE OPTIONAL
     PURPOSE "Required for building tests.")
 
-if(NOT Qt${QT_MAJOR_VERSION}Test_FOUND)
+if(NOT Qt6Test_FOUND)
    set(BUILD_TESTING OFF CACHE BOOL "Build the testing tree.")
 endif()
 

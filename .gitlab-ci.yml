@@ -4,7 +4,6 @@
 include:
   - project: sysadmin/ci-utilities
     file:
-      - /gitlab-templates/freebsd.yml
       - /gitlab-templates/freebsd-qt6.yml
       # The Linux runners are based on Suse which doesn't currently ship aws-sdk-cpp.
       # - /gitlab-templates/linux.yml
