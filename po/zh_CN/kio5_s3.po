@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf5-trunk/messages/kio-s3/kio5_s3.pot\n"
-"X-Crowdin-File-ID: 25705\n"
+"X-Crowdin-File: /kf6-trunk/messages/kio-s3/kio5_s3.pot\n"
+"X-Crowdin-File-ID: 57960\n"
 
 #: s3backend.cpp:27
 #, kde-kuit-format
