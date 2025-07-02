@@ -31,6 +31,7 @@
   <name xml:lang="it">KIO S3</name>
   <name xml:lang="ka">KIO S3</name>
   <name xml:lang="ko">KIO S3</name>
+  <name xml:lang="lv">KIO S3</name>
   <name xml:lang="nl">KIO S3</name>
   <name xml:lang="nn">KIO S3</name>
   <name xml:lang="pl">KIO S3</name>
@@ -65,6 +66,7 @@
   <summary xml:lang="it">Integrazione di Amazon S3 con KDE Plasma e con le applicazioni di KDE</summary>
   <summary xml:lang="ka">KDE Plasma და KDE აპლიკაციების Amazon S3-თან ინტეგრაცია</summary>
   <summary xml:lang="ko">KDE Plasma 및 KDE 앱과 Amazon S3 통합</summary>
+  <summary xml:lang="lv">„Amazon“ S3 integrācija KDE „Plasma“ darbvirsmā un KDE programmās</summary>
   <summary xml:lang="nl">Amazon S3 integratie met KDE Plasma en KDE toepassingen</summary>
   <summary xml:lang="nn">Integrering av Amazon S3 med KDE Plasma og KDE-programma</summary>
   <summary xml:lang="pl">Obsługa Amazon S3 w programach i plazmie KDE</summary>
@@ -100,6 +102,7 @@
     <p xml:lang="it">KIO S3 abilita le applicazioni compatibili con KIO (tipo Dolphin, Kate o Gwenview) all'accesso e alla modifica dei bucket e degli oggetti Amazon S3.</p>
     <p xml:lang="ka">KIO S3 საშუალებას აძლევს KIO-ჩართულ აპლიკაციებს (როგორებიცაა მაგ. Dolphin, Kate და Gwenview), რომ Amazon S3-ის ობიექტები ნახონ და ჩაასწორონ.</p>
     <p xml:lang="ko">KIO S3은 KIO를 사용할 수 있는 앱(Dolphin, Kate, Gwenview 등)에서 Amazon S3 버킷에 저장된 파일을 보고 편집할 수 있습니다.</p>
+    <p xml:lang="lv">KIO S3 ļauj programmām, kas izmanto KIO, (piemēram, „Dolphin“, „Kate“ un „Gwenview“) piekļūt un rediģēt „Amazon“ S3 grozus un objektus.</p>
     <p xml:lang="nl">KIO S3 schakelt toepassingen in die afweten van KIO (zoals Dolphin, Kate of Gwenview) om Amazon S3 buckets en objects te benaderen en te bewerken.</p>
     <p xml:lang="nn">KIO S3 lèt program som brukar KIO (for eksempel Dolphin, Kate og Gwenview) få lese- og skrivetilgang til «buckets» og objekt på Amazon S3.</p>
     <p xml:lang="pl">KIO S3 umożliwia aplikacjom świadomym KIO (takim jak  Dolphin, Kate lub Gwenview) dostęp i edycję pojemników i obiektów Amazon S3.</p>
@@ -141,6 +144,7 @@
       <caption xml:lang="it">Dolphin che mostra un'immagine caricata in un bucket Amazon S3.</caption>
       <caption xml:lang="ka">Dolphin-ი აჩვენებს Amazon S3-ზე ატვირთულ გამოსახულებას.</caption>
       <caption xml:lang="ko">Amazon S3 버킷에 업로드된 사진을 표시하는 Dolphin입니다.</caption>
+      <caption xml:lang="lv">„Dolphin“ rāda „Amazon“ S3 grozā augšupielādētu attēlu.</caption>
       <caption xml:lang="nl">Dolphin die een op een Amazon S3 bucket geüploade afbeelding toont.</caption>
       <caption xml:lang="nn">Dolphin som viser eit bilete lasta på til ei Amazon S3-«bucket»</caption>
       <caption xml:lang="pl">Dolphin pokazujący zdjęcie wysłane do pojemnika Amazon S3.</caption>
