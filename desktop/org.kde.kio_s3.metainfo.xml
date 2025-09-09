@@ -43,7 +43,6 @@
   <name xml:lang="sv">KIO S3</name>
   <name xml:lang="tr">KIO S3</name>
   <name xml:lang="uk">KIO S3</name>
-  <name xml:lang="x-test">xxKIO S3xx</name>
   <name xml:lang="zh-CN">KIO S3</name>
   <name xml:lang="zh-TW">KIO S3</name>
   <summary>Amazon S3 integration with KDE Plasma and KDE applications</summary>
@@ -77,7 +76,6 @@
   <summary xml:lang="sv">Amazon S3 integrering med KDE Plasma och KDE program</summary>
   <summary xml:lang="tr">KDE Plasma ve KDE uygulamaları ile Amazon S3 tümleştirmesi</summary>
   <summary xml:lang="uk">Інтеграція Amazon S3 із Плазмою KDE та програмами KDE</summary>
-  <summary xml:lang="x-test">xxAmazon S3 integration with KDE Plasma and KDE applicationsxx</summary>
   <summary xml:lang="zh-CN">KDE Plasma 和 KDE 应用的 Amazon S3 集成插件</summary>
   <summary xml:lang="zh-TW">適用於 KDE Plasma 和 KDE 應用程式的 Amazon S3 整合</summary>
   <description>
@@ -112,7 +110,6 @@
     <p xml:lang="sv">KIO S3 gör det möjligt för program som känner till KIO (såsom Dolphin, Kate eller Gwenview) att komma åt och redigera Amazon S3 spannar och objekt.</p>
     <p xml:lang="tr">KIO S3, KIO etkin uygulamalarda (Dolphin, Kate veya Gwenview gibi) Amazon S3 kovalarına ve nesnelerine erişim ve düzenleme olanağı verir.</p>
     <p xml:lang="uk">KIO S3 надає змогу програмам, які використовують KIO (зокрема Dolphin, Kate та Gwenview) отримувати доступ до кошиків та об'єктів Amazon S3 та редагувати дані у них.</p>
-    <p xml:lang="x-test">xxKIO S3 enables KIO-aware applications (such as Dolphin, Kate or Gwenview) to access and edit Amazon S3 buckets and objects.xx</p>
     <p xml:lang="zh-CN">KIO S3 可以让能识别 KIO 的应用程序 (例如 Dolphin、Kate 或 Gwenview) 访问并编辑 Amazon S3 的存储桶和对象。</p>
     <p xml:lang="zh-TW">KIO S3 讓支援 KIO 的應用程式（例如 Dolphin、Kate 或 Gwenview）存取或編輯 Amazon S3 儲存貯體和物件。</p>
   </description>
@@ -153,7 +150,6 @@
       <caption xml:lang="sv">Dolphin showing som visar en bild uppladdad till en Amazon S3 spann.</caption>
       <caption xml:lang="tr">Dolphin, bir Amazon S3 kovasına resim yüklerken.</caption>
       <caption xml:lang="uk">Знімок вікна Dolphin із вивантаженням даних до кошика Amazon S3.</caption>
-      <caption xml:lang="x-test">xxDolphin showing a picture uploaded on an Amazon S3 bucket.xx</caption>
       <caption xml:lang="zh-CN">Dolphin 正在显示一张已经上传到 Amazon S3 存储桶的图像。</caption>
       <caption xml:lang="zh-TW">正在顯示已上傳到某 Amazon S3 儲存貯體上的圖片的 Dolphin</caption>
       <image type="source" width="1494" height="825">https://cdn.kde.org/screenshots/kio-s3/kio-s3.png</image>
