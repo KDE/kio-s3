@@ -1,22 +1,22 @@
-# German translations for kio-s3 package
 # German translation for kio-s3.
 # Copyright (C) 2021 This file is copyright:
 # This file is distributed under the same license as the kio-s3 package.
 # SPDX-FileCopyrightText: 2021, 2022 Frederik Schwarzer <schwarzer@kde.org>
+# SPDX-FileCopyrightText: 2025 Philipp Kiemle <l10n.daphipz@fastmail.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: kio5_s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:51+0000\n"
-"PO-Revision-Date: 2022-06-15 11:32+0200\n"
-"Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
+"PO-Revision-Date: 2025-11-11 22:22+0100\n"
+"Last-Translator: Philipp Kiemle <l10n.daphipz@fastmail.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.04.1\n"
+"X-Generator: Lokalize 25.08.3\n"
 
 #: s3backend.cpp:27
 #, kde-kuit-format
@@ -25,12 +25,16 @@ msgid ""
 "Invalid S3 URI, bucket name is missing from the host.<nl/>A valid S3 URI "
 "must be written in the form: <link>s3://bucket/key</link>"
 msgstr ""
+"Ungültige S3-URI, der Name des Buckets fehlt am Host.<nl/>Eine gültige S3-"
+"URI hat folgende Syntax: <link>s3://bucket/key</link>"
 
 #: s3backend.cpp:54
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr ""
+"S3-Buckets konnten nicht gefunden werden, bitte überprüfen Sie Ihre AWS-"
+"Konfiguration."
 
 #: s3backend.cpp:313
 #, kde-kuit-format
