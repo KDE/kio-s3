@@ -7,4 +7,5 @@ include:
       - /gitlab-templates/freebsd-qt6.yml
       # The Linux runners are based on Suse which doesn't currently ship aws-sdk-cpp.
       # - /gitlab-templates/linux.yml
-      - /gitlab-templates/documentation.yml
+      # We need to have linux-qt6 built to have the documentation
+      #- /gitlab-templates/documentation.yml
