@@ -19,6 +19,8 @@
 #include <aws/s3/model/ListObjectsV2Request.h>
 #include <aws/s3/model/PutObjectRequest.h>
 
+#include <aws/s3/S3ClientConfiguration.h>
+
 #include <array>
 
 static KIO::WorkerResult invalidUrlError() {
@@ -38,6 +40,27 @@ S3Backend::S3Backend(S3Worker *q)
 
     m_configProfileName = Aws::Auth::GetConfigProfileName();
     qCDebug(S3) << "S3 backend initialized, config profile name:" << m_configProfileName.c_str();
+    const auto endpointUrl = qEnvironmentVariable("AWS_ENDPOINT_URL");
+    if (!endpointUrl.isEmpty()) {
+        m_endpointOverride = Aws::String(endpointUrl.toUtf8().constData(), endpointUrl.toUtf8().size());
+        qCDebug(S3) << "Using custom endpoint:" << endpointUrl;
+    }
+}
+
+Aws::S3::S3ClientConfiguration S3Backend::createClientConfiguration() const
+{
+    Aws::S3::S3ClientConfiguration config(m_configProfileName.c_str());
+    if (!m_endpointOverride.empty()) {
+        config.endpointOverride = m_endpointOverride;
+        if (m_endpointOverride.find("amazonaws.com") == Aws::String::npos) {
+            config.useVirtualAddressing = false;
+        }
+        const auto envRegion = qEnvironmentVariable("AWS_DEFAULT_REGION");
+        if (!envRegion.isEmpty()) {
+            config.region = Aws::String(envRegion.toUtf8().constData(), envRegion.toUtf8().size());
+        }
+    }
+    return config;
 }
 
 KIO::WorkerResult S3Backend::listDir(const QUrl &url)
@@ -106,7 +129,7 @@ KIO::WorkerResult S3Backend::stat(const QUrl &url)
     const bool isRootKey = pathComponents.isEmpty();
     const auto fileName = isRootKey ? s3url.bucketName() : pathComponents.last();
 
-    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.c_str());
+    const auto clientConfiguration = createClientConfiguration();
     const Aws::S3::S3Client client(clientConfiguration);
 
     Aws::S3::Model::HeadObjectRequest headObjectRequest;
@@ -176,7 +199,7 @@ KIO::WorkerResult S3Backend::get(const QUrl &url)
     const auto s3url = S3Url(url);
     qCDebug(S3) << "Going to get" << s3url;
 
-    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.c_str());
+    const auto clientConfiguration = createClientConfiguration();
     const Aws::S3::S3Client client(clientConfiguration);
 
     q->mimeType(contentType(s3url));
@@ -218,7 +241,7 @@ KIO::WorkerResult S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags
     const auto s3url = S3Url(url);
     qCDebug(S3) << "Going to upload data to" << s3url;
 
-    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.c_str());
+    const auto clientConfiguration = createClientConfiguration();
     const Aws::S3::S3Client client(clientConfiguration);
 
     Aws::S3::Model::PutObjectRequest request;
@@ -290,7 +313,7 @@ KIO::WorkerResult S3Backend::copy(const QUrl &src, const QUrl &dest, int permiss
         return KIO::WorkerResult::fail(KIO::ERR_WRITE_ACCESS_DENIED, dest.toDisplayString());
     }
 
-    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.c_str());
+    const auto clientConfiguration = createClientConfiguration();
     const Aws::S3::S3Client client(clientConfiguration);
 
     // Check if destination key already exists, otherwise S3 will overwrite it leading to data loss.
@@ -338,7 +361,7 @@ KIO::WorkerResult S3Backend::del(const QUrl &url, bool isFile)
         return invalidUrlError();
     }
 
-    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.c_str());
+    const auto clientConfiguration = createClientConfiguration();
     const Aws::S3::S3Client client(clientConfiguration);
 
     // Start recursive delete by using the root prefix.
@@ -381,7 +404,7 @@ KIO::WorkerResult S3Backend::rename(const QUrl &src, const QUrl &dest, KIO::JobF
 
 bool S3Backend::listBuckets()
 {
-    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.c_str());
+    const auto clientConfiguration = createClientConfiguration();
     const Aws::S3::S3Client client(clientConfiguration);
     const auto listBucketsOutcome = client.ListBuckets();
     bool hasBuckets = false;
@@ -412,7 +435,7 @@ bool S3Backend::listBuckets()
 
 void S3Backend::listBucket(const Aws::String &bucketName)
 {
-    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.c_str());
+    const auto clientConfiguration = createClientConfiguration();
     const Aws::S3::S3Client client(clientConfiguration);
 
     Aws::S3::Model::ListObjectsV2Request listObjectsRequest;
@@ -462,7 +485,7 @@ void S3Backend::listBucket(const Aws::String &bucketName)
 
 void S3Backend::listKey(const S3Url &s3url)
 {
-    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.c_str());
+    const auto clientConfiguration = createClientConfiguration();
     const Aws::S3::S3Client client(clientConfiguration);
 
     const QString prefix = s3url.prefix();
@@ -608,7 +631,7 @@ QString S3Backend::contentType(const S3Url &s3url)
 {
     QString contentType;
 
-    const Aws::Client::ClientConfiguration clientConfiguration(m_configProfileName.c_str());
+    const auto clientConfiguration = createClientConfiguration();
     const Aws::S3::S3Client client(clientConfiguration);
 
     Aws::S3::Model::HeadObjectRequest headObjectRequest;

@@ -14,6 +14,7 @@
 #include <QUrl>
 
 #include <aws/s3/S3Client.h>
+#include <aws/s3/S3ClientConfiguration.h>
 
 class S3Worker;
 
@@ -48,7 +49,10 @@ private:
     bool deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url, const Aws::String &prefix);
     QString contentType(const S3Url &s3url);
 
+    Aws::S3::S3ClientConfiguration createClientConfiguration() const;
+
     Aws::String m_configProfileName;    // This must be passed to the S3Client objects to get the proper region from ~/.aws/config
+    Aws::String m_endpointOverride;
     S3Worker *q = nullptr;
 };
 
