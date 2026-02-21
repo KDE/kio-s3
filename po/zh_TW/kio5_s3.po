@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:51+0000\n"
+"POT-Creation-Date: 2026-02-21 00:44+0000\n"
 "PO-Revision-Date: 2024-01-04 23:14+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Lokalize 24.01.85\n"
 
-#: s3backend.cpp:27
+#: s3backend.cpp:29
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -30,13 +30,13 @@ msgstr ""
 "無效的 S3 URI，主機缺乏儲存貯體名稱。<nl/>有效的 S3 URI 必須使用此格式："
 "<link>s3://儲存貯體/金鑰</link>"
 
-#: s3backend.cpp:54
+#: s3backend.cpp:77
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr "找不到 S3 儲存貯體，請檢查您的 AWS 配置。"
 
-#: s3backend.cpp:313
+#: s3backend.cpp:336
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"

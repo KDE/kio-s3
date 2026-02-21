@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:51+0000\n"
+"POT-Creation-Date: 2026-02-21 00:44+0000\n"
 "PO-Revision-Date: 2024-04-26 11:30+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -18,7 +18,7 @@ msgstr ""
 "n % 10 == 0) ? 2 : 3));\n"
 "X-Generator: Lokalize 23.08.5\n"
 
-#: s3backend.cpp:27
+#: s3backend.cpp:29
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -28,13 +28,13 @@ msgstr ""
 "כתובת ה־S3 המלאה שגויה, שם הדלי חסר במארח.<nl/>כתובת S3 מלאה תקפה יש לכתוב "
 "בצורה: <link>s3://bucket/key</link>"
 
-#: s3backend.cpp:54
+#: s3backend.cpp:77
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr "לא ניתן למצוא דליים של S3, נא לבדוק שהגדרות ה־AWS שלך תקינות."
 
-#: s3backend.cpp:313
+#: s3backend.cpp:336
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"

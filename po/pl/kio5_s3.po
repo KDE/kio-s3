@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:51+0000\n"
+"POT-Creation-Date: 2026-02-21 00:44+0000\n"
 "PO-Revision-Date: 2022-09-23 09:25+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: s3backend.cpp:27
+#: s3backend.cpp:29
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -28,13 +28,13 @@ msgstr ""
 ">Prawidłowy adres URI S3 musi mieć następujący zapis: <link>s3://bucket/key</"
 "link>"
 
-#: s3backend.cpp:54
+#: s3backend.cpp:77
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr "Nie można znaleźć bucketów S3, sprawdź swoje ustawienia AWS."
 
-#: s3backend.cpp:313
+#: s3backend.cpp:336
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"

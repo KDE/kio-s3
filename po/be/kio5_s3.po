@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 86ff119b1606fcaa910d6b44fc14b611\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:51+0000\n"
+"POT-Creation-Date: 2026-02-21 00:44+0000\n"
 "PO-Revision-Date: 2023-01-15 14:16\n"
 "Last-Translator: Zmicier <zmicerturok@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-Crowdin-File: /main/be/kio-s3/kio5_s3.po\n"
 "X-Crowdin-File-ID: 9040\n"
 
-#: s3backend.cpp:27
+#: s3backend.cpp:29
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -31,13 +31,13 @@ msgstr ""
 "Хібны URI S3, у хосце няма назвы кантэйнера.<nl/>Сапраўдны URI S3 павінен "
 "мець выгляд: <link>s3://bucket/key</link>"
 
-#: s3backend.cpp:54
+#: s3backend.cpp:77
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr "Не ўдалося знайсці кантэйнеры S3, праверце канфігурацыю AWS."
 
-#: s3backend.cpp:313
+#: s3backend.cpp:336
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
