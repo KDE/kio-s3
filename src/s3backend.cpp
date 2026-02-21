@@ -40,7 +40,12 @@ S3Backend::S3Backend(S3Worker *q)
 
     m_configProfileName = Aws::Auth::GetConfigProfileName();
     qCDebug(S3) << "S3 backend initialized, config profile name:" << m_configProfileName.c_str();
-    const auto endpointUrl = qEnvironmentVariable("AWS_ENDPOINT_URL");
+    // Service-specific env var takes priority over global one.
+    // See: https://docs.aws.amazon.com/sdkref/latest/guide/feature-ss-endpoints.html
+    auto endpointUrl = qEnvironmentVariable("AWS_ENDPOINT_URL_S3");
+    if (endpointUrl.isEmpty()) {
+        endpointUrl = qEnvironmentVariable("AWS_ENDPOINT_URL");
+    }
     if (!endpointUrl.isEmpty()) {
         m_endpointOverride = Aws::String(endpointUrl.toUtf8().constData(), endpointUrl.toUtf8().size());
         qCDebug(S3) << "Using custom endpoint:" << endpointUrl;
