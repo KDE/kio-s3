@@ -10,6 +10,7 @@
 #include <KLocalizedString>
 
 #include <aws/core/auth/AWSCredentialsProvider.h>
+#include <aws/core/config/ConfigAndCredentialsCacheManager.h>
 #include <aws/core/Aws.h>
 #include <aws/s3/model/Bucket.h>
 #include <aws/s3/model/CopyObjectRequest.h>
@@ -49,6 +50,14 @@ S3Backend::S3Backend(S3Worker *q)
     if (!endpointUrl.isEmpty()) {
         m_endpointOverride = Aws::String(endpointUrl.toUtf8().constData(), endpointUrl.toUtf8().size());
         qCDebug(S3) << "Using custom endpoint:" << endpointUrl;
+    }
+    // Fallback to endpoint_url from ~/.aws/config profile.
+    if (m_endpointOverride.empty()) {
+        const auto profileEndpoint = Aws::Config::GetCachedConfigValue(m_configProfileName, "endpoint_url");
+        if (!profileEndpoint.empty()) {
+            m_endpointOverride = profileEndpoint;
+            qCDebug(S3) << "Using endpoint from config profile:" << profileEndpoint.c_str();
+        }
     }
 }
 
