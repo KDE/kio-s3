@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-21 00:44+0000\n"
+"POT-Creation-Date: 2026-02-24 00:44+0000\n"
 "PO-Revision-Date: 2022-12-15 11:14-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -27,14 +27,14 @@ msgstr ""
 "URI S3 inválida, o nome do bucket está faltando no host.<nl/>Uma URI S3 "
 "válida deve ser escrita na forma: <link>s3://bucket/key</link>"
 
-#: s3backend.cpp:77
+#: s3backend.cpp:82
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr ""
 "Não foi possível encontrar buckets S3, verifique sua configuração do AWS."
 
-#: s3backend.cpp:336
+#: s3backend.cpp:341
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"

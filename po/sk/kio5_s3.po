@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio5_s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-21 00:44+0000\n"
+"POT-Creation-Date: 2026-02-24 00:44+0000\n"
 "PO-Revision-Date: 2022-04-15 19:05+0200\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -30,13 +30,13 @@ msgstr ""
 "Neplatné URI S3, názov koša chýba z hostiteľa.<nl/>Platné S3 URI musí byť "
 "zapísané vo formáte: <link>%1</link>"
 
-#: s3backend.cpp:77
+#: s3backend.cpp:82
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr ""
 
-#: s3backend.cpp:336
+#: s3backend.cpp:341
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"

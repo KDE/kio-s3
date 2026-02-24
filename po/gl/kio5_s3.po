@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-21 00:44+0000\n"
+"POT-Creation-Date: 2026-02-24 00:44+0000\n"
 "PO-Revision-Date: 2023-04-30 08:57+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
@@ -27,14 +27,14 @@ msgstr ""
 "URI de S3 incorrecto, falta o nome do balde na parte do servidor.<nl/>Un URI "
 "de S3 correcto ten que ter esta forma: <link>s3://balde/clave</link>"
 
-#: s3backend.cpp:77
+#: s3backend.cpp:82
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr ""
 "Non é posíbel atopar baldes de S3, comproba a túa configuración de AWS."
 
-#: s3backend.cpp:336
+#: s3backend.cpp:341
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"

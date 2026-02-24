@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-21 00:44+0000\n"
+"POT-Creation-Date: 2026-02-24 00:44+0000\n"
 "PO-Revision-Date: 2021-10-09 08:28+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -31,13 +31,13 @@ msgstr ""
 "Μη έγκυρο S3 URI, το όνομα του κουβά (bucket) λείπει από τον υπολογιστή.<nl/"
 ">Ένα έγκυρο S3 URI πρέπει να γραφτεί στη μορφή: <link>%1</link>"
 
-#: s3backend.cpp:77
+#: s3backend.cpp:82
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr ""
 
-#: s3backend.cpp:336
+#: s3backend.cpp:341
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
