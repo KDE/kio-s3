@@ -23,14 +23,19 @@ void S3UrlTest::testS3Url_data()
     QTest::addColumn<QUrl>("url");
     QTest::addColumn<bool>("expectedIsBucket");
     QTest::addColumn<bool>("expectedIsKey");
+    QTest::addColumn<bool>("expectedIsProfileRoot");
     QTest::addColumn<QString>("expectedBucketName");
+    QTest::addColumn<QString>("expectedProfileName");
     QTest::addColumn<QString>("expectedKey");
     QTest::addColumn<QString>("expectedPrefix");
 
+    // clang-format off
     QTest::newRow("root url")
             << QUrl(QStringLiteral("s3:"))
             << false
             << false
+            << false
+            << QString()
             << QString()
             << QString()
             << QString();
@@ -39,7 +44,9 @@ void S3UrlTest::testS3Url_data()
             << QUrl(QStringLiteral("s3://foo-bucket"))
             << true
             << false
+            << false
             << QStringLiteral("foo-bucket")
+            << QString()
             << QString()
             << QString();
 
@@ -47,7 +54,9 @@ void S3UrlTest::testS3Url_data()
             << QUrl(QStringLiteral("s3://foo-bucket/"))
             << false
             << true
+            << false
             << QStringLiteral("foo-bucket")
+            << QString()
             << QStringLiteral("/")
             << QString();
 
@@ -55,7 +64,9 @@ void S3UrlTest::testS3Url_data()
             << QUrl(QStringLiteral("s3://foo-bucket/bar.txt"))
             << false
             << true
+            << false
             << QStringLiteral("foo-bucket")
+            << QString()
             << QStringLiteral("/bar.txt")
             << QStringLiteral("bar.txt/");
 
@@ -63,7 +74,9 @@ void S3UrlTest::testS3Url_data()
             << QUrl(QStringLiteral("s3://foo-bucket/bar/"))
             << false
             << true
+            << false
             << QStringLiteral("foo-bucket")
+            << QString()
             << QStringLiteral("/bar/")
             << QStringLiteral("bar/");
 
@@ -71,7 +84,9 @@ void S3UrlTest::testS3Url_data()
             << QUrl(QStringLiteral("s3://foo-bucket/bar"))
             << false
             << true
+            << false
             << QStringLiteral("foo-bucket")
+            << QString()
             << QStringLiteral("/bar")
             << QStringLiteral("bar/");
 
@@ -79,7 +94,9 @@ void S3UrlTest::testS3Url_data()
             << QUrl(QStringLiteral("s3://foo-bucket/bar/foo.txt"))
             << false
             << true
+            << false
             << QStringLiteral("foo-bucket")
+            << QString()
             << QStringLiteral("/bar/foo.txt")
             << QStringLiteral("bar/foo.txt/");
 
@@ -87,7 +104,9 @@ void S3UrlTest::testS3Url_data()
             << QUrl(QStringLiteral("s3://foo-bucket/bar/baz/"))
             << false
             << true
+            << false
             << QStringLiteral("foo-bucket")
+            << QString()
             << QStringLiteral("/bar/baz/")
             << QStringLiteral("bar/baz/");
 
@@ -95,9 +114,64 @@ void S3UrlTest::testS3Url_data()
             << QUrl(QStringLiteral("s3://foo-bucket/bar/baz/foo.txt"))
             << false
             << true
+            << false
             << QStringLiteral("foo-bucket")
+            << QString()
             << QStringLiteral("/bar/baz/foo.txt")
             << QStringLiteral("bar/baz/foo.txt/");
+
+    // Profile URL tests
+
+    QTest::newRow("profile root")
+            << QUrl(QStringLiteral("s3://@r2/"))
+            << false
+            << false
+            << true
+            << QString()
+            << QStringLiteral("r2")
+            << QStringLiteral("/")
+            << QString();
+
+    QTest::newRow("bucket with profile")
+            << QUrl(QStringLiteral("s3://demos@r2/"))
+            << false
+            << true
+            << false
+            << QStringLiteral("demos")
+            << QStringLiteral("r2")
+            << QStringLiteral("/")
+            << QString();
+
+    QTest::newRow("bucket with profile no trailing slash")
+            << QUrl(QStringLiteral("s3://demos@r2"))
+            << true
+            << false
+            << false
+            << QStringLiteral("demos")
+            << QStringLiteral("r2")
+            << QString()
+            << QString();
+
+    QTest::newRow("key with profile")
+            << QUrl(QStringLiteral("s3://demos@r2/images/cat.jpg"))
+            << false
+            << true
+            << false
+            << QStringLiteral("demos")
+            << QStringLiteral("r2")
+            << QStringLiteral("/images/cat.jpg")
+            << QStringLiteral("images/cat.jpg/");
+
+    QTest::newRow("profile root without trailing slash")
+            << QUrl(QStringLiteral("s3://@minio"))
+            << false
+            << false
+            << true
+            << QString()
+            << QStringLiteral("minio")
+            << QString()
+            << QString();
+    // clang-format on
 }
 
 void S3UrlTest::testS3Url()
@@ -113,11 +187,16 @@ void S3UrlTest::testS3Url()
     QFETCH(bool, expectedIsKey);
     QCOMPARE(s3url.isKey(), expectedIsKey);
 
+    QFETCH(bool, expectedIsProfileRoot);
+    QCOMPARE(s3url.isProfileRoot(), expectedIsProfileRoot);
+
     QFETCH(QString, expectedBucketName);
+    QFETCH(QString, expectedProfileName);
     QFETCH(QString, expectedKey);
     QFETCH(QString, expectedPrefix);
 
     QCOMPARE(s3url.bucketName(), expectedBucketName);
+    QCOMPARE(s3url.profileName(), expectedProfileName);
     QCOMPARE(s3url.key(), expectedKey);
     QCOMPARE(s3url.prefix(), expectedPrefix);
 }

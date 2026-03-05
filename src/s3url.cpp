@@ -11,7 +11,7 @@ S3Url::S3Url(const QUrl &url)
 
 bool S3Url::isRoot() const
 {
-    return bucketName().isEmpty() && key().isEmpty();
+    return bucketName().isEmpty() && key().isEmpty() && profileName().isEmpty();
 }
 
 bool S3Url::isBucket() const
@@ -24,8 +24,30 @@ bool S3Url::isKey() const
     return !bucketName().isEmpty() && !key().isEmpty();
 }
 
+bool S3Url::isProfileRoot() const
+{
+    return m_url.userName().isEmpty() && !m_url.host().isEmpty() && m_url.authority().startsWith(QLatin1Char('@'));
+}
+
 QString S3Url::bucketName() const
 {
+    if (isProfileRoot()) {
+        return QString();
+    }
+    if (m_url.userName().isEmpty()) {
+        return m_url.host();
+    }
+    return m_url.userName();
+}
+
+QString S3Url::profileName() const
+{
+    if (m_url.authority().startsWith(QLatin1Char('@'))) {
+        return m_url.host();
+    }
+    if (m_url.userName().isEmpty()) {
+        return QString();
+    }
     return m_url.host();
 }
 
@@ -60,6 +82,12 @@ Aws::String S3Url::BucketName() const
     return Aws::String(bucket.constData(), bucket.size());
 }
 
+Aws::String S3Url::ProfileName() const
+{
+    const QByteArray profile = profileName().toUtf8();
+    return Aws::String(profile.constData(), profile.size());
+}
+
 Aws::String S3Url::Key() const
 {
     // The S3 object key name is a sequence of Unicode characters with UTF-8 encoding.
@@ -76,7 +104,7 @@ Aws::String S3Url::Prefix() const
 QDebug operator<<(QDebug debug, const S3Url &s3url)
 {
     QDebugStateSaver stateSaver(debug);
-    debug.nospace() << s3url.url().toDisplayString() << " (bucket: " << s3url.bucketName() << ", key: " << s3url.key() << ")";
+    debug.nospace() << s3url.url().toDisplayString() << " (bucket: " << s3url.bucketName() << ", key: " << s3url.key() << ", profile: " << s3url.profileName() << ")";
     return debug.maybeSpace();
 }
 
