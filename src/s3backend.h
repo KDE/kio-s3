@@ -42,14 +42,15 @@ private:
         WritableCwd
     };
 
-    bool listBuckets();
-    void listBucket(const Aws::String &bucketName);
+    bool listBuckets(const S3Url &s3url);
+    void listBucket(const S3Url &s3url);
     void listKey(const S3Url &s3url);
     void listCwdEntry(CwdAccess access = WritableCwd);
     bool deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url, const Aws::String &prefix);
     QString contentType(const S3Url &s3url);
 
-    Aws::S3::S3ClientConfiguration createClientConfiguration() const;
+    Aws::S3::S3ClientConfiguration createClientConfiguration(const QString &profileName = QString()) const;
+    Aws::S3::S3Client createS3Client(const QString &profileName = QString()) const;
 
     Aws::String m_configProfileName;    // This must be passed to the S3Client objects to get the proper region from ~/.aws/config
     Aws::String m_endpointOverride;

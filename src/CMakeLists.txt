@@ -17,6 +17,7 @@ target_link_libraries(kio_s3
     Qt6::Network
     KF6::KIOCore
     KF6::KIOWidgets
+    KF6::ConfigCore
     KF6::I18n
     ${AWSSDK_LINK_LIBRARIES})
 

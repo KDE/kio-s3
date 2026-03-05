@@ -4,9 +4,11 @@
 */
 
 #include "s3backend.h"
-#include "s3debug.h"
 #include "kio_s3.h"
+#include "s3debug.h"
 
+#include <KConfig>
+#include <KConfigGroup>
 #include <KLocalizedString>
 
 #include <aws/core/auth/AWSCredentialsProvider.h>
@@ -61,8 +63,27 @@ S3Backend::S3Backend(S3Worker *q)
     }
 }
 
-Aws::S3::S3ClientConfiguration S3Backend::createClientConfiguration() const
+Aws::S3::S3ClientConfiguration S3Backend::createClientConfiguration(const QString &profileName) const
 {
+    if (!profileName.isEmpty()) {
+        KConfig kioConfig(QStringLiteral("kio_s3rc"), KConfig::SimpleConfig);
+        KConfigGroup profileGroup = kioConfig.group(QStringLiteral("Profile-%1").arg(profileName));
+
+        Aws::S3::S3ClientConfiguration config;
+        const auto endpointUrl = profileGroup.readEntry("EndpointUrl", QString());
+        if (!endpointUrl.isEmpty()) {
+            config.endpointOverride = Aws::String(endpointUrl.toUtf8().constData(), endpointUrl.toUtf8().size());
+        }
+        const auto region = profileGroup.readEntry("Region", QString());
+        if (!region.isEmpty()) {
+            config.region = Aws::String(region.toLatin1().constData(), region.toLatin1().size());
+        }
+        if (profileGroup.readEntry("PathStyle", false)) {
+            config.useVirtualAddressing = false;
+        }
+        return config;
+    }
+
     Aws::S3::S3ClientConfiguration config(m_configProfileName.c_str());
     if (!m_endpointOverride.empty()) {
         config.endpointOverride = m_endpointOverride;
@@ -77,13 +98,37 @@ Aws::S3::S3ClientConfiguration S3Backend::createClientConfiguration() const
     return config;
 }
 
+Aws::S3::S3Client S3Backend::createS3Client(const QString &profileName) const
+{
+    const auto config = createClientConfiguration(profileName);
+    if (!profileName.isEmpty()) {
+        KConfig kioConfig(QStringLiteral("kio_s3rc"), KConfig::SimpleConfig);
+        KConfigGroup profileGroup = kioConfig.group(QStringLiteral("Profile-%1").arg(profileName));
+        const auto awsProfile = profileGroup.readEntry("AwsProfile", QString());
+        if (!awsProfile.isEmpty()) {
+            const auto creds = Aws::MakeShared<Aws::Auth::ProfileConfigFileAWSCredentialsProvider>("kio-s3", awsProfile.toStdString().c_str());
+            return Aws::S3::S3Client(creds, nullptr, config);
+        }
+    }
+    return Aws::S3::S3Client(config);
+}
+
 KIO::WorkerResult S3Backend::listDir(const QUrl &url)
 {
     const auto s3url = S3Url(url);
     qCDebug(S3) << "Going to list" << s3url;
 
+    if (s3url.isProfileRoot()) {
+        const bool hasBuckets = listBuckets(s3url);
+        listCwdEntry(ReadOnlyCwd);
+        if (hasBuckets) {
+            return KIO::WorkerResult::pass();
+        }
+        return KIO::WorkerResult::fail(KIO::ERR_WORKER_DEFINED, xi18nc("@info", "Could not find S3 buckets, please check your AWS configuration."));
+    }
+
     if (s3url.isRoot()) {
-        const bool hasBuckets = listBuckets();
+        const bool hasBuckets = listBuckets(s3url);
         listCwdEntry(ReadOnlyCwd);
         if (hasBuckets) {
             return KIO::WorkerResult::pass();
@@ -92,7 +137,7 @@ KIO::WorkerResult S3Backend::listDir(const QUrl &url)
     }
 
     if (s3url.isBucket()) {
-        listBucket(s3url.BucketName());
+        listBucket(s3url);
         listCwdEntry();
         return KIO::WorkerResult::pass();
     }
@@ -114,7 +159,7 @@ KIO::WorkerResult S3Backend::stat(const QUrl &url)
     const auto s3url = S3Url(url);
     qCDebug(S3) << "Going to stat()" << s3url;
 
-    if (s3url.isRoot()) {
+    if (s3url.isRoot() || s3url.isProfileRoot()) {
         return KIO::WorkerResult::pass();
     }
 
@@ -143,8 +188,7 @@ KIO::WorkerResult S3Backend::stat(const QUrl &url)
     const bool isRootKey = pathComponents.isEmpty();
     const auto fileName = isRootKey ? s3url.bucketName() : pathComponents.last();
 
-    const auto clientConfiguration = createClientConfiguration();
-    const Aws::S3::S3Client client(clientConfiguration);
+    const Aws::S3::S3Client client = createS3Client(s3url.profileName());
 
     Aws::S3::Model::HeadObjectRequest headObjectRequest;
     headObjectRequest.SetBucket(s3url.BucketName());
@@ -213,8 +257,7 @@ KIO::WorkerResult S3Backend::get(const QUrl &url)
     const auto s3url = S3Url(url);
     qCDebug(S3) << "Going to get" << s3url;
 
-    const auto clientConfiguration = createClientConfiguration();
-    const Aws::S3::S3Client client(clientConfiguration);
+    const Aws::S3::S3Client client = createS3Client(s3url.profileName());
 
     q->mimeType(contentType(s3url));
 
@@ -255,8 +298,7 @@ KIO::WorkerResult S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags
     const auto s3url = S3Url(url);
     qCDebug(S3) << "Going to upload data to" << s3url;
 
-    const auto clientConfiguration = createClientConfiguration();
-    const Aws::S3::S3Client client(clientConfiguration);
+    const Aws::S3::S3Client client = createS3Client(s3url.profileName());
 
     Aws::S3::Model::PutObjectRequest request;
     request.SetBucket(s3url.BucketName());
@@ -306,6 +348,11 @@ KIO::WorkerResult S3Backend::copy(const QUrl &src, const QUrl &dest, int permiss
         return KIO::WorkerResult::fail(KIO::ERR_FILE_ALREADY_EXIST, QString());
     }
 
+    if (s3src.profileName() != s3dest.profileName()) {
+        return KIO::WorkerResult::fail(KIO::ERR_WORKER_DEFINED,
+            xi18nc("@info", "Cannot copy between different S3 profiles. Copy the file locally first."));
+    }
+
     if (s3src.isRoot() || s3src.isBucket()) {
         qCDebug(S3) << "Cannot copy from root or bucket url:" << src;
         return KIO::WorkerResult::fail(KIO::ERR_CANNOT_OPEN_FOR_READING, src.toDisplayString());
@@ -327,8 +374,7 @@ KIO::WorkerResult S3Backend::copy(const QUrl &src, const QUrl &dest, int permiss
         return KIO::WorkerResult::fail(KIO::ERR_WRITE_ACCESS_DENIED, dest.toDisplayString());
     }
 
-    const auto clientConfiguration = createClientConfiguration();
-    const Aws::S3::S3Client client(clientConfiguration);
+    const Aws::S3::S3Client client = createS3Client(s3src.profileName());
 
     // Check if destination key already exists, otherwise S3 will overwrite it leading to data loss.
     Aws::S3::Model::HeadObjectRequest headObjectRequest;
@@ -375,8 +421,7 @@ KIO::WorkerResult S3Backend::del(const QUrl &url, bool isFile)
         return invalidUrlError();
     }
 
-    const auto clientConfiguration = createClientConfiguration();
-    const Aws::S3::S3Client client(clientConfiguration);
+    const Aws::S3::S3Client client = createS3Client(s3url.profileName());
 
     // Start recursive delete by using the root prefix.
     if (deletePrefix(client, s3url, s3url.Prefix())) {
@@ -416,10 +461,9 @@ KIO::WorkerResult S3Backend::rename(const QUrl &src, const QUrl &dest, KIO::JobF
     return KIO::WorkerResult::pass();
 }
 
-bool S3Backend::listBuckets()
+bool S3Backend::listBuckets(const S3Url &s3url)
 {
-    const auto clientConfiguration = createClientConfiguration();
-    const Aws::S3::S3Client client(clientConfiguration);
+    const Aws::S3::S3Client client = createS3Client(s3url.profileName());
     const auto listBucketsOutcome = client.ListBuckets();
     bool hasBuckets = false;
 
@@ -433,7 +477,12 @@ bool S3Backend::listBuckets()
             entry.reserve(7);
             entry.fastInsert(KIO::UDSEntry::UDS_NAME, bucketName);
             entry.fastInsert(KIO::UDSEntry::UDS_DISPLAY_NAME, bucketName);
-            entry.fastInsert(KIO::UDSEntry::UDS_URL, QStringLiteral("s3://%1/").arg(bucketName));
+            const auto profile = s3url.profileName();
+            if (profile.isEmpty()) {
+                entry.fastInsert(KIO::UDSEntry::UDS_URL, QStringLiteral("s3://%1/").arg(bucketName));
+            } else {
+                entry.fastInsert(KIO::UDSEntry::UDS_URL, QStringLiteral("s3://%1@%2/").arg(bucketName, profile));
+            }
             entry.fastInsert(KIO::UDSEntry::UDS_FILE_TYPE, S_IFDIR);
             entry.fastInsert(KIO::UDSEntry::UDS_SIZE, 0);
             entry.fastInsert(KIO::UDSEntry::UDS_ACCESS, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IXOTH);
@@ -447,10 +496,10 @@ bool S3Backend::listBuckets()
     return hasBuckets;
 }
 
-void S3Backend::listBucket(const Aws::String &bucketName)
+void S3Backend::listBucket(const S3Url &s3url)
 {
-    const auto clientConfiguration = createClientConfiguration();
-    const Aws::S3::S3Client client(clientConfiguration);
+    const Aws::S3::S3Client client = createS3Client(s3url.profileName());
+    const Aws::String bucketName = s3url.BucketName();
 
     Aws::S3::Model::ListObjectsV2Request listObjectsRequest;
     listObjectsRequest.SetBucket(bucketName);
@@ -461,6 +510,8 @@ void S3Backend::listBucket(const Aws::String &bucketName)
     if (listObjectsOutcome.IsSuccess()) {
 
         const auto bucket = QString::fromLatin1(bucketName.c_str(), bucketName.size());
+        const auto profile = s3url.profileName();
+        const auto authority = profile.isEmpty() ? bucket : QStringLiteral("%1@%2").arg(bucket, profile);
         const auto objects = listObjectsOutcome.GetResult().GetContents();
         for (const auto &object : objects) {
             KIO::UDSEntry entry;
@@ -468,7 +519,7 @@ void S3Backend::listBucket(const Aws::String &bucketName)
             entry.reserve(6);
             entry.fastInsert(KIO::UDSEntry::UDS_NAME, objectKey);
             entry.fastInsert(KIO::UDSEntry::UDS_DISPLAY_NAME, objectKey);
-            entry.fastInsert(KIO::UDSEntry::UDS_URL, QStringLiteral("s3://%1/%2").arg(bucket, objectKey));
+            entry.fastInsert(KIO::UDSEntry::UDS_URL, QStringLiteral("s3://%1/%2").arg(authority, objectKey));
             entry.fastInsert(KIO::UDSEntry::UDS_FILE_TYPE, S_IFREG);
             entry.fastInsert(KIO::UDSEntry::UDS_SIZE, object.GetSize());
             entry.fastInsert(KIO::UDSEntry::UDS_ACCESS, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH );
@@ -485,7 +536,7 @@ void S3Backend::listBucket(const Aws::String &bucketName)
             entry.reserve(6);
             entry.fastInsert(KIO::UDSEntry::UDS_NAME, prefix);
             entry.fastInsert(KIO::UDSEntry::UDS_DISPLAY_NAME, prefix);
-            entry.fastInsert(KIO::UDSEntry::UDS_URL, QStringLiteral("s3://%1/%2/").arg(bucket, prefix));
+            entry.fastInsert(KIO::UDSEntry::UDS_URL, QStringLiteral("s3://%1/%2/").arg(authority, prefix));
             entry.fastInsert(KIO::UDSEntry::UDS_FILE_TYPE, S_IFDIR);
             entry.fastInsert(KIO::UDSEntry::UDS_ACCESS, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IXOTH);
             entry.fastInsert(KIO::UDSEntry::UDS_SIZE, 0);
@@ -499,8 +550,7 @@ void S3Backend::listBucket(const Aws::String &bucketName)
 
 void S3Backend::listKey(const S3Url &s3url)
 {
-    const auto clientConfiguration = createClientConfiguration();
-    const Aws::S3::S3Client client(clientConfiguration);
+    const Aws::S3::S3Client client = createS3Client(s3url.profileName());
 
     const QString prefix = s3url.prefix();
 
@@ -645,8 +695,7 @@ QString S3Backend::contentType(const S3Url &s3url)
 {
     QString contentType;
 
-    const auto clientConfiguration = createClientConfiguration();
-    const Aws::S3::S3Client client(clientConfiguration);
+    const Aws::S3::S3Client client = createS3Client(s3url.profileName());
 
     Aws::S3::Model::HeadObjectRequest headObjectRequest;
     headObjectRequest.SetBucket(s3url.BucketName());
