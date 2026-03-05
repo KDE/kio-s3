@@ -1,0 +1,8 @@
+{
+    "KPlugin": {
+        "Description": "Configure S3 backend profiles",
+        "Icon": "folder-cloud",
+        "Name": "S3 Backends"
+    },
+    "X-KDE-System-Settings-Parent-Category": "network"
+}

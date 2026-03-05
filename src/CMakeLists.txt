@@ -22,3 +22,7 @@ target_link_libraries(kio_s3
     ${AWSSDK_LINK_LIBRARIES})
 
 set_target_properties(kio_s3 PROPERTIES OUTPUT_NAME "s3")
+
+if(TARGET KF6::KCMUtilsQuick)
+    add_subdirectory(kcm)
+endif()

@@ -28,6 +28,11 @@ find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS
     I18n
     KIO)
 
+find_package(KF6KCMUtils ${KF_MIN_VERSION} CONFIG)
+set_package_properties(KF6KCMUtils PROPERTIES
+    TYPE OPTIONAL
+    PURPOSE "Required for building the System Settings module.")
+
 find_package(AWSSDK REQUIRED COMPONENTS
     core
     s3)
