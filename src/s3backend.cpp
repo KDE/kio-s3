@@ -423,8 +423,7 @@ KIO::WorkerResult S3Backend::del(const QUrl &url, bool isFile)
 
     const Aws::S3::S3Client client = createS3Client(s3url.profileName());
 
-    // Start recursive delete by using the root prefix.
-    if (deletePrefix(client, s3url, s3url.Prefix())) {
+    if (deletePrefix(client, s3url)) {
         return KIO::WorkerResult::pass();
     } else {
         return KIO::WorkerResult::fail(KIO::ERR_CANNOT_DELETE, url.toDisplayString());
@@ -654,59 +653,66 @@ void S3Backend::listCwdEntry(CwdAccess access)
     q->listEntry(entry);
 }
 
-bool S3Backend::deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url, const Aws::String &prefix)
+bool S3Backend::deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url)
 {
-    qCDebug(S3) << "Going to recursively delete prefix:" << prefix.c_str();
-    bool outcome = false;
+    const Aws::String prefix = s3url.Prefix();
     const Aws::String bucketName = s3url.BucketName();
-    // In order to recursively delete a folder, we need to list by prefix and manually delete each listed key.
-    Aws::S3::Model::ListObjectsV2Request listObjectsRequest;
-    listObjectsRequest.SetBucket(bucketName);
-    listObjectsRequest.SetDelimiter("/");
-    listObjectsRequest.SetPrefix(prefix);
-    const auto listObjectsOutcome = client.ListObjectsV2(listObjectsRequest);
-    if (listObjectsOutcome.IsSuccess()) {
-        // TODO: handle listObjectsOutcome.GetResult().GetIsTruncated()
-        // By default the max-keys request parameter is 1000, which is reasonable for us
-        // since we filter the keys by the name of the folder, but it won't work
-        // if someone has very big folders with more than 1000 files.
-        const auto commonPrefixes = listObjectsOutcome.GetResult().GetCommonPrefixes();
-        qCDebug(S3) << "Prefix" << prefix.c_str() << "has" << commonPrefixes.size() << "common prefixes";
-        // Recursively delete folder children.
-        for (const auto &commonPrefix : commonPrefixes) {
-            const bool recursiveOutcome = deletePrefix(client, s3url, commonPrefix.GetPrefix());
-            outcome = outcome && recursiveOutcome;
+    qCDebug(S3) << "Going to delete all objects under prefix:" << prefix.c_str();
+
+    // Flat listing (no delimiter) returns all objects under the prefix,
+    // including objects in nested subfolders. This avoids recursion and
+    // handles folders with more than 1000 objects via pagination.
+    Aws::S3::Model::ListObjectsV2Request listRequest;
+    listRequest.SetBucket(bucketName);
+    listRequest.SetPrefix(prefix);
+
+    bool allDeleted = true;
+    int totalDeleted = 0;
+    bool isTruncated = false;
+    do {
+        const auto listOutcome = client.ListObjectsV2(listRequest);
+        if (!listOutcome.IsSuccess()) {
+            qCWarning(S3) << "Could not list prefix:" << prefix.c_str() << "-" << listOutcome.GetError().GetMessage().c_str();
+            return false;
         }
-        const auto objects = listObjectsOutcome.GetResult().GetContents();
-        // Delete each file child.
-        if (objects.size() > 0) {
-            for (const auto &object : objects) {
-                Aws::S3::Model::DeleteObjectRequest request;
-                request.SetBucket(bucketName);
-                request.SetKey(object.GetKey());
-                auto deleteObjectOutcome = client.DeleteObject(request);
-                if (!deleteObjectOutcome.IsSuccess()) {
-                    qCDebug(S3) << "Could not delete object with key:" << s3url.key() << " - " << deleteObjectOutcome.GetError().GetMessage().c_str();
-                    outcome = false;
-                }
-            }
-        } else { // The prefix was either a file or a folder that contains 0 files.
+
+        const auto &result = listOutcome.GetResult();
+        const auto &objects = result.GetContents();
+
+        if (objects.empty() && totalDeleted == 0) {
+            // The prefix was a file or a 0-sized folder object — delete the key directly.
             Aws::S3::Model::DeleteObjectRequest request;
             request.SetBucket(bucketName);
             request.SetKey(s3url.Key());
-            auto deleteObjectOutcome = client.DeleteObject(request);
-            if (!deleteObjectOutcome.IsSuccess()) {
-                qCDebug(S3) << "Could not delete object with key:" << s3url.key() << " - " << deleteObjectOutcome.GetError().GetMessage().c_str();
-                outcome = false;
+            auto deleteOutcome = client.DeleteObject(request);
+            if (!deleteOutcome.IsSuccess()) {
+                qCWarning(S3) << "Could not delete object with key:" << s3url.key() << "-" << deleteOutcome.GetError().GetMessage().c_str();
+                return false;
+            }
+            return true;
+        }
+
+        for (const auto &object : objects) {
+            Aws::S3::Model::DeleteObjectRequest request;
+            request.SetBucket(bucketName);
+            request.SetKey(object.GetKey());
+            auto deleteOutcome = client.DeleteObject(request);
+            if (!deleteOutcome.IsSuccess()) {
+                qCWarning(S3) << "Could not delete object:" << object.GetKey().c_str() << "-" << deleteOutcome.GetError().GetMessage().c_str();
+                allDeleted = false;
+            } else {
+                totalDeleted++;
             }
         }
-        outcome = true;
-    } else {
-        qCDebug(S3) << "Could not list prefix:" << prefix.c_str();
-        outcome = false;
-    }
 
-    return outcome;
+        isTruncated = result.GetIsTruncated();
+        if (isTruncated) {
+            listRequest.SetContinuationToken(result.GetNextContinuationToken());
+        }
+    } while (isTruncated);
+
+    qCDebug(S3) << "Deleted" << totalDeleted << "objects under prefix:" << prefix.c_str();
+    return allDeleted;
 }
 
 QString S3Backend::contentType(const S3Url &s3url)

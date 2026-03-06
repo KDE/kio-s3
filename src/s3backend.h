@@ -46,7 +46,7 @@ private:
     void listBucket(const S3Url &s3url);
     void listKey(const S3Url &s3url);
     void listCwdEntry(CwdAccess access = WritableCwd);
-    bool deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url, const Aws::String &prefix);
+    bool deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url);
     QString contentType(const S3Url &s3url);
 
     Aws::S3::S3ClientConfiguration createClientConfiguration(const QString &profileName = QString()) const;
