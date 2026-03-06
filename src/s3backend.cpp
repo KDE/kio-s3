@@ -500,20 +500,30 @@ void S3Backend::listBucket(const S3Url &s3url)
 {
     const Aws::S3::S3Client client = createS3Client(s3url.profileName());
     const Aws::String bucketName = s3url.BucketName();
+    const auto bucket = QString::fromLatin1(bucketName.c_str(), bucketName.size());
+    const auto profile = s3url.profileName();
+    const auto authority = profile.isEmpty() ? bucket : QStringLiteral("%1@%2").arg(bucket, profile);
 
-    Aws::S3::Model::ListObjectsV2Request listObjectsRequest;
-    listObjectsRequest.SetBucket(bucketName);
-    listObjectsRequest.SetDelimiter("/");
+    Aws::S3::Model::ListObjectsV2Request request;
+    request.SetBucket(bucketName);
+    request.SetDelimiter("/");
 
     qCDebug(S3) << "Listing objects in bucket" << bucketName.c_str() << "...";
-    const auto listObjectsOutcome = client.ListObjectsV2(listObjectsRequest);
-    if (listObjectsOutcome.IsSuccess()) {
 
-        const auto bucket = QString::fromLatin1(bucketName.c_str(), bucketName.size());
-        const auto profile = s3url.profileName();
-        const auto authority = profile.isEmpty() ? bucket : QStringLiteral("%1@%2").arg(bucket, profile);
-        const auto objects = listObjectsOutcome.GetResult().GetContents();
-        for (const auto &object : objects) {
+    bool isTruncated = false;
+    do {
+        const auto outcome = client.ListObjectsV2(request);
+        if (!outcome.IsSuccess()) {
+            qCWarning(S3) << "Could not list bucket:" << outcome.GetError().GetMessage().c_str();
+            if (isTruncated) {
+                q->warning(i18nc("@info", "Could not retrieve the complete file listing. Some files may not be shown."));
+            }
+            break;
+        }
+
+        const auto &result = outcome.GetResult();
+
+        for (const auto &object : result.GetContents()) {
             KIO::UDSEntry entry;
             const auto objectKey = QString::fromUtf8(object.GetKey().c_str());
             entry.reserve(6);
@@ -526,8 +536,7 @@ void S3Backend::listBucket(const S3Url &s3url)
             q->listEntry(entry);
         }
 
-        const auto commonPrefixes = listObjectsOutcome.GetResult().GetCommonPrefixes();
-        for (const auto &commonPrefix : commonPrefixes) {
+        for (const auto &commonPrefix : result.GetCommonPrefixes()) {
             KIO::UDSEntry entry;
             QString prefix = QString::fromUtf8(commonPrefix.GetPrefix().c_str(), commonPrefix.GetPrefix().size());
             if (prefix.endsWith(QLatin1Char('/'))) {
@@ -540,35 +549,43 @@ void S3Backend::listBucket(const S3Url &s3url)
             entry.fastInsert(KIO::UDSEntry::UDS_FILE_TYPE, S_IFDIR);
             entry.fastInsert(KIO::UDSEntry::UDS_ACCESS, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IXOTH);
             entry.fastInsert(KIO::UDSEntry::UDS_SIZE, 0);
-
             q->listEntry(entry);
         }
-    } else {
-        qCDebug(S3) << "Could not list bucket: " << listObjectsOutcome.GetError().GetMessage().c_str();
-    }
+
+        isTruncated = result.GetIsTruncated();
+        if (isTruncated) {
+            request.SetContinuationToken(result.GetNextContinuationToken());
+        }
+    } while (isTruncated);
 }
 
 void S3Backend::listKey(const S3Url &s3url)
 {
     const Aws::S3::S3Client client = createS3Client(s3url.profileName());
-
     const QString prefix = s3url.prefix();
 
-    Aws::S3::Model::ListObjectsV2Request listObjectsRequest;
-    listObjectsRequest.SetBucket(s3url.BucketName());
-    listObjectsRequest.SetDelimiter("/");
-    listObjectsRequest.SetPrefix(s3url.Prefix());
+    Aws::S3::Model::ListObjectsV2Request request;
+    request.SetBucket(s3url.BucketName());
+    request.SetDelimiter("/");
+    request.SetPrefix(s3url.Prefix());
 
     qCDebug(S3) << "Listing prefix" << prefix << "...";
-    const auto listObjectsOutcome = client.ListObjectsV2(listObjectsRequest);
-    if (listObjectsOutcome.IsSuccess()) {
-        const auto objects = listObjectsOutcome.GetResult().GetContents();
-        // TODO: handle listObjectsOutcome.GetResult().GetIsTruncated()
-        // By default the max-keys request parameter is 1000, which is reasonable for us
-        // since we filter the keys by the name of the folder, but it won't work
-        // if someone has very big folders with more than 1000 files.
-        qCDebug(S3) << "Prefix" << prefix << "has" << objects.size() << "objects";
-        for (const auto &object : objects) {
+
+    bool isTruncated = false;
+    do {
+        const auto outcome = client.ListObjectsV2(request);
+        if (!outcome.IsSuccess()) {
+            qCWarning(S3) << "Could not list prefix" << s3url.key() << "-" << outcome.GetError().GetMessage().c_str();
+            if (isTruncated) {
+                q->warning(i18nc("@info", "Could not retrieve the complete file listing. Some files may not be shown."));
+            }
+            break;
+        }
+
+        const auto &result = outcome.GetResult();
+        qCDebug(S3) << "Prefix" << prefix << "has" << result.GetContents().size() << "objects";
+
+        for (const auto &object : result.GetContents()) {
             QString key = QString::fromUtf8(object.GetKey().c_str(), object.GetKey().size());
             // Note: key might be empty. 0-sized virtual folders have object.GetKey() equal to prefix.
             key.remove(0, prefix.length());
@@ -595,9 +612,8 @@ void S3Backend::listKey(const S3Url &s3url)
             }
         }
 
-        const auto commonPrefixes = listObjectsOutcome.GetResult().GetCommonPrefixes();
-        qCDebug(S3) << "Prefix" << prefix << "has" << commonPrefixes.size() << "common prefixes";
-        for (const auto &commonPrefix : commonPrefixes) {
+        qCDebug(S3) << "Prefix" << prefix << "has" << result.GetCommonPrefixes().size() << "common prefixes";
+        for (const auto &commonPrefix : result.GetCommonPrefixes()) {
             QString subprefix = QString::fromUtf8(commonPrefix.GetPrefix().c_str(), commonPrefix.GetPrefix().size());
             if (subprefix.endsWith(QLatin1Char('/'))) {
                 subprefix.chop(1);
@@ -611,12 +627,14 @@ void S3Backend::listKey(const S3Url &s3url)
             entry.fastInsert(KIO::UDSEntry::UDS_DISPLAY_NAME, subprefix);
             entry.fastInsert(KIO::UDSEntry::UDS_FILE_TYPE, S_IFDIR);
             entry.fastInsert(KIO::UDSEntry::UDS_SIZE, 0);
-
             q->listEntry(entry);
         }
-    } else {
-        qCDebug(S3) << "Could not list prefix" << s3url.key() << " - " << listObjectsOutcome.GetError().GetMessage().c_str();
-    }
+
+        isTruncated = result.GetIsTruncated();
+        if (isTruncated) {
+            request.SetContinuationToken(result.GetNextContinuationToken());
+        }
+    } while (isTruncated);
 }
 
 void S3Backend::listCwdEntry(CwdAccess access)
