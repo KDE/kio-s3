@@ -47,6 +47,7 @@ private:
     void listKey(const S3Url &s3url);
     void listCwdEntry(CwdAccess access = WritableCwd);
     bool deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url);
+    Q_REQUIRED_RESULT KIO::WorkerResult renamePrefix(const Aws::S3::S3Client &client, const S3Url &s3src, const S3Url &s3dest);
     QString contentType(const S3Url &s3url);
 
     Aws::S3::S3ClientConfiguration createClientConfiguration(const QString &profileName = QString()) const;

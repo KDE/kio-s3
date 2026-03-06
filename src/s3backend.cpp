@@ -432,16 +432,35 @@ KIO::WorkerResult S3Backend::del(const QUrl &url, bool isFile)
 
 KIO::WorkerResult S3Backend::rename(const QUrl &src, const QUrl &dest, KIO::JobFlags flags)
 {
-    Q_UNUSED(flags)
-    qCDebug(S3) << "Going to rename" << src << "to" << dest;
+    const auto s3src = S3Url(src);
+    const auto s3dest = S3Url(dest);
+    qCDebug(S3) << "Going to rename" << s3src << "to" << s3dest;
 
-    // FIXME: rename of virtual folders doesn't work, because folders don't exist in S3.
-    // This would require some special handling:
-    // 1. detect that src is a folder
-    // 2. list the folder
-    // 3. rename each key listed
-    // Workaround: copy+delete from dolphin...
+    if (s3src.profileName() != s3dest.profileName()) {
+        return KIO::WorkerResult::fail(KIO::ERR_WORKER_DEFINED,
+            xi18nc("@info", "Cannot rename between different S3 profiles."));
+    }
 
+    if (!s3src.isKey() || !s3dest.isKey()) {
+        return KIO::WorkerResult::fail(KIO::ERR_CANNOT_RENAME, src.toDisplayString());
+    }
+
+    const Aws::S3::S3Client client = createS3Client(s3src.profileName());
+
+    // Check if source is a folder by probing for objects under its prefix.
+    Aws::S3::Model::ListObjectsV2Request probeRequest;
+    probeRequest.SetBucket(s3src.BucketName());
+    probeRequest.SetPrefix(s3src.Prefix());
+    probeRequest.SetMaxKeys(1);
+
+    const auto probeOutcome = client.ListObjectsV2(probeRequest);
+    if (!probeOutcome.IsSuccess()) {
+        qCDebug(S3) << "Could not probe source prefix, assuming single file:" << probeOutcome.GetError().GetMessage().c_str();
+    } else if (!probeOutcome.GetResult().GetContents().empty()) {
+        return renamePrefix(client, s3src, s3dest);
+    }
+
+    // Single file: copy + delete.
     const auto copyResult = copy(src, dest, -1, flags);
     if (!copyResult.success()) {
         qCDebug(S3).nospace() << "Could not copy " << src << " to " << dest << ", aborting rename()";
@@ -457,6 +476,101 @@ KIO::WorkerResult S3Backend::rename(const QUrl &src, const QUrl &dest, KIO::JobF
         return KIO::WorkerResult::fail(KIO::ERR_CANNOT_RENAME, src.toDisplayString());
     }
 
+    return KIO::WorkerResult::pass();
+}
+
+KIO::WorkerResult S3Backend::renamePrefix(const Aws::S3::S3Client &client, const S3Url &s3src, const S3Url &s3dest)
+{
+    const Aws::String srcBucket = s3src.BucketName();
+    const Aws::String destBucket = s3dest.BucketName();
+    const Aws::String srcPrefix = s3src.Prefix();
+    const Aws::String destPrefix = s3dest.Prefix();
+    qCDebug(S3) << "Renaming folder:" << srcPrefix.c_str() << "to" << destPrefix.c_str();
+
+    // Phase 1: List all objects under the source prefix and copy each to the destination.
+    // Track both source and destination keys so we can delete sources after a successful
+    // copy, or rollback destination keys if the copy fails partway.
+    QList<Aws::String> srcKeys;
+    QList<Aws::String> destKeys;
+
+    auto rollback = [&client, &destBucket, &destKeys]() {
+        for (const auto &key : destKeys) {
+            Aws::S3::Model::DeleteObjectRequest delReq;
+            delReq.SetBucket(destBucket);
+            delReq.SetKey(key);
+            const auto delOutcome = client.DeleteObject(delReq);
+            if (!delOutcome.IsSuccess()) {
+                qCWarning(S3) << "Rollback: could not delete" << key.c_str()
+                              << "-" << delOutcome.GetError().GetMessage().c_str();
+            }
+        }
+    };
+
+    Aws::S3::Model::ListObjectsV2Request listRequest;
+    listRequest.SetBucket(srcBucket);
+    listRequest.SetPrefix(srcPrefix);
+
+    bool isTruncated = false;
+    do {
+        const auto listOutcome = client.ListObjectsV2(listRequest);
+        if (!listOutcome.IsSuccess()) {
+            qCWarning(S3) << "Could not list source prefix:" << srcPrefix.c_str()
+                          << "-" << listOutcome.GetError().GetMessage().c_str();
+            rollback();
+            return KIO::WorkerResult::fail(KIO::ERR_CANNOT_RENAME, s3src.url().toDisplayString());
+        }
+
+        const auto &result = listOutcome.GetResult();
+        for (const auto &object : result.GetContents()) {
+            const Aws::String &srcKey = object.GetKey();
+            const Aws::String destKey = destPrefix + srcKey.substr(srcPrefix.size());
+
+            Aws::S3::Model::CopyObjectRequest copyRequest;
+            copyRequest.SetCopySource(srcBucket + "/" + srcKey);
+            copyRequest.SetBucket(destBucket);
+            copyRequest.SetKey(destKey);
+
+            const auto copyOutcome = client.CopyObject(copyRequest);
+            if (!copyOutcome.IsSuccess()) {
+                qCWarning(S3) << "Could not copy object:" << srcKey.c_str()
+                              << "to" << destKey.c_str()
+                              << "-" << copyOutcome.GetError().GetMessage().c_str();
+                rollback();
+                return KIO::WorkerResult::fail(KIO::ERR_CANNOT_RENAME, s3src.url().toDisplayString());
+            }
+
+            srcKeys.append(srcKey);
+            destKeys.append(destKey);
+        }
+
+        isTruncated = result.GetIsTruncated();
+        if (isTruncated) {
+            listRequest.SetContinuationToken(result.GetNextContinuationToken());
+        }
+    } while (isTruncated);
+
+    qCDebug(S3) << "Copied" << srcKeys.size() << "objects, now deleting source objects...";
+
+    // Phase 2: Delete all source objects. If deletion fails, the data is safe
+    // at the destination — warn the user but still report success.
+    bool allDeleted = true;
+    for (const auto &key : srcKeys) {
+        Aws::S3::Model::DeleteObjectRequest delRequest;
+        delRequest.SetBucket(srcBucket);
+        delRequest.SetKey(key);
+        const auto delOutcome = client.DeleteObject(delRequest);
+        if (!delOutcome.IsSuccess()) {
+            qCWarning(S3) << "Could not delete source object:" << key.c_str()
+                          << "-" << delOutcome.GetError().GetMessage().c_str();
+            allDeleted = false;
+        }
+    }
+
+    if (!allDeleted) {
+        q->warning(i18nc("@info", "Some source files could not be deleted after renaming. The renamed folder may still contain leftover files."));
+    }
+
+    qCDebug(S3) << "Folder rename complete:" << srcKeys.size() << "objects moved";
     return KIO::WorkerResult::pass();
 }
 
