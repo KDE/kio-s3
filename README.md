@@ -78,4 +78,3 @@ DigitalOcean Spaces, MinIO, etc.) and switch between them using the
   - *Workaround*: prefer folder browsing using the Dolphin views, instead of manually typing the URLs in the navigation bar.
 - Creating an empty folder is currently not supported.
   - *Workaround*: create it from the S3 web console.
-- Listing a folder with more than 1000 files is currently not supported.
