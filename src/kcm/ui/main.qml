@@ -7,6 +7,7 @@ import QtQuick
 import QtQuick.Controls as QQC2
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.formcard as FormCard
 import org.kde.kcmutils as KCM
 
 KCM.ScrollViewKCM {
@@ -97,89 +98,110 @@ KCM.ScrollViewKCM {
     }
 
     // ---- Edit Dialog ----
-    Kirigami.Dialog {
+    FormCard.FormCardDialog {
         id: editDialog
 
         title: isNewProfile ? i18n("Add S3 Profile") : i18n("Edit S3 Profile")
         modal: true
-        preferredWidth: Kirigami.Units.gridUnit * 25
+        parent: root.QQC2.Overlay.overlay
 
         property bool isNewProfile: true
         property int editIndex: -1
 
-        contentItem: Kirigami.FormLayout {
-            QQC2.TextField {
-                id: nameField
-                Kirigami.FormData.label: i18n("Name:")
-                placeholderText: i18n("e.g., My S3 Storage")
-            }
+        standardButtons: FormCard.FormCardDialog.Ok | FormCard.FormCardDialog.Cancel
 
-            QQC2.TextField {
-                id: endpointField
-                Kirigami.FormData.label: i18n("Endpoint URL:")
-                placeholderText: i18n("e.g., https://s3.example.com")
-                inputMethodHints: Qt.ImhUrlCharactersOnly
-            }
-
-            QQC2.TextField {
-                id: regionField
-                Kirigami.FormData.label: i18n("Region:")
-                placeholderText: i18n("e.g., us-east-1, auto")
-            }
-
-            Kirigami.Separator {
-                Kirigami.FormData.isSection: true
-                Kirigami.FormData.label: i18n("Authentication")
-            }
-
-            QQC2.TextField {
-                id: awsProfileField
-                Kirigami.FormData.label: i18n("AWS Profile:")
-                placeholderText: i18n("Profile from ~/.aws/credentials")
-            }
-
-            Kirigami.Separator {
-                Kirigami.FormData.isSection: true
-                Kirigami.FormData.label: i18n("Advanced")
-            }
-
-            QQC2.CheckBox {
-                id: pathStyleCheck
-                Kirigami.FormData.label: i18n("Addressing:")
-                text: i18n("Use path-style S3 URLs")
-            }
+        Component.onCompleted: {
+            const okButton = standardButton(FormCard.FormCardDialog.Ok);
+            okButton.text = Qt.binding(() => editDialog.isNewProfile ? i18n("Add") : i18n("Save"))
+            okButton.icon.name = Qt.binding(() =>  editDialog.isNewProfile ? "list-add-symbolic" : "document-save-symbolic")
+            okButton.enabled = Qt.binding(() =>  nameField.text.length > 0)
         }
 
-        customFooterActions: [
-            Kirigami.Action {
-                text: editDialog.isNewProfile ? i18n("Add") : i18n("Save")
-                icon.name: editDialog.isNewProfile ? "list-add-symbolic" : "document-save-symbolic"
-                enabled: nameField.text.length > 0
-                onTriggered: {
-                    if (editDialog.isNewProfile) {
-                        kcm.profileModel.addProfile(
-                            nameField.text,
-                            endpointField.text,
-                            regionField.text,
-                            awsProfileField.text,
-                            pathStyleCheck.checked
-                        );
-                    } else {
-                        kcm.profileModel.editProfile(
-                            editDialog.editIndex,
-                            nameField.text,
-                            endpointField.text,
-                            regionField.text,
-                            awsProfileField.text,
-                            pathStyleCheck.checked
-                        );
-                    }
-                    editDialog.close();
-                }
+        onAccepted: {
+            if (editDialog.isNewProfile) {
+                kcm.profileModel.addProfile(
+                    nameField.text,
+                    endpointField.text,
+                    regionField.text,
+                    awsProfileField.text,
+                    pathStyleCheck.checked
+                );
+            } else {
+                kcm.profileModel.editProfile(
+                    editDialog.editIndex,
+                    nameField.text,
+                    endpointField.text,
+                    regionField.text,
+                    awsProfileField.text,
+                    pathStyleCheck.checked
+                );
             }
-        ]
+            editDialog.close();
+        }
 
-        function openForNew() {
+        onRejected: editDialog.close();
+
+        FormCard.FormTextFieldDelegate {
+            id: nameField
+            label: i18n("Name:")
+            placeholderText: i18n("e.g., My S3 Storage")
+        }
+
+        FormCard.FormDelegateSeparator {}
+
+        FormCard.FormTextFieldDelegate {
+            id: endpointField
+            label: i18n("Endpoint URL:")
+            placeholderText: i18n("e.g., https://s3.example.com")
+            inputMethodHints: Qt.ImhUrlCharactersOnly
+        }
+
+        FormCard.FormDelegateSeparator {}
+
+        FormCard.FormTextFieldDelegate {
+            id: regionField
+            label: i18n("Region:")
+            placeholderText: i18n("e.g., us-east-1, auto")
+        }
+
+        FormCard.FormDelegateSeparator {}
+
+        Kirigami.Heading {
+            text: i18nc("@title:group", "Authentication")
+            level: 2
+            type: Kirigami.Heading.Type.Primary
+            Layout.leftMargin: Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
+            Layout.topMargin: Kirigami.Units.largeSpacing
+        }
+
+        FormCard.FormTextFieldDelegate {
+            id: awsProfileField
+            label: i18n("AWS Profile:")
+            placeholderText: i18n("Profile from ~/.aws/credentials")
+        }
+
+        FormCard.FormDelegateSeparator {}
+
+        Kirigami.Heading {
+            text: i18nc("@title:group", "Advanced")
+            level: 2
+            type: Kirigami.Heading.Type.Primary
+            Layout.leftMargin: Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
+            Layout.topMargin: Kirigami.Units.largeSpacing
+        }
+
+        Kirigami.Separator {
+            Kirigami.FormData.isSection: true
+            Kirigami.FormData.label: i18n("Advanced")
+        }
+
+        FormCard.FormCheckDelegate {
+            id: pathStyleCheck
+            //label: i18n("Addressing:")
+            text: i18n("Use path-style S3 URLs")
+        }
+
+        function openForNew(): void {
             isNewProfile = true;
             editIndex = -1;
             nameField.text = "";
@@ -191,7 +213,7 @@ KCM.ScrollViewKCM {
             nameField.forceActiveFocus();
         }
 
-        function openForEdit(index) {
+        function openForEdit(index: int): void {
             isNewProfile = false;
             editIndex = index;
             var profile = kcm.profileModel.profileAt(index);
