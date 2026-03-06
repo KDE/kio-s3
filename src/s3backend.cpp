@@ -325,13 +325,13 @@ KIO::WorkerResult S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags
 
     request.SetBody(putDataStream);
 
-    auto putObjectOutcome = client.PutObject(request);
-    if (putObjectOutcome.IsSuccess()) {
-        qCDebug(S3) << "Uploaded" <<  bytesCount << "bytes to key:" << s3url.key();
-    } else {
-        qCDebug(S3) << "Could not PUT object with key:" << s3url.key() << " - " << putObjectOutcome.GetError().GetMessage().c_str();
+    const auto putObjectOutcome = client.PutObject(request);
+    if (!putObjectOutcome.IsSuccess()) {
+        qCWarning(S3) << "Could not PUT object with key:" << s3url.key() << "-" << putObjectOutcome.GetError().GetMessage().c_str();
+        return KIO::WorkerResult::fail(KIO::ERR_CANNOT_WRITE, url.toDisplayString());
     }
 
+    qCDebug(S3) << "Uploaded" << bytesCount << "bytes to key:" << s3url.key();
     return KIO::WorkerResult::pass();
 }
 
