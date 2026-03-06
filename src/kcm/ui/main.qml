@@ -30,6 +30,12 @@ KCM.ScrollViewKCM {
         }
     }
 
+    actions: QQC2.Action {
+	icon.name: "list-add-symbolic"
+	text: i18n("Add Profile…")
+	onTriggered: editDialog.openForNew()
+    }
+
     view: ListView {
         id: profileList
         model: kcm.profileModel
@@ -87,17 +93,6 @@ KCM.ScrollViewKCM {
                     onTriggered: deleteDialog.openForProfile(model.index, model.name)
                 }
             ]
-        }
-    }
-
-    footer: QQC2.ToolBar {
-        contentItem: RowLayout {
-            QQC2.ToolButton {
-                icon.name: "list-add-symbolic"
-                text: i18n("Add Profile…")
-                onClicked: editDialog.openForNew()
-            }
-            Item { Layout.fillWidth: true }
         }
     }
 
