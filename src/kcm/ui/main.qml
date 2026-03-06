@@ -8,6 +8,7 @@ import QtQuick.Controls as QQC2
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.formcard as FormCard
+import org.kde.kirigamiaddons.components as Components
 import org.kde.kcmutils as KCM
 
 KCM.ScrollViewKCM {
@@ -228,29 +229,33 @@ KCM.ScrollViewKCM {
     }
 
     // ---- Delete Confirmation ----
-    Kirigami.PromptDialog {
+    Components.MessageDialog {
         id: deleteDialog
 
         property int deleteIndex: -1
+        property string name: ''
 
         title: i18n("Delete Profile")
-        subtitle: ""
-        standardButtons: Kirigami.Dialog.NoButton
+        subtitle: i18n("Are you sure you want to delete the profile \"%1\"?", name)
+        standardButtons: Components.MessageDialog.Ok | Components.MessageDialog.Cancel
+        dialogType: Components.MessageDialog.Warning
 
-        customFooterActions: [
-            Kirigami.Action {
-                text: i18n("Delete")
-                icon.name: "edit-delete-symbolic"
-                onTriggered: {
-                    kcm.profileModel.removeProfile(deleteDialog.deleteIndex);
-                    deleteDialog.close();
-                }
-            }
-        ]
+        Component.onCompleted: {
+            const okButton = standardButton(FormCard.FormCardDialog.Ok);
+            okButton.text = i18n("Delete")
+            okButton.icon.name = "edit-delete-symbolic"
+        }
 
-        function openForProfile(index, name) {
+        onAccepted: {
+            kcm.profileModel.removeProfile(deleteDialog.deleteIndex);
+            deleteDialog.close();
+        }
+
+        onRejected: deleteDialog.close()
+
+        function openForProfile(index: int, name: string): void {
             deleteIndex = index;
-            subtitle = i18n("Are you sure you want to delete the profile \"%1\"?", name);
+            name = name;
             open();
         }
     }
