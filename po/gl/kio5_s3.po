@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-05 00:43+0000\n"
+"POT-Creation-Date: 2026-03-07 00:43+0000\n"
 "PO-Revision-Date: 2023-04-30 08:57+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
@@ -17,7 +17,130 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 23.04.0\n"
 
-#: s3backend.cpp:30
+#: kcm/ui/main.qml:25
+#, kde-format
+msgid "No S3 profiles configured"
+msgstr ""
+
+#: kcm/ui/main.qml:26
+#, kde-format
+msgid "Add a profile to connect to an S3-compatible storage backend"
+msgstr ""
+
+#: kcm/ui/main.qml:30 kcm/ui/main.qml:37
+#, kde-format
+msgid "Add Profile…"
+msgstr ""
+
+#: kcm/ui/main.qml:72
+#, kde-format
+msgid "Default AWS endpoint"
+msgstr ""
+
+#: kcm/ui/main.qml:89
+#, kde-format
+msgid "Edit"
+msgstr ""
+
+#: kcm/ui/main.qml:94 kcm/ui/main.qml:245
+#, kde-format
+msgid "Delete"
+msgstr ""
+
+#: kcm/ui/main.qml:105
+#, kde-format
+msgid "Add S3 Profile"
+msgstr ""
+
+#: kcm/ui/main.qml:105
+#, kde-format
+msgid "Edit S3 Profile"
+msgstr ""
+
+#: kcm/ui/main.qml:116
+#, kde-format
+msgid "Add"
+msgstr ""
+
+#: kcm/ui/main.qml:116
+#, kde-format
+msgid "Save"
+msgstr ""
+
+#: kcm/ui/main.qml:147
+#, kde-format
+msgid "Name:"
+msgstr ""
+
+#: kcm/ui/main.qml:148
+#, kde-format
+msgid "e.g., My S3 Storage"
+msgstr ""
+
+#: kcm/ui/main.qml:155
+#, kde-format
+msgid "Endpoint URL:"
+msgstr ""
+
+#: kcm/ui/main.qml:156
+#, kde-format
+msgid "e.g., https://s3.example.com"
+msgstr ""
+
+#: kcm/ui/main.qml:164
+#, kde-format
+msgid "Region:"
+msgstr ""
+
+#: kcm/ui/main.qml:165
+#, kde-format
+msgid "e.g., us-east-1, auto"
+msgstr ""
+
+#: kcm/ui/main.qml:171
+#, kde-format
+msgctxt "@title:group"
+msgid "Authentication"
+msgstr ""
+
+#: kcm/ui/main.qml:180
+#, kde-format
+msgid "AWS Profile:"
+msgstr ""
+
+#: kcm/ui/main.qml:181
+#, kde-format
+msgid "Profile from ~/.aws/credentials"
+msgstr ""
+
+#: kcm/ui/main.qml:187
+#, kde-format
+msgctxt "@title:group"
+msgid "Advanced"
+msgstr ""
+
+#: kcm/ui/main.qml:196
+#, kde-format
+msgid "Advanced"
+msgstr ""
+
+#. i18n("Addressing:")
+#: kcm/ui/main.qml:202
+#, kde-format
+msgid "Use path-style S3 URLs"
+msgstr ""
+
+#: kcm/ui/main.qml:238
+#, kde-format
+msgid "Delete Profile"
+msgstr ""
+
+#: kcm/ui/main.qml:239
+#, kde-format
+msgid "Are you sure you want to delete the profile \"%1\"?"
+msgstr ""
+
+#: s3backend.cpp:32
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -27,15 +150,28 @@ msgstr ""
 "URI de S3 incorrecto, falta o nome do balde na parte do servidor.<nl/>Un URI "
 "de S3 correcto ten que ter esta forma: <link>s3://balde/clave</link>"
 
-#: s3backend.cpp:91
+#: s3backend.cpp:127 s3backend.cpp:136
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr ""
 "Non é posíbel atopar baldes de S3, comproba a túa configuración de AWS."
 
-#: s3backend.cpp:350
+#: s3backend.cpp:353
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Cannot copy between different S3 profiles. Copy the file locally first."
+msgstr ""
+
+#: s3backend.cpp:396
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "Non foi posíbel copiar <link>%1</link> a <link>%2</link>"
+
+#: s3backend.cpp:519 s3backend.cpp:580
+#, kde-format
+msgctxt "@info"
+msgid ""
+"Could not retrieve the complete file listing. Some files may not be shown."
+msgstr ""
