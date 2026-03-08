@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-07 00:43+0000\n"
+"POT-Creation-Date: 2026-03-08 00:44+0000\n"
 "PO-Revision-Date: 2022-09-16 10:03+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -171,7 +171,21 @@ msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "No s'ha pogut copiar <link>%1</link> a <link>%2</link>"
 
-#: s3backend.cpp:519 s3backend.cpp:580
+#: s3backend.cpp:441
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Cannot rename between different S3 profiles."
+msgstr ""
+
+#: s3backend.cpp:570
+#, kde-format
+msgctxt "@info"
+msgid ""
+"Some source files could not be deleted after renaming. The renamed folder "
+"may still contain leftover files."
+msgstr ""
+
+#: s3backend.cpp:632 s3backend.cpp:693
 #, kde-format
 msgctxt "@info"
 msgid ""

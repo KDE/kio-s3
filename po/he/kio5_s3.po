@@ -1,13 +1,13 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the kio-s3 package.
 #
-# SPDX-FileCopyrightText: 2024 Yaron Shahrabani <sh.yaron@gmail.com>
+# SPDX-FileCopyrightText: 2024, 2026 Yaron Shahrabani <sh.yaron@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-07 00:43+0000\n"
-"PO-Revision-Date: 2024-04-26 11:30+0300\n"
+"POT-Creation-Date: 2026-03-08 00:44+0000\n"
+"PO-Revision-Date: 2026-03-07 08:15+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -16,130 +16,130 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.12.2\n"
 
 #: kcm/ui/main.qml:25
 #, kde-format
 msgid "No S3 profiles configured"
-msgstr ""
+msgstr "לא נבחרו פרופילים של S3"
 
 #: kcm/ui/main.qml:26
 #, kde-format
 msgid "Add a profile to connect to an S3-compatible storage backend"
-msgstr ""
+msgstr "יש להוסיף פרופיל כדי להתחבר למנגנון אחסון תואם S3"
 
 #: kcm/ui/main.qml:30 kcm/ui/main.qml:37
 #, kde-format
 msgid "Add Profile…"
-msgstr ""
+msgstr "הוספת פרופיל…"
 
 #: kcm/ui/main.qml:72
 #, kde-format
 msgid "Default AWS endpoint"
-msgstr ""
+msgstr "נקודת הגישה של AWS כברירת מחדל"
 
 #: kcm/ui/main.qml:89
 #, kde-format
 msgid "Edit"
-msgstr ""
+msgstr "עריכה"
 
 #: kcm/ui/main.qml:94 kcm/ui/main.qml:245
 #, kde-format
 msgid "Delete"
-msgstr ""
+msgstr "מחיקה"
 
 #: kcm/ui/main.qml:105
 #, kde-format
 msgid "Add S3 Profile"
-msgstr ""
+msgstr "הוספת פרופיל S3"
 
 #: kcm/ui/main.qml:105
 #, kde-format
 msgid "Edit S3 Profile"
-msgstr ""
+msgstr "עריכת פרופיל S3"
 
 #: kcm/ui/main.qml:116
 #, kde-format
 msgid "Add"
-msgstr ""
+msgstr "הוספה"
 
 #: kcm/ui/main.qml:116
 #, kde-format
 msgid "Save"
-msgstr ""
+msgstr "שמירה"
 
 #: kcm/ui/main.qml:147
 #, kde-format
 msgid "Name:"
-msgstr ""
+msgstr "שם:"
 
 #: kcm/ui/main.qml:148
 #, kde-format
 msgid "e.g., My S3 Storage"
-msgstr ""
+msgstr "למשל, האחסון שלי ב־S3"
 
 #: kcm/ui/main.qml:155
 #, kde-format
 msgid "Endpoint URL:"
-msgstr ""
+msgstr "כתובת נקודת גישה:"
 
 #: kcm/ui/main.qml:156
 #, kde-format
 msgid "e.g., https://s3.example.com"
-msgstr ""
+msgstr "למשל, https://s3.example.com"
 
 #: kcm/ui/main.qml:164
 #, kde-format
 msgid "Region:"
-msgstr ""
+msgstr "אזור:"
 
 #: kcm/ui/main.qml:165
 #, kde-format
 msgid "e.g., us-east-1, auto"
-msgstr ""
+msgstr "למשל, us-east-1,‏ auto"
 
 #: kcm/ui/main.qml:171
 #, kde-format
 msgctxt "@title:group"
 msgid "Authentication"
-msgstr ""
+msgstr "אימות"
 
 #: kcm/ui/main.qml:180
 #, kde-format
 msgid "AWS Profile:"
-msgstr ""
+msgstr "פרופיל AWS:"
 
 #: kcm/ui/main.qml:181
 #, kde-format
 msgid "Profile from ~/.aws/credentials"
-msgstr ""
+msgstr "פרופיל מ־‎~/.aws/credentials"
 
 #: kcm/ui/main.qml:187
 #, kde-format
 msgctxt "@title:group"
 msgid "Advanced"
-msgstr ""
+msgstr "מתקדם"
 
 #: kcm/ui/main.qml:196
 #, kde-format
 msgid "Advanced"
-msgstr ""
+msgstr "מתקדם"
 
 #. i18n("Addressing:")
 #: kcm/ui/main.qml:202
 #, kde-format
 msgid "Use path-style S3 URLs"
-msgstr ""
+msgstr "להשתמש בכתובות S3 בסגנון נתיב"
 
 #: kcm/ui/main.qml:238
 #, kde-format
 msgid "Delete Profile"
-msgstr ""
+msgstr "מחיקת פרופיל"
 
 #: kcm/ui/main.qml:239
 #, kde-format
 msgid "Are you sure you want to delete the profile \"%1\"?"
-msgstr ""
+msgstr "למחוק את הפרופיל „%1”?"
 
 #: s3backend.cpp:32
 #, kde-kuit-format
@@ -162,6 +162,7 @@ msgstr "לא ניתן למצוא דליים של S3, נא לבדוק שהגדר�
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
 msgstr ""
+"לא ניתן להעתיק בין פרופילים שונים של S3. יש להעתיק את הקבצים מקומית תחילה."
 
 #: s3backend.cpp:396
 #, kde-kuit-format
@@ -169,9 +170,27 @@ msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "לא ניתן להעתיק את <link>%1</link> אל <link>%2</link>"
 
-#: s3backend.cpp:519 s3backend.cpp:580
+#: s3backend.cpp:441
+#, fuzzy, kde-kuit-format
+#| msgctxt "@info"
+#| msgid ""
+#| "Cannot copy between different S3 profiles. Copy the file locally first."
+msgctxt "@info"
+msgid "Cannot rename between different S3 profiles."
+msgstr ""
+"לא ניתן להעתיק בין פרופילים שונים של S3. יש להעתיק את הקבצים מקומית תחילה."
+
+#: s3backend.cpp:570
+#, kde-format
+msgctxt "@info"
+msgid ""
+"Some source files could not be deleted after renaming. The renamed folder "
+"may still contain leftover files."
+msgstr ""
+
+#: s3backend.cpp:632 s3backend.cpp:693
 #, kde-format
 msgctxt "@info"
 msgid ""
 "Could not retrieve the complete file listing. Some files may not be shown."
-msgstr ""
+msgstr "לא ניתן למשוך את רשימת הקבצים המלאה. יכול להיות שיש קבצים שלא יופיעו."

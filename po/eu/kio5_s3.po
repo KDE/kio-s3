@@ -1,16 +1,16 @@
 # Translation for kio5_s3.po to Euskera/Basque (eu).
-# Copyright (C) 2021-2022, This file is copyright:
+# Copyright (C) 2021-2026 This file is copyright:
 # This file is distributed under the same license as the kio-s3 package.
-# KDE euskaratzeko proiektuko arduraduna <xalba@ni.eus>.
+# SPDX-FileCopyrightText: 2026 KDE euskaratzeko proiektuaren arduraduna <xalba@ni.eus>
 #
 # Translators:
-# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2021, 2022.
+# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2021, 2022, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-07 00:43+0000\n"
-"PO-Revision-Date: 2022-09-16 07:49+0200\n"
+"POT-Creation-Date: 2026-03-08 00:44+0000\n"
+"PO-Revision-Date: 2026-03-07 23:52+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -18,130 +18,132 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.08.0\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #: kcm/ui/main.qml:25
 #, kde-format
 msgid "No S3 profiles configured"
-msgstr ""
+msgstr "Ez da S3 profilik konfiguratu"
 
 #: kcm/ui/main.qml:26
 #, kde-format
 msgid "Add a profile to connect to an S3-compatible storage backend"
 msgstr ""
+"Gehitu S3rekin bateragarria den gordetegi bizkarraldeko batera konektatzeko "
+"profil bat."
 
 #: kcm/ui/main.qml:30 kcm/ui/main.qml:37
 #, kde-format
 msgid "Add Profile…"
-msgstr ""
+msgstr "Gehitu profila…"
 
 #: kcm/ui/main.qml:72
 #, kde-format
 msgid "Default AWS endpoint"
-msgstr ""
+msgstr "AWS bukaera-puntu lehenetsia"
 
 #: kcm/ui/main.qml:89
 #, kde-format
 msgid "Edit"
-msgstr ""
+msgstr "Editatu"
 
 #: kcm/ui/main.qml:94 kcm/ui/main.qml:245
 #, kde-format
 msgid "Delete"
-msgstr ""
+msgstr "Ezabatu"
 
 #: kcm/ui/main.qml:105
 #, kde-format
 msgid "Add S3 Profile"
-msgstr ""
+msgstr "Gehitu S3 profila"
 
 #: kcm/ui/main.qml:105
 #, kde-format
 msgid "Edit S3 Profile"
-msgstr ""
+msgstr "Editatu S3 profila"
 
 #: kcm/ui/main.qml:116
 #, kde-format
 msgid "Add"
-msgstr ""
+msgstr "Gehitu"
 
 #: kcm/ui/main.qml:116
 #, kde-format
 msgid "Save"
-msgstr ""
+msgstr "Gorde"
 
 #: kcm/ui/main.qml:147
 #, kde-format
 msgid "Name:"
-msgstr ""
+msgstr "Izena:"
 
 #: kcm/ui/main.qml:148
 #, kde-format
 msgid "e.g., My S3 Storage"
-msgstr ""
+msgstr "adib. Nire S3 gordetegia"
 
 #: kcm/ui/main.qml:155
 #, kde-format
 msgid "Endpoint URL:"
-msgstr ""
+msgstr "Bukaera-puntuko URLa:"
 
 #: kcm/ui/main.qml:156
 #, kde-format
 msgid "e.g., https://s3.example.com"
-msgstr ""
+msgstr "adib., https://s3.example.com"
 
 #: kcm/ui/main.qml:164
 #, kde-format
 msgid "Region:"
-msgstr ""
+msgstr "Eskualdea:"
 
 #: kcm/ui/main.qml:165
 #, kde-format
 msgid "e.g., us-east-1, auto"
-msgstr ""
+msgstr "adib., us-east-1, auto"
 
 #: kcm/ui/main.qml:171
 #, kde-format
 msgctxt "@title:group"
 msgid "Authentication"
-msgstr ""
+msgstr "Autentifikazioa"
 
 #: kcm/ui/main.qml:180
 #, kde-format
 msgid "AWS Profile:"
-msgstr ""
+msgstr "AWS profila:"
 
 #: kcm/ui/main.qml:181
 #, kde-format
 msgid "Profile from ~/.aws/credentials"
-msgstr ""
+msgstr "“~/.aws/credentials”ko profila"
 
 #: kcm/ui/main.qml:187
 #, kde-format
 msgctxt "@title:group"
 msgid "Advanced"
-msgstr ""
+msgstr "Aurreratua"
 
 #: kcm/ui/main.qml:196
 #, kde-format
 msgid "Advanced"
-msgstr ""
+msgstr "Aurreratua"
 
 #. i18n("Addressing:")
 #: kcm/ui/main.qml:202
 #, kde-format
 msgid "Use path-style S3 URLs"
-msgstr ""
+msgstr "Erabili bide-izen estiloko S3 URLak"
 
 #: kcm/ui/main.qml:238
 #, kde-format
 msgid "Delete Profile"
-msgstr ""
+msgstr "Ezabatu profila"
 
 #: kcm/ui/main.qml:239
 #, kde-format
 msgid "Are you sure you want to delete the profile \"%1\"?"
-msgstr ""
+msgstr "Ziur zaude \"%1\" profila ezabatu nahi duzula?"
 
 #: s3backend.cpp:32
 #, kde-kuit-format
@@ -166,6 +168,8 @@ msgstr ""
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
 msgstr ""
+"Ezin da S3 profil ezberdinen artean kopiatu. Aurrena fitxategia lokalki "
+"kopiatu."
 
 #: s3backend.cpp:396
 #, kde-kuit-format
@@ -173,9 +177,30 @@ msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "Ezin izan du <link>%1</link> <link>%2</link>(e)ra kopiatu"
 
-#: s3backend.cpp:519 s3backend.cpp:580
+#: s3backend.cpp:441
+#, fuzzy, kde-kuit-format
+#| msgctxt "@info"
+#| msgid ""
+#| "Cannot copy between different S3 profiles. Copy the file locally first."
+msgctxt "@info"
+msgid "Cannot rename between different S3 profiles."
+msgstr ""
+"Ezin da S3 profil ezberdinen artean kopiatu. Aurrena fitxategia lokalki "
+"kopiatu."
+
+#: s3backend.cpp:570
+#, kde-format
+msgctxt "@info"
+msgid ""
+"Some source files could not be deleted after renaming. The renamed folder "
+"may still contain leftover files."
+msgstr ""
+
+#: s3backend.cpp:632 s3backend.cpp:693
 #, kde-format
 msgctxt "@info"
 msgid ""
 "Could not retrieve the complete file listing. Some files may not be shown."
 msgstr ""
+"Ezin izan da fitxategien zerrenda osoa eskuratu. Baliteke fitxategi batzuk "
+"ez agertzea."
