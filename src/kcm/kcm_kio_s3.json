@@ -1,8 +1,20 @@
 {
     "KPlugin": {
         "Description": "Configure S3 backend profiles",
+        "Description[ca]": "Configura els perfils de dorsals S3",
+        "Description[es]": "Configurar perfiles de motores S3",
+        "Description[eu]": "S3 bizkarraldeko profilak konfiguratu",
+        "Description[pt_BR]": "Configurar perfis de backend S3",
+        "Description[tr]": "S3 arka uç profillerini yapılandırın",
+        "Description[uk]": "Налаштовування профілів модулів S3",
         "Icon": "folder-cloud",
-        "Name": "S3 Backends"
+        "Name": "S3 Backends",
+        "Name[ca]": "Dorsals S3",
+        "Name[es]": "Motores S3",
+        "Name[eu]": "S3 bizkarraldekoak",
+        "Name[pt_BR]": "Backends S3",
+        "Name[tr]": "S3 Arka Uçları",
+        "Name[uk]": "Модулі обробки S3"
     },
     "X-KDE-System-Settings-Parent-Category": "network"
 }
