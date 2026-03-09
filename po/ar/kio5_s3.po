@@ -1,13 +1,13 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2026 This file is copyright:
 # This file is distributed under the same license as the kio-s3 package.
+# SPDX-FileCopyrightText: 2022, 2026 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
 #
-# Zayed Al-Saidi <zayed.alsaidi@gmail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-08 00:44+0000\n"
-"PO-Revision-Date: 2022-09-19 18:50+0400\n"
+"PO-Revision-Date: 2026-03-08 10:20+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -16,129 +16,130 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #: kcm/ui/main.qml:25
 #, kde-format
 msgid "No S3 profiles configured"
-msgstr ""
+msgstr "لم يضبط أي تشكيلة S3"
 
 #: kcm/ui/main.qml:26
 #, kde-format
 msgid "Add a profile to connect to an S3-compatible storage backend"
-msgstr ""
+msgstr "أضف تشكيلة للاتصال بخلفية تخزين متوافقة مع S3"
 
 #: kcm/ui/main.qml:30 kcm/ui/main.qml:37
 #, kde-format
 msgid "Add Profile…"
-msgstr ""
+msgstr "أضف تشكيلة…"
 
 #: kcm/ui/main.qml:72
 #, kde-format
 msgid "Default AWS endpoint"
-msgstr ""
+msgstr "نقطة نهاية AWS المبدئية"
 
 #: kcm/ui/main.qml:89
 #, kde-format
 msgid "Edit"
-msgstr ""
+msgstr "حرّر"
 
 #: kcm/ui/main.qml:94 kcm/ui/main.qml:245
 #, kde-format
 msgid "Delete"
-msgstr ""
+msgstr "احذف"
 
 #: kcm/ui/main.qml:105
 #, kde-format
 msgid "Add S3 Profile"
-msgstr ""
+msgstr "أضف تشكيلة S3"
 
 #: kcm/ui/main.qml:105
 #, kde-format
 msgid "Edit S3 Profile"
-msgstr ""
+msgstr "حرر التشكيلة S3"
 
 #: kcm/ui/main.qml:116
 #, kde-format
 msgid "Add"
-msgstr ""
+msgstr "أضف"
 
 #: kcm/ui/main.qml:116
 #, kde-format
 msgid "Save"
-msgstr ""
+msgstr "احفظ"
 
 #: kcm/ui/main.qml:147
 #, kde-format
 msgid "Name:"
-msgstr ""
+msgstr "الاسم:"
 
 #: kcm/ui/main.qml:148
 #, kde-format
 msgid "e.g., My S3 Storage"
-msgstr ""
+msgstr "على سبيل المثال، تخزين S3 الخاص بي"
 
 #: kcm/ui/main.qml:155
 #, kde-format
 msgid "Endpoint URL:"
-msgstr ""
+msgstr "عنوان نقطة النهاية:"
 
 #: kcm/ui/main.qml:156
 #, kde-format
 msgid "e.g., https://s3.example.com"
-msgstr ""
+msgstr "مثال، https://s3.example.com"
 
 #: kcm/ui/main.qml:164
 #, kde-format
 msgid "Region:"
-msgstr ""
+msgstr "المنطقة:"
 
 #: kcm/ui/main.qml:165
 #, kde-format
 msgid "e.g., us-east-1, auto"
-msgstr ""
+msgstr "مثال, us-east-1, auto"
 
 #: kcm/ui/main.qml:171
 #, kde-format
 msgctxt "@title:group"
 msgid "Authentication"
-msgstr ""
+msgstr "الاستيثاق"
 
 #: kcm/ui/main.qml:180
 #, kde-format
 msgid "AWS Profile:"
-msgstr ""
+msgstr "تشكيلة AWS:"
 
 #: kcm/ui/main.qml:181
 #, kde-format
 msgid "Profile from ~/.aws/credentials"
-msgstr ""
+msgstr "تشكيلة من ~/.aws/credentials"
 
 #: kcm/ui/main.qml:187
 #, kde-format
 msgctxt "@title:group"
 msgid "Advanced"
-msgstr ""
+msgstr "متقدّم"
 
 #: kcm/ui/main.qml:196
 #, kde-format
 msgid "Advanced"
-msgstr ""
+msgstr "متقدّم"
 
 #. i18n("Addressing:")
 #: kcm/ui/main.qml:202
 #, kde-format
 msgid "Use path-style S3 URLs"
-msgstr ""
+msgstr "استخدم عناوين URL بنمط المسار S3"
 
 #: kcm/ui/main.qml:238
 #, kde-format
 msgid "Delete Profile"
-msgstr ""
+msgstr "احذف التشكيلة"
 
 #: kcm/ui/main.qml:239
 #, kde-format
 msgid "Are you sure you want to delete the profile \"%1\"?"
-msgstr ""
+msgstr "هل أنت متأكد من رغبتك في حذف التشكيلة \"%1\"؟"
 
 #: s3backend.cpp:32
 #, kde-kuit-format
@@ -160,7 +161,7 @@ msgstr "لم يعثر على حاوية اس3، رجاء تأكد من ضبط AW
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
-msgstr ""
+msgstr "لا يمكن النسخ بين ملفات تعريف S3 مختلفة. انسخ الملف محليًا أولاً."
 
 #: s3backend.cpp:396
 #, kde-kuit-format
@@ -187,4 +188,4 @@ msgstr ""
 msgctxt "@info"
 msgid ""
 "Could not retrieve the complete file listing. Some files may not be shown."
-msgstr ""
+msgstr "تعذر استرداد قائمة الملفات الكاملة. قد لا تظهر بعض الملفات."

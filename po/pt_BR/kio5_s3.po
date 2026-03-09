@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-08 00:44+0000\n"
-"PO-Revision-Date: 2026-03-07 09:36-0300\n"
+"PO-Revision-Date: 2026-03-08 07:24-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -175,15 +175,10 @@ msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "Não foi possível copiar <link>%1</link> para <link>%2</link>"
 
 #: s3backend.cpp:441
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid ""
-#| "Cannot copy between different S3 profiles. Copy the file locally first."
+#, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
-msgstr ""
-"Não é possível copiar entre diferentes perfis do S3. Primeiro, copie o "
-"arquivo localmente."
+msgstr "Não é possível renomear entre diferentes perfis do S3."
 
 #: s3backend.cpp:570
 #, kde-format
@@ -192,6 +187,8 @@ msgid ""
 "Some source files could not be deleted after renaming. The renamed folder "
 "may still contain leftover files."
 msgstr ""
+"Alguns arquivos de origem não puderam ser excluídos após a renomeação. A "
+"pasta renomeada ainda pode conter arquivos residuais."
 
 #: s3backend.cpp:632 s3backend.cpp:693
 #, kde-format

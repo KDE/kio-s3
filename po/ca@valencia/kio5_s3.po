@@ -1,16 +1,16 @@
 # Translation of kio5_s3.po to Catalan (Valencian)
-# Copyright (C) 2021-2022 This_file_is_part_of_KDE
+# Copyright (C) 2021-2026 This_file_is_part_of_KDE
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # SPDX-FileCopyrightText: 2021 Antoni Bella Pérez <antonibella5@yahoo.com>
-# SPDX-FileCopyrightText: 2022 Josep M. Ferrer <txemaq@gmail.com>
+# SPDX-FileCopyrightText: 2022, 2026 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-08 00:44+0000\n"
-"PO-Revision-Date: 2022-09-16 10:03+0200\n"
+"PO-Revision-Date: 2026-03-08 10:10+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -18,130 +18,132 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #: kcm/ui/main.qml:25
 #, kde-format
 msgid "No S3 profiles configured"
-msgstr ""
+msgstr "No s'ha configurat cap perfil S3"
 
 #: kcm/ui/main.qml:26
 #, kde-format
 msgid "Add a profile to connect to an S3-compatible storage backend"
 msgstr ""
+"Afig un perfil per a connectar amb un dorsal d'emmagatzematge compatible amb "
+"S3"
 
 #: kcm/ui/main.qml:30 kcm/ui/main.qml:37
 #, kde-format
 msgid "Add Profile…"
-msgstr ""
+msgstr "Afig un perfil…"
 
 #: kcm/ui/main.qml:72
 #, kde-format
 msgid "Default AWS endpoint"
-msgstr ""
+msgstr "Punt final AWS predeterminat"
 
 #: kcm/ui/main.qml:89
 #, kde-format
 msgid "Edit"
-msgstr ""
+msgstr "Edita"
 
 #: kcm/ui/main.qml:94 kcm/ui/main.qml:245
 #, kde-format
 msgid "Delete"
-msgstr ""
+msgstr "Suprimix"
 
 #: kcm/ui/main.qml:105
 #, kde-format
 msgid "Add S3 Profile"
-msgstr ""
+msgstr "Afig un perfil S3"
 
 #: kcm/ui/main.qml:105
 #, kde-format
 msgid "Edit S3 Profile"
-msgstr ""
+msgstr "Edita el perfil S3"
 
 #: kcm/ui/main.qml:116
 #, kde-format
 msgid "Add"
-msgstr ""
+msgstr "Afig"
 
 #: kcm/ui/main.qml:116
 #, kde-format
 msgid "Save"
-msgstr ""
+msgstr "Guarda"
 
 #: kcm/ui/main.qml:147
 #, kde-format
 msgid "Name:"
-msgstr ""
+msgstr "Nom:"
 
 #: kcm/ui/main.qml:148
 #, kde-format
 msgid "e.g., My S3 Storage"
-msgstr ""
+msgstr "p. ex., El meu emmagatzematge S3"
 
 #: kcm/ui/main.qml:155
 #, kde-format
 msgid "Endpoint URL:"
-msgstr ""
+msgstr "URL del punt final:"
 
 #: kcm/ui/main.qml:156
 #, kde-format
 msgid "e.g., https://s3.example.com"
-msgstr ""
+msgstr "p. ex., https://s3.example.com"
 
 #: kcm/ui/main.qml:164
 #, kde-format
 msgid "Region:"
-msgstr ""
+msgstr "Regió:"
 
 #: kcm/ui/main.qml:165
 #, kde-format
 msgid "e.g., us-east-1, auto"
-msgstr ""
+msgstr "p. ex., vos-east-1, auto"
 
 #: kcm/ui/main.qml:171
 #, kde-format
 msgctxt "@title:group"
 msgid "Authentication"
-msgstr ""
+msgstr "Autenticació"
 
 #: kcm/ui/main.qml:180
 #, kde-format
 msgid "AWS Profile:"
-msgstr ""
+msgstr "Perfil AWS:"
 
 #: kcm/ui/main.qml:181
 #, kde-format
 msgid "Profile from ~/.aws/credentials"
-msgstr ""
+msgstr "Perfil de ~/.aws/credentials"
 
 #: kcm/ui/main.qml:187
 #, kde-format
 msgctxt "@title:group"
 msgid "Advanced"
-msgstr ""
+msgstr "Avançat"
 
 #: kcm/ui/main.qml:196
 #, kde-format
 msgid "Advanced"
-msgstr ""
+msgstr "Avançat"
 
 #. i18n("Addressing:")
 #: kcm/ui/main.qml:202
 #, kde-format
 msgid "Use path-style S3 URLs"
-msgstr ""
+msgstr "Utilitza URL S3 d'estil camí"
 
 #: kcm/ui/main.qml:238
 #, kde-format
 msgid "Delete Profile"
-msgstr ""
+msgstr "Suprimix el perfil"
 
 #: kcm/ui/main.qml:239
 #, kde-format
 msgid "Are you sure you want to delete the profile \"%1\"?"
-msgstr ""
+msgstr "Segur que voleu eliminar el perfil «%1»?"
 
 #: s3backend.cpp:32
 #, kde-kuit-format
@@ -164,18 +166,20 @@ msgstr "No s'ha trobat cap depòsit S3, comproveu la vostra configuració d'AWS.
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
 msgstr ""
+"No es pot copiar entre diferents perfils S3. Primer copieu el fitxer "
+"localment."
 
 #: s3backend.cpp:396
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
-msgstr "No s'ha pogut copiar <link>%1</link> a <link>%2</link>"
+msgstr "No s'ha pogut copiar <link>%1</link> en <link>%2</link>"
 
 #: s3backend.cpp:441
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
-msgstr ""
+msgstr "No s'ha pogut canviar de nom entre diferents perfils S3."
 
 #: s3backend.cpp:570
 #, kde-format
@@ -184,6 +188,8 @@ msgid ""
 "Some source files could not be deleted after renaming. The renamed folder "
 "may still contain leftover files."
 msgstr ""
+"Alguns fitxers d'origen no s'han pogut suprimir després de canviar-ne el "
+"nom. La carpeta reanomenada encara pot contindre fitxers sobrants."
 
 #: s3backend.cpp:632 s3backend.cpp:693
 #, kde-format
@@ -191,3 +197,5 @@ msgctxt "@info"
 msgid ""
 "Could not retrieve the complete file listing. Some files may not be shown."
 msgstr ""
+"No s'ha pogut recuperar el llistat complet de fitxers. És possible que "
+"alguns fitxers no es mostren."

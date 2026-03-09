@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-08 00:44+0000\n"
-"PO-Revision-Date: 2026-03-08 00:13+0100\n"
+"PO-Revision-Date: 2026-03-08 07:10+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -173,15 +173,10 @@ msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "Ni bilo mogoče kopirati <link>%1</link> v <link>%2</link>"
 
 #: s3backend.cpp:441
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid ""
-#| "Cannot copy between different S3 profiles. Copy the file locally first."
+#, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
-msgstr ""
-"Kopiranje med različnimi profili S3 ni mogoče. Najprej kopirajte datoteko "
-"lokalno."
+msgstr "Preimenovanje med različnimi profili S3 ni mogoče."
 
 #: s3backend.cpp:570
 #, kde-format
@@ -190,6 +185,8 @@ msgid ""
 "Some source files could not be deleted after renaming. The renamed folder "
 "may still contain leftover files."
 msgstr ""
+"Nekaterih izvornih datotek po preimenovanju ni bilo mogoče izbrisati. "
+"Preimenovana mapa lahko še vedno vsebuje preostale datoteke."
 
 #: s3backend.cpp:632 s3backend.cpp:693
 #, kde-format

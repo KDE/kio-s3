@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-08 00:44+0000\n"
-"PO-Revision-Date: 2026-03-07 11:22+0200\n"
+"PO-Revision-Date: 2026-03-08 15:59+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -176,15 +176,10 @@ msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "Не вдалося скопіювати <link>%1</link> до <link>%2</link>"
 
 #: s3backend.cpp:441
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid ""
-#| "Cannot copy between different S3 profiles. Copy the file locally first."
+#, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
-msgstr ""
-"Копіювання між різними профілями S3 неможливе. Спочатку скопіюйте файл на "
-"ваш комп'ютер."
+msgstr "Перейменування між різними профілями S3 неможливе."
 
 #: s3backend.cpp:570
 #, kde-format
@@ -193,6 +188,8 @@ msgid ""
 "Some source files could not be deleted after renaming. The renamed folder "
 "may still contain leftover files."
 msgstr ""
+"Деякі початкові файли не вдалося вилучити після перейменування. У "
+"перейменованій теці можуть усе ще міститися залишки початкових файлів."
 
 #: s3backend.cpp:632 s3backend.cpp:693
 #, kde-format
