@@ -224,7 +224,24 @@ KIO::WorkerResult S3Backend::stat(const QUrl &url)
         q->statEntry(entry);
     } else {
         if (!isRootKey) {
-            qCDebug(S3).nospace() << "Could not get HEAD object for key: " << s3url.key() << " - " << headObjectRequestOutcome.GetError().GetMessage().c_str() << " - assuming it's a folder.";
+            // S3 returns HTTP 404 for a non-existent key, but HEAD responses carry no body,
+            // so the AWS SDK cannot parse the XML error message. It leaves GetResponseCode()
+            // at its default sentinel (-1 = REQUEST_NOT_MADE) and sets the message to
+            // "No response body". We identify this SDK-specific pattern and treat it as a
+            // normal 404. All other errors — 401 (bad credentials), 403 (access denied),
+            // 405 (delete marker in versioned bucket), 5xx (server errors), or genuine
+            // network failures (-1 with a different message) — fall through to the folder
+            // assumption below, because we cannot conclude the key does not exist.
+            // Keys ending with '/' are S3 virtual folder prefixes — also keep the assumption.
+            const auto &headError = headObjectRequestOutcome.GetError();
+            const auto httpCode = static_cast<int>(headError.GetResponseCode());
+            const bool isSdkHead404 = (httpCode == -1
+                && headError.GetMessage() == Aws::String("No response body"));
+            const bool isHttp404 = (httpCode == 404);
+            if ((isSdkHead404 || isHttp404) && !s3url.key().endsWith(QLatin1Char('/'))) {
+                return KIO::WorkerResult::fail(KIO::ERR_DOES_NOT_EXIST, url.toDisplayString());
+            }
+            qCDebug(S3).nospace() << "Could not get HEAD object for key: " << s3url.key() << " - " << headError.GetMessage().c_str() << " (httpCode: " << httpCode << ") - assuming it's a folder.";
         }
         // HACK: assume this is a folder (i.e. a virtual key without associated object).
         // If it were a key or a 0-sized folder the HEAD request would likely have worked.
