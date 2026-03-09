@@ -20,7 +20,13 @@
 #include <aws/s3/model/GetObjectRequest.h>
 #include <aws/s3/model/HeadObjectRequest.h>
 #include <aws/s3/model/ListObjectsV2Request.h>
+#include <aws/s3/model/AbortMultipartUploadRequest.h>
+#include <aws/s3/model/CompleteMultipartUploadRequest.h>
+#include <aws/s3/model/CompletedMultipartUpload.h>
+#include <aws/s3/model/CompletedPart.h>
+#include <aws/s3/model/CreateMultipartUploadRequest.h>
 #include <aws/s3/model/PutObjectRequest.h>
+#include <aws/s3/model/UploadPartRequest.h>
 
 #include <aws/s3/S3ClientConfiguration.h>
 
@@ -312,43 +318,162 @@ KIO::WorkerResult S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags
 {
     Q_UNUSED(permissions)
     Q_UNUSED(flags)
+
+    static constexpr qint64 MultipartThreshold = 8 * 1024 * 1024;
+    static constexpr qint64 MultipartChunkSize  = 8 * 1024 * 1024;
+
     const auto s3url = S3Url(url);
     qCDebug(S3) << "Going to upload data to" << s3url;
 
     const Aws::S3::S3Client client = createS3Client(s3url.profileName());
+    const Aws::String bucket = s3url.BucketName();
+    const Aws::String key = s3url.Key();
 
-    Aws::S3::Model::PutObjectRequest request;
-    request.SetBucket(s3url.BucketName());
-    request.SetKey(s3url.Key());
+    // Read data from KIO, accumulating into partBuffer.
+    // Once partBuffer reaches MultipartThreshold we switch to multipart upload.
+    QByteArray partBuffer;
+    partBuffer.reserve(MultipartChunkSize);
 
-    const auto putDataStream = std::make_shared<Aws::StringStream>("");
+    Aws::String uploadId;
+    Aws::Vector<Aws::S3::Model::CompletedPart> completedParts;
+    int partNumber = 1;
+    KIO::filesize_t processedBytes = 0;
 
-    int bytesCount = 0;
+    // Helper: abort an in-progress multipart upload and return an error.
+    auto abortAndFail = [&]() -> KIO::WorkerResult {
+        Aws::S3::Model::AbortMultipartUploadRequest abortReq;
+        abortReq.SetBucket(bucket);
+        abortReq.SetKey(key);
+        abortReq.SetUploadId(uploadId);
+        client.AbortMultipartUpload(abortReq);
+        return KIO::WorkerResult::fail(KIO::ERR_CANNOT_WRITE, url.toDisplayString());
+    };
+
+    // Helper: upload partBuffer as one multipart part.
+    auto uploadPart = [&]() -> bool {
+        const auto stream = std::make_shared<Aws::StringStream>();
+        stream->write(partBuffer.data(), partBuffer.size());
+
+        Aws::S3::Model::UploadPartRequest partReq;
+        partReq.SetBucket(bucket);
+        partReq.SetKey(key);
+        partReq.SetUploadId(uploadId);
+        partReq.SetPartNumber(partNumber);
+        partReq.SetContentLength(partBuffer.size());
+        partReq.SetBody(stream);
+
+        const auto outcome = client.UploadPart(partReq);
+        if (!outcome.IsSuccess()) {
+            qCWarning(S3) << "UploadPart" << partNumber << "failed:"
+                          << outcome.GetError().GetMessage().c_str();
+            return false;
+        }
+
+        Aws::S3::Model::CompletedPart completed;
+        completed.SetPartNumber(partNumber);
+        completed.SetETag(outcome.GetResult().GetETag());
+        completedParts.push_back(std::move(completed));
+
+        processedBytes += partBuffer.size();
+        q->processedSize(processedBytes);
+        partBuffer.clear();
+        ++partNumber;
+        return true;
+    };
+
     int n;
     do {
-        QByteArray buffer;
+        QByteArray chunk;
         q->dataReq();
-        n = q->readData(buffer);
-        if (!buffer.isEmpty()) {
-            bytesCount += n;
-            putDataStream->write(buffer.data(), n);
+        n = q->readData(chunk);
+        if (!chunk.isEmpty()) {
+            partBuffer.append(chunk);
+        }
+
+        // If buffer reached chunk size and multipart is already started, flush it.
+        if (!uploadId.empty() && partBuffer.size() >= MultipartChunkSize) {
+            if (!uploadPart()) {
+                return abortAndFail();
+            }
+        }
+
+        // If buffer reached threshold and multipart not yet started, initiate it.
+        if (uploadId.empty() && partBuffer.size() >= MultipartThreshold) {
+            Aws::S3::Model::CreateMultipartUploadRequest createReq;
+            createReq.SetBucket(bucket);
+            createReq.SetKey(key);
+            const auto createOutcome = client.CreateMultipartUpload(createReq);
+            if (!createOutcome.IsSuccess()) {
+                qCWarning(S3) << "CreateMultipartUpload failed:"
+                              << createOutcome.GetError().GetMessage().c_str();
+                return KIO::WorkerResult::fail(KIO::ERR_CANNOT_WRITE, url.toDisplayString());
+            }
+            uploadId = createOutcome.GetResult().GetUploadId();
+            qCDebug(S3) << "Started multipart upload, uploadId:" << uploadId.c_str();
+
+            if (!uploadPart()) {
+                return abortAndFail();
+            }
         }
     } while (n > 0);
 
     if (n < 0) {
-        qCWarning(S3) << "Failed to upload data to" << s3url;
+        qCWarning(S3) << "Failed to read data for upload to" << s3url;
+        if (!uploadId.empty()) {
+            return abortAndFail();
+        }
         return KIO::WorkerResult::fail(KIO::ERR_CANNOT_WRITE, url.toDisplayString());
     }
 
-    request.SetBody(putDataStream);
+    // Small file path: never reached MultipartThreshold, use simple PutObject.
+    if (uploadId.empty()) {
+        const auto stream = std::make_shared<Aws::StringStream>();
+        stream->write(partBuffer.data(), partBuffer.size());
 
-    const auto putObjectOutcome = client.PutObject(request);
-    if (!putObjectOutcome.IsSuccess()) {
-        qCWarning(S3) << "Could not PUT object with key:" << s3url.key() << "-" << putObjectOutcome.GetError().GetMessage().c_str();
-        return KIO::WorkerResult::fail(KIO::ERR_CANNOT_WRITE, url.toDisplayString());
+        Aws::S3::Model::PutObjectRequest request;
+        request.SetBucket(bucket);
+        request.SetKey(key);
+        request.SetBody(stream);
+
+        const auto outcome = client.PutObject(request);
+        if (!outcome.IsSuccess()) {
+            qCWarning(S3) << "Could not PUT object with key:" << s3url.key()
+                          << "-" << outcome.GetError().GetMessage().c_str();
+            return KIO::WorkerResult::fail(KIO::ERR_CANNOT_WRITE, url.toDisplayString());
+        }
+
+        qCDebug(S3) << "Uploaded" << partBuffer.size() << "bytes to key:" << s3url.key();
+        return KIO::WorkerResult::pass();
     }
 
-    qCDebug(S3) << "Uploaded" << bytesCount << "bytes to key:" << s3url.key();
+    // Large file path: upload remaining bytes as final part (may be smaller than chunk size).
+    if (!partBuffer.isEmpty()) {
+        if (!uploadPart()) {
+            return abortAndFail();
+        }
+    }
+
+    // Complete the multipart upload.
+    Aws::S3::Model::CompletedMultipartUpload completedUpload;
+    for (auto &part : completedParts) {
+        completedUpload.AddParts(part);
+    }
+
+    Aws::S3::Model::CompleteMultipartUploadRequest completeReq;
+    completeReq.SetBucket(bucket);
+    completeReq.SetKey(key);
+    completeReq.SetUploadId(uploadId);
+    completeReq.SetMultipartUpload(completedUpload);
+
+    const auto completeOutcome = client.CompleteMultipartUpload(completeReq);
+    if (!completeOutcome.IsSuccess()) {
+        qCWarning(S3) << "CompleteMultipartUpload failed:"
+                      << completeOutcome.GetError().GetMessage().c_str();
+        return abortAndFail();
+    }
+
+    qCDebug(S3) << "Uploaded" << processedBytes << "bytes in" << (partNumber - 1)
+                << "parts to key:" << s3url.key();
     return KIO::WorkerResult::pass();
 }
 
