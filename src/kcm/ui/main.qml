@@ -241,7 +241,7 @@ KCM.ScrollViewKCM {
         dialogType: Components.MessageDialog.Warning
 
         Component.onCompleted: {
-            const okButton = standardButton(FormCard.FormCardDialog.Ok);
+            const okButton = standardButton(Kirigami.Dialog.Ok);
             okButton.text = i18n("Delete")
             okButton.icon.name = "edit-delete-symbolic"
         }
