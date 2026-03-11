@@ -59,7 +59,20 @@ QHash<int, QByteArray> S3ProfileModel::roleNames() const
 
 void S3ProfileModel::addProfile(const QString &name, const QString &endpointUrl, const QString &region, const QString &awsProfile, bool pathStyle)
 {
-    QString id = name.toLower().simplified().replace(QLatin1Char(' '), QLatin1Char('-'));
+    // Sanitize: keep only alphanumeric, hyphen, and underscore.
+    // This prevents KConfig corruption from special characters like [ ] \ or newlines.
+    QString id;
+    const QString normalized = name.toLower().simplified();
+    for (const QChar &ch : normalized) {
+        if (ch.isLetterOrNumber() || ch == QLatin1Char('-') || ch == QLatin1Char('_')) {
+            id += ch;
+        } else if (ch == QLatin1Char(' ')) {
+            id += QLatin1Char('-');
+        }
+    }
+    if (id.isEmpty()) {
+        id = QStringLiteral("profile");
+    }
 
     QSet<QString> existingIds;
     for (const auto &p : m_profiles) {
