@@ -191,10 +191,7 @@ KCM.ScrollViewKCM {
             Layout.topMargin: Kirigami.Units.largeSpacing
         }
 
-        Kirigami.Separator {
-            Kirigami.FormData.isSection: true
-            Kirigami.FormData.label: i18n("Advanced")
-        }
+        FormCard.FormDelegateSeparator {}
 
         FormCard.FormCheckDelegate {
             id: pathStyleCheck
