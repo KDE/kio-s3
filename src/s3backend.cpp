@@ -282,34 +282,35 @@ KIO::WorkerResult S3Backend::get(const QUrl &url)
 
     const Aws::S3::S3Client client = createS3Client(s3url.profileName());
 
-    q->mimeType(contentType(s3url));
-
     Aws::S3::Model::GetObjectRequest objectRequest;
     objectRequest.SetBucket(s3url.BucketName());
     objectRequest.SetKey(s3url.Key());
 
     auto getObjectOutcome = client.GetObject(objectRequest);
-    if (getObjectOutcome.IsSuccess()) {
-        auto objectResult = getObjectOutcome.GetResultWithOwnership();
-        auto& retrievedFile = objectResult.GetBody();
-        qCDebug(S3) << "Key" << s3url.key() << "has Content-Length:" << objectResult.GetContentLength();
-        q->totalSize(objectResult.GetContentLength());
-
-        std::array<char, 1024*1024> buffer{};
-        while (!retrievedFile.eof()) {
-            const auto readBytes = retrievedFile.read(buffer.data(), buffer.size()).gcount();
-            if (readBytes > 0) {
-                q->data(QByteArray(buffer.data(), readBytes));
-            }
-        }
-
-        q->data(QByteArray());
-
-    } else {
-        // NOTE: normally we shouldn't get this error, because KIO does a stat() before the get() and if the url doesn't exist, our stat() assumes it's a folder.
-        // This is why this error is not shown to users in the frontend.
+    if (!getObjectOutcome.IsSuccess()) {
         qCWarning(S3) << "Could not get object with key:" << s3url.key() << " - " << getObjectOutcome.GetError().GetMessage().c_str();
+        return KIO::WorkerResult::fail(KIO::ERR_CANNOT_READ, url.toDisplayString());
     }
+
+    auto objectResult = getObjectOutcome.GetResultWithOwnership();
+
+    // Emit MIME type from the GetObject response directly (no extra HEAD request needed).
+    const auto ct = objectResult.GetContentType();
+    q->mimeType(QString::fromLatin1(ct.c_str(), ct.size()));
+
+    qCDebug(S3) << "Key" << s3url.key() << "has Content-Length:" << objectResult.GetContentLength();
+    q->totalSize(objectResult.GetContentLength());
+
+    auto& retrievedFile = objectResult.GetBody();
+    std::array<char, 1024*1024> buffer{};
+    while (!retrievedFile.eof()) {
+        const auto readBytes = retrievedFile.read(buffer.data(), buffer.size()).gcount();
+        if (readBytes > 0) {
+            q->data(QByteArray(buffer.data(), readBytes));
+        }
+    }
+
+    q->data(QByteArray());
 
     return KIO::WorkerResult::pass();
 }
