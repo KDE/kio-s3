@@ -530,8 +530,13 @@ KIO::WorkerResult S3Backend::copy(const QUrl &src, const QUrl &dest, int permiss
         }
     }
 
+    // CopySource is sent in the x-amz-copy-source header which is not
+    // URL-path-normalized, so we must strip the leading '/' from the key
+    // (QUrl::path() always starts with '/') to avoid a double-slash.
+    const QByteArray srcKey = s3src.key().mid(1).toUtf8();
+
     Aws::S3::Model::CopyObjectRequest request;
-    request.SetCopySource(s3src.BucketName() + "/" + s3src.Key());
+    request.SetCopySource(s3src.BucketName() + "/" + Aws::String(srcKey.constData(), srcKey.size()));
     request.SetBucket(s3dest.BucketName());
     request.SetKey(s3dest.Key());
 
