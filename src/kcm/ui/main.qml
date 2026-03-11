@@ -253,9 +253,9 @@ KCM.ScrollViewKCM {
 
         onRejected: deleteDialog.close()
 
-        function openForProfile(index: int, name: string): void {
+        function openForProfile(index: int, profileName: string): void {
             deleteIndex = index;
-            name = name;
+            name = profileName;
             open();
         }
     }
