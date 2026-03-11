@@ -481,7 +481,6 @@ KIO::WorkerResult S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags
 KIO::WorkerResult S3Backend::copy(const QUrl &src, const QUrl &dest, int permissions, KIO::JobFlags flags)
 {
     Q_UNUSED(permissions)
-    Q_UNUSED(flags)
 
     const auto s3src = S3Url(src);
     const auto s3dest = S3Url(dest);
@@ -519,13 +518,16 @@ KIO::WorkerResult S3Backend::copy(const QUrl &src, const QUrl &dest, int permiss
 
     const Aws::S3::S3Client client = createS3Client(s3src.profileName());
 
-    // Check if destination key already exists, otherwise S3 will overwrite it leading to data loss.
-    Aws::S3::Model::HeadObjectRequest headObjectRequest;
-    headObjectRequest.SetBucket(s3dest.BucketName());
-    headObjectRequest.SetKey(s3dest.Key());
-    auto headObjectRequestOutcome = client.HeadObject(headObjectRequest);
-    if (headObjectRequestOutcome.IsSuccess()) {
-        return KIO::WorkerResult::fail(KIO::ERR_FILE_ALREADY_EXIST, QString());
+    // Check if destination key already exists to prevent silent overwrites.
+    // Skip this check when KIO::Overwrite is set (e.g. user chose "Replace" in Dolphin).
+    if (!(flags & KIO::Overwrite)) {
+        Aws::S3::Model::HeadObjectRequest headObjectRequest;
+        headObjectRequest.SetBucket(s3dest.BucketName());
+        headObjectRequest.SetKey(s3dest.Key());
+        auto headObjectRequestOutcome = client.HeadObject(headObjectRequest);
+        if (headObjectRequestOutcome.IsSuccess()) {
+            return KIO::WorkerResult::fail(KIO::ERR_FILE_ALREADY_EXIST, dest.toDisplayString());
+        }
     }
 
     Aws::S3::Model::CopyObjectRequest request;
