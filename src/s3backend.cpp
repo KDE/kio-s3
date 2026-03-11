@@ -350,7 +350,12 @@ KIO::WorkerResult S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags
         abortReq.SetBucket(bucket);
         abortReq.SetKey(key);
         abortReq.SetUploadId(uploadId);
-        client.AbortMultipartUpload(abortReq);
+        const auto abortOutcome = client.AbortMultipartUpload(abortReq);
+        if (!abortOutcome.IsSuccess()) {
+            qCWarning(S3) << "Failed to abort multipart upload" << uploadId.c_str()
+                          << "-" << abortOutcome.GetError().GetMessage().c_str()
+                          << "- orphaned upload may incur storage costs";
+        }
         return KIO::WorkerResult::fail(KIO::ERR_CANNOT_WRITE, url.toDisplayString());
     };
 
