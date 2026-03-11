@@ -56,7 +56,8 @@ S3Backend::S3Backend(S3Worker *q)
         endpointUrl = qEnvironmentVariable("AWS_ENDPOINT_URL");
     }
     if (!endpointUrl.isEmpty()) {
-        m_endpointOverride = Aws::String(endpointUrl.toUtf8().constData(), endpointUrl.toUtf8().size());
+        const QByteArray endpointUtf8 = endpointUrl.toUtf8();
+        m_endpointOverride = Aws::String(endpointUtf8.constData(), endpointUtf8.size());
         qCDebug(S3) << "Using custom endpoint:" << endpointUrl;
     }
     // Fallback to endpoint_url from ~/.aws/config profile.
@@ -78,11 +79,13 @@ Aws::S3::S3ClientConfiguration S3Backend::createClientConfiguration(const QStrin
         Aws::S3::S3ClientConfiguration config;
         const auto endpointUrl = profileGroup.readEntry("EndpointUrl", QString());
         if (!endpointUrl.isEmpty()) {
-            config.endpointOverride = Aws::String(endpointUrl.toUtf8().constData(), endpointUrl.toUtf8().size());
+            const QByteArray endpointUtf8 = endpointUrl.toUtf8();
+            config.endpointOverride = Aws::String(endpointUtf8.constData(), endpointUtf8.size());
         }
         const auto region = profileGroup.readEntry("Region", QString());
         if (!region.isEmpty()) {
-            config.region = Aws::String(region.toLatin1().constData(), region.toLatin1().size());
+            const QByteArray regionUtf8 = region.toUtf8();
+            config.region = Aws::String(regionUtf8.constData(), regionUtf8.size());
         }
         if (profileGroup.readEntry("PathStyle", false)) {
             config.useVirtualAddressing = false;
@@ -98,7 +101,8 @@ Aws::S3::S3ClientConfiguration S3Backend::createClientConfiguration(const QStrin
         }
         const auto envRegion = qEnvironmentVariable("AWS_DEFAULT_REGION");
         if (!envRegion.isEmpty()) {
-            config.region = Aws::String(envRegion.toUtf8().constData(), envRegion.toUtf8().size());
+            const QByteArray envRegionUtf8 = envRegion.toUtf8();
+            config.region = Aws::String(envRegionUtf8.constData(), envRegionUtf8.size());
         }
     }
     return config;
