@@ -115,7 +115,7 @@ KCM.ScrollViewKCM {
             const okButton = standardButton(FormCard.FormCardDialog.Ok);
             okButton.text = Qt.binding(() => editDialog.isNewProfile ? i18n("Add") : i18n("Save"))
             okButton.icon.name = Qt.binding(() =>  editDialog.isNewProfile ? "list-add-symbolic" : "document-save-symbolic")
-            okButton.enabled = Qt.binding(() =>  nameField.text.length > 0)
+            okButton.enabled = Qt.binding(() =>  nameField.text.trim().length > 0)
         }
 
         onAccepted: {
