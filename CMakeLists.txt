@@ -34,6 +34,11 @@ set_package_properties(KF6KCMUtils PROPERTIES
     TYPE OPTIONAL
     PURPOSE "Required for building the System Settings module.")
 
+find_package(KF6KirigamiAddons)
+set_package_properties(KF6KirigamiAddons PROPERTIES
+    TYPE OPTIONAL
+    PURPOSE "Required for building the System Settings module.")
+
 find_package(AWSSDK REQUIRED COMPONENTS
     core
     s3)
