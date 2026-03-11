@@ -13,6 +13,7 @@
         "Description[sl]": "Konfigurira profile ozadja S3",
         "Description[tr]": "S3 arka uç profillerini yapılandırın",
         "Description[uk]": "Налаштовування профілів модулів S3",
+        "Description[zh_CN]": "配置 S3 后端方案",
         "Icon": "folder-cloud",
         "Name": "S3 Backends",
         "Name[ar]": "خلفيات S3",
@@ -26,7 +27,8 @@
         "Name[pt_BR]": "Backends S3",
         "Name[sl]": "Ozadja S3",
         "Name[tr]": "S3 Arka Uçları",
-        "Name[uk]": "Модулі обробки S3"
+        "Name[uk]": "Модулі обробки S3",
+        "Name[zh_CN]": "S3 后端程序"
     },
     "X-KDE-System-Settings-Parent-Category": "network"
 }
