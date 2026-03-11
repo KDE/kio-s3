@@ -6,7 +6,7 @@
 <component type="addon">
   <id>org.kde.kio_s3</id>
   <metadata_license>CC0-1.0</metadata_license>
-  <project_license>GPL-2.0+</project_license>
+  <project_license>GPL-2.0-or-later</project_license>
   <extends>org.kde.dolphin.desktop</extends>
   <extends>org.kde.konqueror.desktop</extends>
   <extends>org.kde.krusader.desktop</extends>
@@ -121,7 +121,7 @@
   </description>
   <url type="homepage">https://apps.kde.org/en/kio_s3</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=kio-s3</url>
-  <url type="help">https://docs.kde.org/?application=kioslave5%2Fs3</url>
+  <url type="help">https://docs.kde.org/?application=kioworker6%2Fs3</url>
   <update_contact>elvis.angelaccio_at_kde.org</update_contact>
   <screenshots>
     <screenshot type="default">
@@ -163,9 +163,13 @@
       <image type="source" width="1494" height="825">https://cdn.kde.org/screenshots/kio-s3/kio-s3.png</image>
     </screenshot>
   </screenshots>
-  <!--  <releases>
-    <release version="20.08.1" date="2020-09-03"/>
-  </releases>-->
+  <releases>
+    <release version="0.1.0" date="2026-03-13">
+      <description>
+        <p>Initial release of kio-s3, which provides access to S3 in Dolphin and other KDE Apps.</p>
+      </description>
+    </release>
+  </releases>
   <project_group>KDE</project_group>
   <categories>
     <category>Network</category>
