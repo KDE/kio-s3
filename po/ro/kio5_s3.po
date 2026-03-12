@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-08 00:44+0000\n"
+"POT-Creation-Date: 2026-03-12 00:43+0000\n"
 "PO-Revision-Date: 2024-02-18 14:43+0000\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -43,7 +43,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: kcm/ui/main.qml:94 kcm/ui/main.qml:245
+#: kcm/ui/main.qml:94 kcm/ui/main.qml:242
 #, kde-format
 msgid "Delete"
 msgstr ""
@@ -120,28 +120,23 @@ msgctxt "@title:group"
 msgid "Advanced"
 msgstr ""
 
-#: kcm/ui/main.qml:196
-#, kde-format
-msgid "Advanced"
-msgstr ""
-
 #. i18n("Addressing:")
-#: kcm/ui/main.qml:202
+#: kcm/ui/main.qml:199
 #, kde-format
 msgid "Use path-style S3 URLs"
 msgstr ""
 
-#: kcm/ui/main.qml:238
+#: kcm/ui/main.qml:235
 #, kde-format
 msgid "Delete Profile"
 msgstr ""
 
-#: kcm/ui/main.qml:239
+#: kcm/ui/main.qml:236
 #, kde-format
 msgid "Are you sure you want to delete the profile \"%1\"?"
 msgstr ""
 
-#: s3backend.cpp:32
+#: s3backend.cpp:38
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -151,31 +146,31 @@ msgstr ""
 "URI S3 nevalid, denumirea găleții lipsește de la gazdă.<nl/>Un URI S3 valid "
 "trebuie scris sub forma: <link>s3://găleată/cheie</link>"
 
-#: s3backend.cpp:127 s3backend.cpp:136
+#: s3backend.cpp:137 s3backend.cpp:146
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr "Nu au fost găsite găleți S3, verificați configurația AWS locală."
 
-#: s3backend.cpp:353
+#: s3backend.cpp:504
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
 msgstr ""
 
-#: s3backend.cpp:396
+#: s3backend.cpp:555
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "Nu s-a putut copia <link>%1</link> la <link>%2</link>"
 
-#: s3backend.cpp:441
+#: s3backend.cpp:600
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr ""
 
-#: s3backend.cpp:570
+#: s3backend.cpp:729
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -183,7 +178,7 @@ msgid ""
 "may still contain leftover files."
 msgstr ""
 
-#: s3backend.cpp:632 s3backend.cpp:693
+#: s3backend.cpp:791 s3backend.cpp:852
 #, kde-format
 msgctxt "@info"
 msgid ""

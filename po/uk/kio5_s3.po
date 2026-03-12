@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-08 00:44+0000\n"
+"POT-Creation-Date: 2026-03-12 00:43+0000\n"
 "PO-Revision-Date: 2026-03-08 15:59+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -45,7 +45,7 @@ msgstr "Типова кінцева точка AWS"
 msgid "Edit"
 msgstr "Змінити"
 
-#: kcm/ui/main.qml:94 kcm/ui/main.qml:245
+#: kcm/ui/main.qml:94 kcm/ui/main.qml:242
 #, kde-format
 msgid "Delete"
 msgstr "Вилучити"
@@ -122,28 +122,23 @@ msgctxt "@title:group"
 msgid "Advanced"
 msgstr "Додатково"
 
-#: kcm/ui/main.qml:196
-#, kde-format
-msgid "Advanced"
-msgstr "Додатково"
-
 #. i18n("Addressing:")
-#: kcm/ui/main.qml:202
+#: kcm/ui/main.qml:199
 #, kde-format
 msgid "Use path-style S3 URLs"
 msgstr "Використовувати адреси S3 у стилі шляхів"
 
-#: kcm/ui/main.qml:238
+#: kcm/ui/main.qml:235
 #, kde-format
 msgid "Delete Profile"
 msgstr "Вилучити профіль"
 
-#: kcm/ui/main.qml:239
+#: kcm/ui/main.qml:236
 #, kde-format
 msgid "Are you sure you want to delete the profile \"%1\"?"
 msgstr "Ви справді хочете вилучити профіль «%1»?"
 
-#: s3backend.cpp:32
+#: s3backend.cpp:38
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -153,7 +148,7 @@ msgstr ""
 "Некоректна адреса S3 — у записі вузла не вистачає назви кошика.<nl/>Коректна "
 "адреса S3 повинна мати таку форму: <link>s3://bucket/key</link>"
 
-#: s3backend.cpp:127 s3backend.cpp:136
+#: s3backend.cpp:137 s3backend.cpp:146
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
@@ -161,7 +156,7 @@ msgstr ""
 "Не вдалося знайти кошики S3. Будь ласка, перевірте, чи правильно вказано "
 "налаштування AWS."
 
-#: s3backend.cpp:353
+#: s3backend.cpp:504
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
@@ -169,19 +164,19 @@ msgstr ""
 "Копіювання між різними профілями S3 неможливе. Спочатку скопіюйте файл на "
 "ваш комп'ютер."
 
-#: s3backend.cpp:396
+#: s3backend.cpp:555
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "Не вдалося скопіювати <link>%1</link> до <link>%2</link>"
 
-#: s3backend.cpp:441
+#: s3backend.cpp:600
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "Перейменування між різними профілями S3 неможливе."
 
-#: s3backend.cpp:570
+#: s3backend.cpp:729
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -191,10 +186,13 @@ msgstr ""
 "Деякі початкові файли не вдалося вилучити після перейменування. У "
 "перейменованій теці можуть усе ще міститися залишки початкових файлів."
 
-#: s3backend.cpp:632 s3backend.cpp:693
+#: s3backend.cpp:791 s3backend.cpp:852
 #, kde-format
 msgctxt "@info"
 msgid ""
 "Could not retrieve the complete file listing. Some files may not be shown."
 msgstr ""
 "Не вдалося отримати повний список файлів. Деякі файли може бути не показано."
+
+#~ msgid "Advanced"
+#~ msgstr "Додатково"

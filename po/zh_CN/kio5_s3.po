@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-08 00:44+0000\n"
+"POT-Creation-Date: 2026-03-12 00:43+0000\n"
 "PO-Revision-Date: 2024-04-23 19:31\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -42,7 +42,7 @@ msgstr "默认 AWS 端点"
 msgid "Edit"
 msgstr "编辑"
 
-#: kcm/ui/main.qml:94 kcm/ui/main.qml:245
+#: kcm/ui/main.qml:94 kcm/ui/main.qml:242
 #, kde-format
 msgid "Delete"
 msgstr "删除"
@@ -119,28 +119,23 @@ msgctxt "@title:group"
 msgid "Advanced"
 msgstr "高级"
 
-#: kcm/ui/main.qml:196
-#, kde-format
-msgid "Advanced"
-msgstr "高级"
-
 #. i18n("Addressing:")
-#: kcm/ui/main.qml:202
+#: kcm/ui/main.qml:199
 #, kde-format
 msgid "Use path-style S3 URLs"
 msgstr "使用路径样式 S3 URL"
 
-#: kcm/ui/main.qml:238
+#: kcm/ui/main.qml:235
 #, kde-format
 msgid "Delete Profile"
 msgstr "删除配置方案"
 
-#: kcm/ui/main.qml:239
+#: kcm/ui/main.qml:236
 #, kde-format
 msgid "Are you sure you want to delete the profile \"%1\"?"
 msgstr "您确定要删除“%1”配置方案吗？"
 
-#: s3backend.cpp:32
+#: s3backend.cpp:38
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -150,31 +145,31 @@ msgstr ""
 "无效的 S3 URI，主机缺少存储桶名称。<nl/>一个有效的 S3 URI 必须按照此格式填"
 "写：<link>s3://bucket/key</link>"
 
-#: s3backend.cpp:127 s3backend.cpp:136
+#: s3backend.cpp:137 s3backend.cpp:146
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr "无法找到 S3 存储桶，请检查您的 AWS 配置。"
 
-#: s3backend.cpp:353
+#: s3backend.cpp:504
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
 msgstr "无法在不同的 S3 配置方案之间复制。请先复制本地文件。"
 
-#: s3backend.cpp:396
+#: s3backend.cpp:555
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "无法复制 <link>%1</link> 到 <link>%2</link>"
 
-#: s3backend.cpp:441
+#: s3backend.cpp:600
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "无法在不同的 S3 配置文件之间重命名。"
 
-#: s3backend.cpp:570
+#: s3backend.cpp:729
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -182,9 +177,12 @@ msgid ""
 "may still contain leftover files."
 msgstr "重命名后无法删除某些源文件。重命名的文件夹可能仍然包含剩余文件。"
 
-#: s3backend.cpp:632 s3backend.cpp:693
+#: s3backend.cpp:791 s3backend.cpp:852
 #, kde-format
 msgctxt "@info"
 msgid ""
 "Could not retrieve the complete file listing. Some files may not be shown."
 msgstr "无法检索完整的文件列表。一些文件可能无法显示。"
+
+#~ msgid "Advanced"
+#~ msgstr "高级"

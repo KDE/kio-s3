@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-08 00:44+0000\n"
+"POT-Creation-Date: 2026-03-12 00:43+0000\n"
 "PO-Revision-Date: 2022-07-19 21:53+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -42,7 +42,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: kcm/ui/main.qml:94 kcm/ui/main.qml:245
+#: kcm/ui/main.qml:94 kcm/ui/main.qml:242
 #, kde-format
 msgid "Delete"
 msgstr ""
@@ -119,28 +119,23 @@ msgctxt "@title:group"
 msgid "Advanced"
 msgstr ""
 
-#: kcm/ui/main.qml:196
-#, kde-format
-msgid "Advanced"
-msgstr ""
-
 #. i18n("Addressing:")
-#: kcm/ui/main.qml:202
+#: kcm/ui/main.qml:199
 #, kde-format
 msgid "Use path-style S3 URLs"
 msgstr ""
 
-#: kcm/ui/main.qml:238
+#: kcm/ui/main.qml:235
 #, kde-format
 msgid "Delete Profile"
 msgstr ""
 
-#: kcm/ui/main.qml:239
+#: kcm/ui/main.qml:236
 #, kde-format
 msgid "Are you sure you want to delete the profile \"%1\"?"
 msgstr ""
 
-#: s3backend.cpp:32
+#: s3backend.cpp:38
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -148,31 +143,31 @@ msgid ""
 "must be written in the form: <link>s3://bucket/key</link>"
 msgstr ""
 
-#: s3backend.cpp:127 s3backend.cpp:136
+#: s3backend.cpp:137 s3backend.cpp:146
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr ""
 
-#: s3backend.cpp:353
+#: s3backend.cpp:504
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
 msgstr ""
 
-#: s3backend.cpp:396
+#: s3backend.cpp:555
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "<link>%1</link> என்பதை <link>%2</link> என்பதற்கு நகலெடுக்க முடியவில்லை"
 
-#: s3backend.cpp:441
+#: s3backend.cpp:600
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr ""
 
-#: s3backend.cpp:570
+#: s3backend.cpp:729
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -180,7 +175,7 @@ msgid ""
 "may still contain leftover files."
 msgstr ""
 
-#: s3backend.cpp:632 s3backend.cpp:693
+#: s3backend.cpp:791 s3backend.cpp:852
 #, kde-format
 msgctxt "@info"
 msgid ""

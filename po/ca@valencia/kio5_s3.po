@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-08 00:44+0000\n"
+"POT-Creation-Date: 2026-03-12 00:43+0000\n"
 "PO-Revision-Date: 2026-03-08 10:10+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -47,7 +47,7 @@ msgstr "Punt final AWS predeterminat"
 msgid "Edit"
 msgstr "Edita"
 
-#: kcm/ui/main.qml:94 kcm/ui/main.qml:245
+#: kcm/ui/main.qml:94 kcm/ui/main.qml:242
 #, kde-format
 msgid "Delete"
 msgstr "Suprimix"
@@ -124,28 +124,23 @@ msgctxt "@title:group"
 msgid "Advanced"
 msgstr "Avançat"
 
-#: kcm/ui/main.qml:196
-#, kde-format
-msgid "Advanced"
-msgstr "Avançat"
-
 #. i18n("Addressing:")
-#: kcm/ui/main.qml:202
+#: kcm/ui/main.qml:199
 #, kde-format
 msgid "Use path-style S3 URLs"
 msgstr "Utilitza URL S3 d'estil camí"
 
-#: kcm/ui/main.qml:238
+#: kcm/ui/main.qml:235
 #, kde-format
 msgid "Delete Profile"
 msgstr "Suprimix el perfil"
 
-#: kcm/ui/main.qml:239
+#: kcm/ui/main.qml:236
 #, kde-format
 msgid "Are you sure you want to delete the profile \"%1\"?"
 msgstr "Segur que voleu eliminar el perfil «%1»?"
 
-#: s3backend.cpp:32
+#: s3backend.cpp:38
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -155,13 +150,13 @@ msgstr ""
 "L'URI de S3 no és vàlid, falta el nom del depòsit a l'amfitrió.<nl/>S'ha "
 "d'escriure un URI de S3 vàlid en la forma: <link>s3://depòsit/clau</link>"
 
-#: s3backend.cpp:127 s3backend.cpp:136
+#: s3backend.cpp:137 s3backend.cpp:146
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr "No s'ha trobat cap depòsit S3, comproveu la vostra configuració d'AWS."
 
-#: s3backend.cpp:353
+#: s3backend.cpp:504
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
@@ -169,19 +164,19 @@ msgstr ""
 "No es pot copiar entre diferents perfils S3. Primer copieu el fitxer "
 "localment."
 
-#: s3backend.cpp:396
+#: s3backend.cpp:555
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "No s'ha pogut copiar <link>%1</link> en <link>%2</link>"
 
-#: s3backend.cpp:441
+#: s3backend.cpp:600
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "No s'ha pogut canviar de nom entre diferents perfils S3."
 
-#: s3backend.cpp:570
+#: s3backend.cpp:729
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -191,7 +186,7 @@ msgstr ""
 "Alguns fitxers d'origen no s'han pogut suprimir després de canviar-ne el "
 "nom. La carpeta reanomenada encara pot contindre fitxers sobrants."
 
-#: s3backend.cpp:632 s3backend.cpp:693
+#: s3backend.cpp:791 s3backend.cpp:852
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -199,3 +194,6 @@ msgid ""
 msgstr ""
 "No s'ha pogut recuperar el llistat complet de fitxers. És possible que "
 "alguns fitxers no es mostren."
+
+#~ msgid "Advanced"
+#~ msgstr "Avançat"
