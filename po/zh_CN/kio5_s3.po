@@ -183,6 +183,3 @@ msgctxt "@info"
 msgid ""
 "Could not retrieve the complete file listing. Some files may not be shown."
 msgstr "无法检索完整的文件列表。一些文件可能无法显示。"
-
-#~ msgid "Advanced"
-#~ msgstr "高级"
