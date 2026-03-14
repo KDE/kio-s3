@@ -44,36 +44,460 @@
 </authorgroup>
 
 <date
->2021‒01‒05</date>
+>2026-03-13</date>
 <releaseinfo
->kio-s3 0.9.70</releaseinfo>
+>kio-s3 1.0.0</releaseinfo>
 
 </articleinfo>
 
-<para
->KIO S3, Amazon S3 kovalarını ve nesnelerini listelemenize, bir kovaya dosya ve klasör yüklemenize ve bir kovadan nesneleri silmenize olanak tanır. Ayrıca S3 içindeki klasörleri veya nesneleri kopyalayabilir, taşıyabilir veya yeniden adlandırabilirsiniz.</para>
+<sect1 id="introduction">
+<title
+>Introduction</title>
 
 <para
->s3 KIO işçisini şöyle kullanabilirsiniz:</para>
+>KIO S3 is a KIO worker that allows you to browse and manage files stored in Amazon S3 and S3-compatible storage services (such as Cloudflare R2, DigitalOcean Spaces, MinIO, and others) directly from <application
+>Dolphin</application
+> and other KDE applications.</para>
+
 <para
-><userinput
->s3://</userinput
-> or <userinput
->s3://<replaceable
->kovam/anahtarım</replaceable
-></userinput
+>With KIO S3, you can:</para>
+<itemizedlist>
+  <listitem
+><para
+>Browse buckets and folders</para
+></listitem>
+  <listitem
+><para
+>Upload and download files</para
+></listitem>
+  <listitem
+><para
+>Copy, rename, and delete files and folders</para
+></listitem>
+  <listitem
+><para
+>Create folders inside buckets</para
+></listitem>
+  <listitem
+><para
+>Connect to multiple S3-compatible services at the same time using named profiles</para
+></listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="configuration">
+<title
+>Configuring Profiles</title>
+
+<para
+>KIO S3 supports connecting to multiple S3-compatible storage services through named profiles. Each profile stores the connection settings for one service. You can manage profiles in <menuchoice
+><guimenu
+>System Settings</guimenu
+> <guisubmenu
+>Network</guisubmenu
+> <guimenuitem
+>S3 Backends</guimenuitem
+></menuchoice
 >.</para>
 
-<para
->İlk URL, tüm S3 kovalarınızı gösterir.</para>
+<sect2 id="configuration-adding">
+<title
+>Adding a Profile</title>
 
 <para
+>Click the <guibutton
+>Add Profile...</guibutton
+> button and fill in the following fields:</para>
+
+<variablelist>
+  <varlistentry>
+    <term
+><guilabel
+>Name</guilabel
+></term>
+    <listitem
+><para
+>A descriptive name for this profile (required), &eg; <userinput
+>My Cloud Storage</userinput
+>.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>Endpoint URL</guilabel
+></term>
+    <listitem
+><para
+>The URL of the S3-compatible service, &eg; <userinput
+>https://s3.example.com</userinput
+>. Leave empty to use the default Amazon S3 endpoint.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>Region</guilabel
+></term>
+    <listitem
+><para
+>The storage region, &eg; <userinput
+>us-east-1</userinput
+> or <userinput
+>auto</userinput
+>. Leave empty to use the region from your AWS configuration.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>AWS Profile</guilabel
+></term>
+    <listitem
+><para
+>The name of the credentials profile from <filename
+>~/.aws/credentials</filename
+>. If left empty, the profile identifier is used as the credentials profile name.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>Use path-style S3 URLs</guilabel
+></term>
+    <listitem
+><para
+>Enable this for services that do not support virtual-hosted-style addressing, such as MinIO or some Ceph deployments. Most services, including Amazon S3 and Cloudflare R2, do not need this.</para
+></listitem>
+  </varlistentry>
+</variablelist>
+
+<para
+>After adding a profile, click <guibutton
+>Apply</guibutton
+> to save. The new profile will appear as a shortcut in the <application
+>Dolphin</application
+> Places panel.</para>
+
+</sect2>
+
+<sect2 id="configuration-editing">
+<title
+>Editing and Deleting Profiles</title>
+
+<para
+>Each profile in the list has an edit and a delete action. Editing opens the same dialog with the current values pre-filled. Deleting asks for confirmation before removing the profile. Remember to click <guibutton
+>Apply</guibutton
+> to save your changes.</para>
+
+</sect2>
+
+</sect1>
+
+<sect1 id="credentials">
+<title
+>AWS Credentials</title>
+
+<para
+>KIO S3 uses the standard AWS credentials chain to authenticate with S3 services. Credentials are read from <filename
+>~/.aws/credentials</filename
+>, which can contain multiple named profiles:</para>
+
+<programlisting
+>[default]
+aws_access_key_id = YOUR_KEY
+aws_secret_access_key = YOUR_SECRET
+
+[mycloud]
+aws_access_key_id = YOUR_CLOUD_KEY
+aws_secret_access_key = YOUR_CLOUD_SECRET
+</programlisting>
+
+<para
+>Each KIO S3 profile uses the <guilabel
+>AWS Profile</guilabel
+> field to select which credentials section to use. For example, a profile with <guilabel
+>AWS Profile</guilabel
+> set to <userinput
+>mycloud</userinput
+> will use the credentials from the <literal
+>[mycloud]</literal
+> section above.</para>
+
+<para
+>If no profiles are configured, KIO S3 uses the default AWS credentials chain, which includes environment variables (<envar
+>AWS_ACCESS_KEY_ID</envar
+>, <envar
+>AWS_SECRET_ACCESS_KEY</envar
+>), the <literal
+>[default]</literal
+> section in <filename
+>~/.aws/credentials</filename
+>, and EC2 instance roles.</para>
+
+<para
+>You can optionally set the region using <filename
+>~/.aws/config</filename
+>:</para>
+
+<programlisting
+>[default]
+region = eu-west-1
+
+[profile mycloud]
+region = auto
+</programlisting>
+
+<note
+><para
+>In <filename
+>~/.aws/config</filename
+>, named profiles use the <literal
+>profile</literal
+> prefix (&eg; <literal
+>[profile mycloud]</literal
+>), while in <filename
+>~/.aws/credentials</filename
+> the prefix is not used (&eg; <literal
+>[mycloud]</literal
+>). This is a convention of the AWS SDK.</para
+></note>
+
+</sect1>
+
+<sect1 id="urls">
+<title
+>URL Scheme</title>
+
+<para
+>KIO S3 uses the <literal
+>s3://</literal
+> URL scheme. You can type these URLs directly in the <application
+>Dolphin</application
+> location bar or use them with command-line tools such as <command
+>kioclient</command
+>.</para>
+
+<variablelist>
+  <varlistentry>
+    <term
+><userinput
+>s3://</userinput
+></term>
+    <listitem
+><para
+>Lists all buckets available with the default AWS credentials.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
 ><userinput
 >s3://<replaceable
->kovam/anahtarım</replaceable
+>mybucket</replaceable
+>/</userinput
+></term>
+    <listitem
+><para
+>Lists the contents of <replaceable
+>mybucket</replaceable
+>.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>mybucket</replaceable
+>/<replaceable
+>path/to/file.txt</replaceable
 ></userinput
-> URL’si, <userinput
->kovanızdaki</userinput
-> tüm dosyaları ve klasörleri listeler.</para>
+></term>
+    <listitem
+><para
+>Accesses a specific file in the bucket.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://@<replaceable
+>profile</replaceable
+>/</userinput
+></term>
+    <listitem
+><para
+>Lists all buckets available on the named profile.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>mybucket</replaceable
+>@<replaceable
+>profile</replaceable
+>/</userinput
+></term>
+    <listitem
+><para
+>Lists the contents of <replaceable
+>mybucket</replaceable
+> on the named profile.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>mybucket</replaceable
+>@<replaceable
+>profile</replaceable
+>/<replaceable
+>path/to/file.txt</replaceable
+></userinput
+></term>
+    <listitem
+><para
+>Accesses a specific file on the named profile.</para
+></listitem>
+  </varlistentry>
+</variablelist>
+
+<tip
+><para
+>When you add a profile in <guilabel
+>System Settings</guilabel
+>, a shortcut is automatically created in the <application
+>Dolphin</application
+> Places panel. You can simply click it to browse that profile's buckets.</para
+></tip>
+
+</sect1>
+
+<sect1 id="browsing">
+<title
+>Browsing Files</title>
+
+<para
+>Open <application
+>Dolphin</application
+> and type <userinput
+>s3://</userinput
+> in the location bar to see your S3 buckets. Click a bucket to browse its contents. Folders and files appear just like on a local filesystem.</para>
+
+<para
+>To browse a specific profile, type <userinput
+>s3://@<replaceable
+>profile</replaceable
+>/</userinput
+> or click the profile shortcut in the Places panel.</para>
+
+<para
+>Navigation works as expected: you can use the breadcrumb bar, the back and forward buttons, and the location bar. You can also open S3 locations in new tabs.</para>
+
+</sect1>
+
+<sect1 id="operations">
+<title
+>File Operations</title>
+
+<sect2 id="operations-upload">
+<title
+>Uploading Files</title>
+<para
+>Drag files from your local filesystem and drop them into an S3 folder in <application
+>Dolphin</application
+>. You can also use copy and paste. Large files are automatically uploaded using multipart upload to avoid excessive memory usage.</para>
+</sect2>
+
+<sect2 id="operations-download">
+<title
+>Downloading Files</title>
+<para
+>Drag files from an S3 folder to a local folder, or use copy and paste. You can also open S3 files directly in applications — the file will be downloaded to a temporary location and opened.</para>
+</sect2>
+
+<sect2 id="operations-copy">
+<title
+>Copying</title>
+<para
+>You can copy files within the same S3 service using copy and paste or drag and drop. The copy is performed server-side, so it does not require downloading and re-uploading the file.</para>
+</sect2>
+
+<sect2 id="operations-rename">
+<title
+>Renaming</title>
+<para
+>Press <keycap
+>F2</keycap
+> in <application
+>Dolphin</application
+> to rename a file or folder. Since S3 does not have a native rename operation, KIO S3 performs a server-side copy to the new name and then deletes the original. For folders, all files inside the folder are copied and deleted individually.</para>
+</sect2>
+
+<sect2 id="operations-delete">
+<title
+>Deleting</title>
+<para
+>Select files or folders and press <keycap
+>Delete</keycap
+>. When deleting a folder, all files and subfolders inside it are deleted recursively.</para>
+</sect2>
+
+<sect2 id="operations-mkdir">
+<title
+>Creating Folders</title>
+<para
+>Press <keycap
+>F10</keycap
+> or use <menuchoice
+><guimenu
+>Create New</guimenu
+> <guimenuitem
+>Folder...</guimenuitem
+></menuchoice
+> to create a new folder inside a bucket.</para>
+</sect2>
+
+</sect1>
+
+<sect1 id="multiprofile">
+<title
+>Working with Multiple Profiles</title>
+
+<para
+>If you use several S3-compatible services (for example, one for backups and another for website assets), you can configure a profile for each one and switch between them without changing any configuration files or environment variables.</para>
+
+<para
+>Each profile appears as a separate shortcut in the <application
+>Dolphin</application
+> Places panel. Clicking a profile shortcut shows the buckets available on that service. All operations (upload, download, copy, rename, delete) work independently within each profile.</para>
+
+<note
+><para
+>Copying or renaming files between different profiles is not supported. S3 server-side copy only works within a single service. To move files between profiles, copy them to a local folder first, then upload to the other profile.</para
+></note>
+
+</sect1>
+
+<sect1 id="limitations">
+<title
+>Known Limitations</title>
+
+<itemizedlist>
+  <listitem
+><para
+>Bucket creation and deletion are not supported. Use the provider's web console or CLI tools to manage buckets.</para
+></listitem>
+  <listitem
+><para
+>File permissions shown in <application
+>Dolphin</application
+> are cosmetic. S3 uses its own access control model (IAM policies and bucket policies), which does not map to Unix permissions.</para
+></listitem>
+</itemizedlist>
+
+</sect1>
 
 </article>
