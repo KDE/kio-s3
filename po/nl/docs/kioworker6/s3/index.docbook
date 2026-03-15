@@ -30,36 +30,454 @@
 </authorgroup>
 
 <date
->2021-01-05</date>
+>2026-03-13</date>
 <releaseinfo
->kio-s3 0.9.70</releaseinfo>
+>kio-s3 1.0.0</releaseinfo>
 
 </articleinfo>
 
-<para
->KIO-S3 biedt u het tonen van Amazon S3-buckets en objecten, om bestanden en mappen te uploaden naar een bucket en om objecten uit een bucket te verwijderen. U kunt ook mappen of objecten in S3 kopiëren, evenals objecten verplaatsen of hernoemen.</para>
+<sect1 id="introduction">
+<title
+>Inleiding</title>
 
 <para
->U kunt de s3 KIO-worker als volgt gebruiken:</para>
+>KIO S3 is een KIO-worker waarmee u bestanden die zijn opgeslagen in Amazon S3 en S3-compatibele opslagservices (zoals Cloudflare R2, DigitalOcean Spaces, MinIO en andere) rechtstreeks vanuit Dolphin en andere KDE-applicaties kunt bekijken en beheren.</para>
+
 <para
-><userinput
->s3://</userinput
-> of <userinput
->s3://<replaceable
->mybucket/mykey</replaceable
-></userinput
+>Met KIO S3, kunt u:</para>
+<itemizedlist>
+  <listitem
+><para
+>Blader door buckets en mappen.</para
+></listitem>
+  <listitem
+><para
+>Bestanden up- en downloaden</para
+></listitem>
+  <listitem
+><para
+>Bestanden en mappen kopiëren, hernoemen en verwijderen</para
+></listitem>
+  <listitem
+><para
+>Mappen aanmaken binnen buckets</para
+></listitem>
+  <listitem
+><para
+>Tegelijkertijd verbinding maken met meerdere S3-compatibele services met behulp van benoemde profielen</para
+></listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="configuration">
+<title
+>Profielen configureren</title>
+
+<para
+>KIO S3 ondersteunt het verbinden met meerdere S3-compatibele opslagservices via benoemde profielen. Elk profiel slaat de verbindingsinstellingen voor één service op. U kunt profielen beheren in <menuchoice
+><guimenu
+>Systeeminstellingen</guimenu
+> <guisubmenu
+>Netwerk</guisubmenu
+> <guimenuitem
+>S3-backends</guimenuitem
+></menuchoice
 >.</para>
 
-<para
->De eerste URL toont al uw S3-buckets.</para>
+<sect2 id="configuration-adding">
+<title
+>Een profiel toevoegen</title>
 
 <para
->De URL <userinput
+>Klik op de knop <guibutton
+>Profiel toevoegen...</guibutton
+> en vul de volgende velden in:</para>
+
+<variablelist>
+  <varlistentry>
+    <term
+><guilabel
+>Naam</guilabel
+></term>
+    <listitem
+><para
+>Een beschrijvende naam voor dit profiel (verplicht), bijvoorbeeld <userinput
+>Mijn cloudopslag</userinput
+>.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>Eindpunt-URL</guilabel
+></term>
+    <listitem
+><para
+>De URL van de S3-compatibele service, bijvoorbeeld <userinput
+>https://s3.example.com</userinput
+>. Laat dit veld leeg om het standaard Amazon S3-eindpunt te gebruiken.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>Regio</guilabel
+></term>
+    <listitem
+><para
+>De opslagregio, bijvoorbeeld <userinput
+>us-east-1</userinput
+> of <userinput
+>auto</userinput
+>. Laat dit veld leeg om de regio uit uw AWS-configuratie te gebruiken.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>AWS-profiel</guilabel
+></term>
+    <listitem
+><para
+>De naam van het credentials-profiel uit <filename
+>~/.aws/credentials</filename
+>. Als dit veld leeg wordt gelaten, wordt de profiel-ID gebruikt als de naam van het credentials-profiel.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>Gebruik pad-stijl S3 URL's</guilabel
+></term>
+    <listitem
+><para
+>Schakel dit in voor services die geen ondersteuning bieden voor virtueel gehoste adressering, zoals MinIO of bepaalde Ceph-implementaties. De meeste services, waaronder Amazon S3 en Cloudflare R2, hebben dit niet nodig.</para
+></listitem>
+  </varlistentry>
+</variablelist>
+
+<para
+>Nadat u een profiel hebt toegevoegd, klik je op <guibutton
+>Toepassen</guibutton
+> om op te slaan. Het nieuwe profiel verschijnt als een snelkoppeling in het <application
+>Dolphin</application
+>-paneel Plaatsen.</para>
+
+</sect2>
+
+<sect2 id="configuration-editing">
+<title
+>Profielen bewerken en verwijderen</title>
+
+<para
+>Elk profiel in de lijst heeft een bewerkings- en een verwijderingsoptie. Bij het bewerken wordt hetzelfde dialoogvenster geopend, maar dan met de huidige waarden al ingevuld. Bij het verwijderen wordt om bevestiging gevraagd voordat het profiel wordt verwijderd. Vergeet niet op <guibutton
+>Toepassen</guibutton
+> te klikken om uw wijzigingen op te slaan.</para>
+
+</sect2>
+
+</sect1>
+
+<sect1 id="credentials">
+<title
+>AWS-credentials</title>
+
+<para
+>KIO S3 gebruikt de standaard AWS-referentieketen om te authenticeren met S3-services. De referenties worden gelezen uit <filename
+>~/.aws/credentials</filename
+>, waarin meerdere benoemde profielen kunnen worden opgeslagen:</para>
+
+<programlisting
+>[default]
+aws_access_key_id = UW_SLEUTEL
+aws_secret_access_key = UW_GEHEIM
+
+[mijncloud]
+aws_access_key_id = UW_CLOUD_SLEUTEL
+aws_secret_access_key = UW_CLOUD_GEHEIM
+</programlisting>
+
+<para
+>Elk KIO S3-profiel gebruikt het veld <guilabel
+>AWS-profiel</guilabel
+> om te selecteren welke referentiesectie moet worden gebruikt. Een profiel met <guilabel
+>AWS-profiel</guilabel
+> ingesteld op <userinput
+>mijncloud</userinput
+> zal bijvoorbeeld de referenties uit de sectie <literal
+>[mijncloud]</literal
+> hierboven gebruiken.</para>
+
+<para
+>Als er geen profielen zijn geconfigureerd, gebruikt KIO S3 de standaard AWS-referentieketen, die omgevingsvariabelen (<envar
+>AWS_ACCESS_KEY_ID</envar
+>, <envar
+>AWS_SECRET_ACCESS_KEY</envar
+>), de <literal
+>[default]</literal
+>-sectie in <filename
+>~/.aws/credentials</filename
+> en EC2-instantierollen omvat.</para>
+
+<para
+>U kunt de regio optioneel instellen met <filename
+>~/.aws/config</filename
+>:</para>
+
+<programlisting
+>[default]
+region = eu-west-1
+
+[profile mijncloud]
+region = auto
+</programlisting>
+
+<note
+><para
+>In <filename
+>~/.aws/config</filename
+> gebruiken benoemde profielen het voorvoegsel <literal
+>profile</literal
+> (bijv. <literal
+>[profile mijncloud]</literal
+>), terwijl in <filename
+>~/.aws/credentials</filename
+> het voorvoegsel niet wordt gebruikt (bijv. <literal
+>[mijncloud]</literal
+>). Dit is een conventie van de AWS SDK.</para
+></note>
+
+</sect1>
+
+<sect1 id="urls">
+<title
+>URL-schema</title>
+
+<para
+>KIO S3 gebruikt het URL-schema <literal
+>s3://</literal
+>. U kunt deze URL's rechtstreeks in de adresbalk van <application
+>Dolphin</application
+> typen of ze gebruiken met commandoregelhulpmiddelen zoals <command
+>kioclient</command
+>.</para>
+
+<variablelist>
+  <varlistentry>
+    <term
+><userinput
+>s3://</userinput
+></term>
+    <listitem
+><para
+>Toont een lijst van alle buckets die beschikbaar zijn met de standaard AWS-referenties.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
 >s3://<replaceable
->mybucket/mykey</replaceable
+>mijnbucket</replaceable
+>/</userinput
+></term>
+    <listitem
+><para
+>Geeft een overzicht van de inhoud van <replaceable
+>mijnbucket</replaceable
+>.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>mijnbucket</replaceable
+>/<replaceable
+>pad/naar/bestand.txt</replaceable
 ></userinput
-> toont alle bestanden en mappen in uw <userinput
->mybucket</userinput
-> bucket.</para>
+></term>
+    <listitem
+><para
+>Geeft toegang tot een specifiek bestand in de bucket.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://@<replaceable
+>profiel</replaceable
+>/</userinput
+></term>
+    <listitem
+><para
+>Toont een lijst van alle buckets die beschikbaar zijn op het opgegeven profiel.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>mijnbucket</replaceable
+>@<replaceable
+>profiel</replaceable
+>/</userinput
+></term>
+    <listitem
+><para
+>Toont de inhoud van <replaceable
+>mijnbucket</replaceable
+> op het genoemde profiel.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>mijnbucket</replaceable
+>@<replaceable
+>profiel</replaceable
+>/<replaceable
+>pad/naar/bestand.txt</replaceable
+></userinput
+></term>
+    <listitem
+><para
+>Geeft toegang tot een specifiek bestand op het opgegeven profiel.</para
+></listitem>
+  </varlistentry>
+</variablelist>
+
+<tip
+><para
+>Wanneer u een profiel toevoegt in <guilabel
+>Systeeminstellingen</guilabel
+>, wordt er automatisch een snelkoppeling aangemaakt in het <application
+>Dolphin</application
+>-paneel 'Plaatsen'. U kunt er eenvoudig op klikken om de buckets van dat profiel te bekijken.</para
+></tip>
+
+</sect1>
+
+<sect1 id="browsing">
+<title
+>Bestanden bekijken</title>
+
+<para
+>Open <application
+>Dolphin</application
+> en typ <userinput
+>s3://</userinput
+> in de adresbalk om uw S3-buckets te bekijken. Klik op een bucket om de inhoud ervan te bekijken. Mappen en bestanden worden weergegeven zoals op een lokaal bestandssysteem.</para>
+
+<para
+>Om een ​​specifiek profiel te bekijken, typt u <userinput
+>s3://@<replaceable
+>profile</replaceable
+>/</userinput
+> of klikt u op de profielsnelkoppeling in het paneel 'Plaatsen'.</para>
+
+<para
+>De navigatie werkt zoals verwacht: u kunt de broodkruimel-balk, de terug- en vooruitknoppen en de locatiebalk gebruiken. U kunt S3-locaties ook in nieuwe tabbladen openen.</para>
+
+</sect1>
+
+<sect1 id="operations">
+<title
+>Bestandsoperaties</title>
+
+<sect2 id="operations-upload">
+<title
+>Bestanden uploaden</title>
+<para
+>Sleep bestanden vanaf uw lokale bestandssysteem naar een S3-map in Dolphin. U kunt ook kopiëren en plakken. Grote bestanden worden automatisch geüpload met behulp van multipart-upload om overmatig geheugengebruik te voorkomen.</para>
+</sect2>
+
+<sect2 id="operations-download">
+<title
+>Bestanden downloaden</title>
+<para
+>Sleep bestanden vanuit een S3-map naar een lokale map, of gebruik kopiëren en plakken. U kunt S3-bestanden ook rechtstreeks in toepassingen openen — het bestand wordt dan gedownload naar een tijdelijke locatie en geopend.</para>
+</sect2>
+
+<sect2 id="operations-copy">
+<title
+>Kopiëren</title>
+<para
+>U kunt bestanden binnen dezelfde S3-service kopiëren met behulp van kopiëren en plakken of slepen en loslaten. Het kopiëren gebeurt aan de serverzijde, dus het is niet nodig om het bestand te downloaden en opnieuw te uploaden.</para>
+</sect2>
+
+<sect2 id="operations-rename">
+<title
+>Hernoemen</title>
+<para
+>Druk op <keycap
+>F2</keycap
+> in <application
+>Dolphin</application
+> om een bestand of map te hernoemen. Aangezien S3 geen ingebouwde hernoemfunctie heeft, voert KIO S3 een serverzijdige kopie uit naar de nieuwe naam en verwijdert vervolgens het origineel. Voor mappen worden alle bestanden in de map afzonderlijk gekopieerd en verwijderd.</para>
+</sect2>
+
+<sect2 id="operations-delete">
+<title
+>Verwijderen</title>
+<para
+>Selecteer bestanden of mappen en druk op <keycap
+>Del</keycap
+>. Bij het verwijderen van een map worden alle bestanden en submappen daarin recursief verwijderd.</para>
+</sect2>
+
+<sect2 id="operations-mkdir">
+<title
+>Mappen aanmaken</title>
+<para
+>Druk op <keycap
+>F10</keycap
+> of gebruik <menuchoice
+><guimenu
+>Nieuwe map maken</guimenu
+> <guimenuitem
+>Map...</guimenuitem
+></menuchoice
+> om een ​​nieuwe map te maken in een bucket.</para>
+</sect2>
+
+</sect1>
+
+<sect1 id="multiprofile">
+<title
+>Werken met meerdere profielen</title>
+
+<para
+>Als u meerdere S3-compatibele services gebruikt (bijvoorbeeld een voor back-ups en een andere voor website-bezittingen), kunt u voor elk een profiel configureren en ertussen schakelen zonder configuratiebestanden of omgevingsvariabelen te wijzigen.</para>
+
+<para
+>Elk profiel verschijnt als een aparte snelkoppeling in het paneel 'Plaatsen' van de toepassing Dolphin. Door op een profielsnelkoppeling te klikken, worden de buckets weergegeven die beschikbaar zijn op die service. Alle bewerkingen (uploaden, downloaden, kopiëren, hernoemen, verwijderen) werken onafhankelijk van elkaar binnen elk profiel.</para>
+
+<note
+><para
+>Het kopiëren of hernoemen van bestanden tussen verschillende profielen wordt niet ondersteund. Kopiëren in de S3-server werkt alleen binnen één service. Om bestanden tussen profielen te verplaatsen, kopieert u ze eerst naar een lokale map en uploadt u ze vervolgens naar het andere profiel.</para
+></note>
+
+</sect1>
+
+<sect1 id="limitations">
+<title
+>Bekende beperkingen</title>
+
+<itemizedlist>
+  <listitem
+><para
+>Het aanmaken en verwijderen van buckets wordt niet ondersteund. Gebruik de webconsole of CLI-tools van de provider om buckets te beheren.</para
+></listitem>
+  <listitem
+><para
+>De bestandsrechten die in <application
+>Dolphin</application
+> worden weergegeven, zijn slechts cosmetisch. S3 gebruikt een eigen toegangscontrolemodel (IAM-beleid en bucketbeleid), dat niet overeenkomt met Unix-rechten.</para
+></listitem>
+</itemizedlist>
+
+</sect1>
 
 </article>

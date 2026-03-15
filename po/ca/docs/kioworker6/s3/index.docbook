@@ -9,7 +9,7 @@
 -->
 <article lang="&language;" id="s3">
 <title
->KIO S3</title>
+>kio-s3</title>
 
 <articleinfo>
 
@@ -30,36 +30,460 @@
 </authorgroup>
 
 <date
->5 de gener de 2021</date>
+>13 de març de 2026</date>
 <releaseinfo
->kio-s3 0.9.70</releaseinfo>
+>kio-s3 1.0.0</releaseinfo>
 
 </articleinfo>
 
-<para
->El KIO S3 permet llistar els dipòsits i objectes d'Amazon S3, carregar fitxers i carpetes a un dipòsit i suprimir objectes d'un dipòsit. També podreu copiar carpetes o objectes dins de S3, així com moure o canviar el nom dels objectes.</para>
+<sect1 id="introduction">
+<title
+>Introducció</title>
 
 <para
->Podeu utilitzar el procés de treball KIO «s3» de la manera següent:</para>
+>El KIO S3 és un procés de treball KIO que permet navegar i gestionar els fitxers emmagatzemats en els serveis d'emmagatzematge d'Amazon S3 i compatibles amb S3 (com Cloudflare R2, DigitalOcean Spaces, MinIO, i altres) directament des del <application
+>Dolphin</application
+> i altres aplicacions KDE.</para>
+
 <para
+>Amb el KIO S3, podeu:</para>
+<itemizedlist>
+  <listitem
+><para
+>Navegar els compartiments i carpetes</para
+></listitem>
+  <listitem
+><para
+>Pujar i baixar fitxers</para
+></listitem>
+  <listitem
+><para
+>Copiar, canviar el nom i suprimir fitxers i carpetes</para
+></listitem>
+  <listitem
+><para
+>Crear carpetes dins dels compartiments</para
+></listitem>
+  <listitem
+><para
+>Connectar a diversos serveis compatibles amb S3 al mateix temps utilitzant perfils amb nom</para
+></listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="configuration">
+<title
+>Configuració de perfils</title>
+
+<para
+>El KIO S3 permet connectar-se a diversos serveis d'emmagatzematge compatibles amb S3 a través de perfils amb nom. Cada perfil emmagatzema la configuració de connexió d'un servei. Podeu gestionar els perfils a <menuchoice
+><guimenu
+>Arranjament del sistema</guimenu
+> <guisubmenu
+>Xarxa</guisubmenu
+> <guimenuitem
+>Dorsals S3</guimenuitem
+></menuchoice
+>.</para>
+
+<sect2 id="configuration-adding">
+<title
+>Afegir un perfil</title>
+
+<para
+>Feu clic al botó <guibutton
+>Afegeix un perfil...</guibutton
+> i ompliu els camps següents:</para>
+
+<variablelist>
+  <varlistentry>
+    <term
+><guilabel
+>Nom</guilabel
+></term>
+    <listitem
+><para
+>Un nom descriptiu per a aquest perfil (necessari), &pex;, <userinput
+>El meu emmagatzematge al núvol</userinput
+>.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>URL del punt final</guilabel
+></term>
+    <listitem
+><para
+>L'URL del servei compatible amb S3, &pex;, <userinput
+>https://s3.example.com</userinput
+>. Deixeu-ho buit per a utilitzar el punt final predeterminat d'Amazon S3.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>Regió</guilabel
+></term>
+    <listitem
+><para
+>La regió d'emmagatzematge, &pex; <userinput
+>us-east-1</userinput
+> o <userinput
+>auto</userinput
+>. Deixeu-ho buit per a utilitzar la regió a partir de la vostra configuració AWS.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>Perfil AWS</guilabel
+></term>
+    <listitem
+><para
+>El nom del perfil de credencials de <filename
+>~/.aws/credentials</filename
+>. Si es deixa buit, s'utilitza l'identificador del perfil com a nom del perfil de credencials.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>Usa URL S3 d'estil camí</guilabel
+></term>
+    <listitem
+><para
+>Activeu-ho per a serveis que no admeten adreces d'estil virtual allotjats, com ara MinIO o alguns desplegaments de Ceph. La majoria dels serveis, incloent-hi Amazon S3 i Cloudflare R2, no ho necessiten.</para
+></listitem>
+  </varlistentry>
+</variablelist>
+
+<para
+>Després d'afegir un perfil, feu clic a <guibutton
+>Aplica</guibutton
+> per a desar. El perfil nou apareixerà com una drecera al plafó Llocs del <application
+>Dolphin</application
+>.</para>
+
+</sect2>
+
+<sect2 id="configuration-editing">
+<title
+>Edició i supressió de perfils</title>
+
+<para
+>Cada perfil de la llista té una acció d'edició i supressió. L'edició obre el mateix diàleg amb els valors actuals ja omplerts. La supressió demana confirmació abans d'eliminar el perfil. Recordeu fer clic a <guibutton
+>Aplica</guibutton
+> per a desar els canvis.</para>
+
+</sect2>
+
+</sect1>
+
+<sect1 id="credentials">
+<title
+>Credencials AWS</title>
+
+<para
+>El KIO S3 utilitza la cadena de credencials AWS estàndard per a autenticar-se amb els serveis S3. Les credencials es llegeixen a partir de <filename
+>~/.aws/credentials</filename
+>, que pot contenir diversos perfils amb nom:</para>
+
+<programlisting
+>[default]
+aws_access_key_id = VOSTRA_CLAU
+aws_secret_access_key = VOSTRE_SECRET
+
+[mycloud]
+aws_access_key_id = VOSTRA_CLAU_NUVOL
+aws_secret_access_key = VOSTRE_SECRET_NUVOL
+</programlisting>
+
+<para
+>Cada perfil KIO S3 utilitza el camp <guilabel
+>AWS Profile</guilabel
+> per a seleccionar quina secció de credencials utilitzar. Per exemple, un perfil amb <guilabel
+>AWS Profile</guilabel
+> establert a <userinput
+>mycloud</userinput
+> utilitzarà les credencials de la secció <literal
+>[mycloud]</literal
+> anterior.</para>
+
+<para
+>Si no hi ha cap perfil configurat, el KIO S3 utilitza la cadena de credencials AWS predeterminada, que inclou variables d'entorn (<envar
+>AWSACCESSKEYID</envar
+>,<envar
+>AWSSECRETACCESSKEY</envar
+>), la secció <literal
+>[default]</literal
+> a <filename
+>~/.aws/credentials</filename
+>, i rols d'instància EC2.</para>
+
+<para
+>Opcionalment podeu establir la regió utilitzant <filename
+>~/.aws/config</filename
+>:</para>
+
+<programlisting
+>[default]
+region = eu-west-1
+
+[profile mycloud]
+region = auto
+</programlisting>
+
+<note
+><para
+>A <filename
+>~/.aws/config</filename
+>, els perfils amb nom utilitzen el prefix <literal
+>profile</literal
+> (&pex;, <literal
+>[profile mycloud]</literal
+>), mentre que a <filename
+>~/.aws/credentials</filename
+> el prefix no s'utilitza (&pex;, <literal
+>[mycloud]</literal
+>). Aquesta és una convenció del SDK d'AWS.</para
+></note>
+
+</sect1>
+
+<sect1 id="urls">
+<title
+>Esquema d'URL</title>
+
+<para
+>El KIO S3 utilitza l'esquema d'URL <literal
+>s3://</literal
+>. Podeu escriure aquests URL directament a la barra d'ubicació <application
+>Dolphin</application
+> o utilitzar-los amb eines de línia d'ordres com ara <command
+>kioclient</command
+>.</para>
+
+<variablelist>
+  <varlistentry>
+    <term
 ><userinput
 >s3://</userinput
-> o <userinput
+></term>
+    <listitem
+><para
+>Llista tots els compartiments disponibles amb les credencials AWS predeterminades.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
 >s3://<replaceable
->meu_dipòsit/meva_clau</replaceable
+>meu_compartiment</replaceable
+>/</userinput
+></term>
+    <listitem
+><para
+>Llista el contingut de <replaceable
+>meu_compartiment</replaceable
+>.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>meu_compartiment</replaceable
+>/<replaceable
+>camí/a/fitxer.txt</replaceable
 ></userinput
->.</para>
+></term>
+    <listitem
+><para
+>Accedeix a un fitxer específic del compartiment.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://@<replaceable
+>perfil</replaceable
+>/</userinput
+></term>
+    <listitem
+><para
+>Llista tots els compartiments disponibles al perfil anomenat.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>meu_compartiment</replaceable
+>@<replaceable
+>perfil</replaceable
+>/</userinput
+></term>
+    <listitem
+><para
+>Llista el contingut del <replaceable
+>meu_compartiment</replaceable
+> en el perfil anomenat.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>meu_compartiment</replaceable
+>@<replaceable
+>perfil</replaceable
+>/<replaceable
+>camí/a/fitxer.txt</replaceable
+></userinput
+></term>
+    <listitem
+><para
+>Accedeix a un fitxer específic del perfil anomenat.</para
+></listitem>
+  </varlistentry>
+</variablelist>
+
+<tip
+><para
+>Quan afegiu un perfil a l'<guilabel
+>Arranjament del sistema</guilabel
+>, es crea automàticament una drecera al plafó Llocs del <application
+>Dolphin</application
+>. Podeu fer-hi clic per a navegar pels compartiments d'aquest perfil.</para
+></tip>
+
+</sect1>
+
+<sect1 id="browsing">
+<title
+>Navegació de fitxers</title>
 
 <para
->El primer &URL; mostrarà tots els vostres dipòsits S3.</para>
+>Obriu el <application
+>Dolphin</application
+> i escriviu <userinput
+>s3://</userinput
+> a la barra de localització per a veure els compartiments S3. Feu clic a un compartiment per a navegar pel seu contingut. Les carpetes i els fitxers apareixen com en un sistema de fitxers local.</para>
 
 <para
->L'&URL; <userinput
->s3://<replaceable
->dipòsit/clau</replaceable
-></userinput
-> llistarà tots els fitxers i carpetes des del dipòsit <userinput
->meu_dipòsit</userinput
->.</para>
+>Per a navegar per un perfil específic, escriviu <userinput
+>s3://@<replaceable
+>perfil</replaceable
+>/</userinput
+> o feu clic a la drecera de perfil al plafó Llocs.</para>
+
+<para
+>La navegació funciona com s'espera: podeu utilitzar la barra del fil d'Ariadna, els botons enrere i endavant i la barra de localització. També podeu obrir ubicacions S3 en pestanyes noves.</para>
+
+</sect1>
+
+<sect1 id="operations">
+<title
+>Operacions amb fitxers</title>
+
+<sect2 id="operations-upload">
+<title
+>Pujada de fitxers</title>
+<para
+>Arrossegueu els fitxers del sistema de fitxers local i deixeu-los anar a una carpeta S3 al <application
+>Dolphin</application
+>. També podeu utilitzar copia i enganxa. Els fitxers grans es carreguen automàticament utilitzant la càrrega multipart per evitar un ús excessiu de memòria.</para>
+</sect2>
+
+<sect2 id="operations-download">
+<title
+>Baixada de fitxers</title>
+<para
+>Arrossegueu fitxers des d'una carpeta S3 a una carpeta local, o utilitzeu copia i enganxa. També podeu obrir fitxers S3 directament a les aplicacions: el fitxer es baixarà a una ubicació temporal i s'obrirà.</para>
+</sect2>
+
+<sect2 id="operations-copy">
+<title
+>Copia</title>
+<para
+>Podeu copiar fitxers dins del mateix servei S3 utilitzant copia i enganxa o arrossega i deixa anar. La còpia es realitza a la banda del servidor, de manera que no requereix baixar i tornar a pujar el fitxer.</para>
+</sect2>
+
+<sect2 id="operations-rename">
+<title
+>Canviar de nom</title>
+<para
+>Premeu <keycap
+>F2</keycap
+> al <application
+>Dolphin</application
+> per a canviar el nom d'un fitxer o una carpeta. Com que el S3 no té cap operació nativa de canvi de nom, el KIO S3 realitza una còpia a la banda del servidor al nou nom i després suprimeix l'original. Per a les carpetes, tots els fitxers dins de la carpeta es copien i s'esborren individualment.</para>
+</sect2>
+
+<sect2 id="operations-delete">
+<title
+>Supressió</title>
+<para
+>Seleccioneu fitxers o carpetes i premeu <keycap
+>Supr</keycap
+>. En suprimir una carpeta, tots els fitxers i subcarpetes que hi ha dins se suprimeixen recursivament.</para>
+</sect2>
+
+<sect2 id="operations-mkdir">
+<title
+>Creació de carpetes</title>
+<para
+>Premeu <keycap
+>F10</keycap
+> o useu <menuchoice
+><guimenu
+>Crea nou</guimenu
+> <guimenuitem
+>Carpeta...</guimenuitem
+></menuchoice
+> per crear una carpeta nova dins d'un compartiment.</para>
+</sect2>
+
+</sect1>
+
+<sect1 id="multiprofile">
+<title
+>Treballar amb diversos perfils</title>
+
+<para
+>Si utilitzeu diversos serveis compatibles amb S3 (per exemple, un per a còpies de seguretat i un altre per als actius del lloc web), podeu configurar un perfil per a cadascun i canviar entre ells sense canviar cap fitxer de configuració o variable d'entorn.</para>
+
+<para
+>Cada perfil apareix com una drecera separada en el plafó Llocs del <application
+>Dolphin</application
+>. En fer clic a una drecera de perfil es mostren els compartiments disponibles en aquest servei. Totes les operacions (pujar, baixar, copiar, canviar el nom, suprimir) funcionen de manera independent dins de cada perfil.</para>
+
+<note
+><para
+>No s'admet la còpia o canvi de nom de fitxers entre perfils diferents. La copia a la banda del servidor S3 només funciona dins d'un servei individual. Per a moure fitxers entre perfils, copieu-los primer a una carpeta local i, a continuació, pugeu-los a l'altre perfil.</para
+></note>
+
+</sect1>
+
+<sect1 id="limitations">
+<title
+>Limitacions conegudes</title>
+
+<itemizedlist>
+  <listitem
+><para
+>No s'admet la creació i eliminació de compartiments. Utilitzeu la consola web del proveïdor o les eines CLI per a gestionar compartiments.</para
+></listitem>
+  <listitem
+><para
+>Els permisos de fitxer mostrats al <application
+>Dolphin</application
+> són cosmètics. S3 utilitza el seu model propi de control d'accés (polítiques IAM i polítiques de compartiment), que no es correspon amb els permisos d'Unix.</para
+></listitem>
+</itemizedlist>
+
+</sect1>
 
 </article>

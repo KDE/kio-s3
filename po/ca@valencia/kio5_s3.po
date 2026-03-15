@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-12 00:43+0000\n"
-"PO-Revision-Date: 2026-03-08 10:10+0100\n"
+"PO-Revision-Date: 2026-03-14 10:17+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -147,14 +147,16 @@ msgid ""
 "Invalid S3 URI, bucket name is missing from the host.<nl/>A valid S3 URI "
 "must be written in the form: <link>s3://bucket/key</link>"
 msgstr ""
-"L'URI de S3 no és vàlid, falta el nom del depòsit a l'amfitrió.<nl/>S'ha "
-"d'escriure un URI de S3 vàlid en la forma: <link>s3://depòsit/clau</link>"
+"L'URI de S3 no és vàlid, falta el nom del compartiment a l'amfitrió.<nl/"
+">S'ha d'escriure un URI de S3 vàlid en la forma: <link>s3://compartiment/"
+"clau</link>"
 
 #: s3backend.cpp:137 s3backend.cpp:146
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
-msgstr "No s'ha trobat cap depòsit S3, comproveu la vostra configuració d'AWS."
+msgstr ""
+"No s'ha trobat cap compartiment S3, comproveu la vostra configuració d'AWS."
 
 #: s3backend.cpp:504
 #, kde-kuit-format
@@ -194,6 +196,3 @@ msgid ""
 msgstr ""
 "No s'ha pogut recuperar el llistat complet de fitxers. És possible que "
 "alguns fitxers no es mostren."
-
-#~ msgid "Advanced"
-#~ msgstr "Avançat"
