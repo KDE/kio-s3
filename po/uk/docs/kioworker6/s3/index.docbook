@@ -44,36 +44,460 @@
 </authorgroup>
 
 <date
->5 січня 2021 року</date>
+>13 березня 2026 року</date>
 <releaseinfo
->kio-s3 0.9.70</releaseinfo>
+>kio-s3 1.0.0</releaseinfo>
 
 </articleinfo>
 
-<para
->KIO S3 надає вам змогу отримати список кошиків та об'єктів Amazon S3, вивантажувати файли і теки до кошика та вилучати об'єкти з кошика. Ви також можете копіювати теки або об'єкти у S3, а також пересувати та перейменовувати об'єкти.</para>
+<sect1 id="introduction">
+<title
+>Вступ</title>
 
 <para
->Скористатися обробником KIO s3 можна так:</para>
+>KIO S3 — це засіб обробки даних KIO, який надає змогу переглядати файли та керувати файлами, що зберігаються в Amazon S3 та сумісних з S3 службах зберігання даних (зокрема Cloudflare R2, DigitalOcean Spaces, MinIO та інші), безпосередньо з <application
+>Dolphin</application
+> та інших програм KDE.</para>
+
 <para
+>З KIO S3 ви можете:</para>
+<itemizedlist>
+  <listitem
+><para
+>Здійснювати навігацію кошиками та теками</para
+></listitem>
+  <listitem
+><para
+>Вивантажувати і отримувати файли</para
+></listitem>
+  <listitem
+><para
+>Копіювати, перейменовувати та вилучати файли і теки</para
+></listitem>
+  <listitem
+><para
+>Створювати теки у кошиках</para
+></listitem>
+  <listitem
+><para
+>Встановлювати з'єднання з декількома сумісними з S3 службами одночасно з використанням іменованих профілів</para
+></listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="configuration">
+<title
+>Налаштовування профілів</title>
+
+<para
+>У KIO S3 передбачено підтримку встановлення з'єднання із сумісними з S3 службами зберігання даних з використанням іменованих профілів. Кожен профіль зберігає параметри з'єднання для однієї служби. Ви можете керувати профілями на сторінці <menuchoice
+><guimenu
+>Системні параметри</guimenu
+> <guisubmenu
+>Мережа</guisubmenu
+> <guimenuitem
+>Модулі S3</guimenuitem
+></menuchoice
+>.</para>
+
+<sect2 id="configuration-adding">
+<title
+>Додавання профілю</title>
+
+<para
+>Натисніть кнопку <guibutton
+>Додати профіль...</guibutton
+> і заповніть такі поля:</para>
+
+<variablelist>
+  <varlistentry>
+    <term
+><guilabel
+>Назва</guilabel
+></term>
+    <listitem
+><para
+>Описова назва профілю (обов'язкова), наприклад <userinput
+>Моє сховище у хмарі</userinput
+>.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>Адреса кінцевої точки</guilabel
+></term>
+    <listitem
+><para
+>Адреса сумісної із S3 служби, наприклад <userinput
+>https://s3.example.com</userinput
+>. Не заповнюйте, якщо хочете скористатися типовою кінцевою точкою S3 Amazon.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>Область</guilabel
+></term>
+    <listitem
+><para
+>Область сховища, наприклад <userinput
+>us-east-1</userinput
+> або <userinput
+>auto</userinput
+>. Не заповнюйте, якщо хочете скористатися областю з ваших налаштувань AWS.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>Профіль AWS</guilabel
+></term>
+    <listitem
+><para
+>Назва профілю реєстраційних даних з <filename
+>~/.aws/credentials</filename
+>. Якщо не заповнювати, як назву профілю реєстраційних даних буде використано ідентифікатор профілю.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>Використовувати адреси S3 у стилі шляхів</guilabel
+></term>
+    <listitem
+><para
+>Увімкніть це для служб, у яких не передбачено підтримки адресації у стилі віртуального розміщення, зокрема MinIO або деяких розгортань Ceph. Більшість служб, зокрема Amazon S3 та Cloudflare R2, цього не потребують.</para
+></listitem>
+  </varlistentry>
+</variablelist>
+
+<para
+>Після додавання профілю натисніть кнопку <guibutton
+>Застосувати</guibutton
+>, щоб зберегти зміни. Новий профіль буде показано як пункт на панелі «Місця» <application
+>Dolphin</application
+>.</para>
+
+</sect2>
+
+<sect2 id="configuration-editing">
+<title
+>Редагування і вилучення профілів</title>
+
+<para
+>Для кожного профілю у списку передбачено кнопки редагування та вилучення. Кнопка редагування відкриває те саме діалогове вікно з попередньо заповненими поточними значеннями. У відповідь на натискання кнопки вилучення програма попросить підтвердити дію перед вилученням профілю. Не забудьте натиснути кнопку <guibutton
+>Застосувати</guibutton
+>, щоб зберегти зміни.</para>
+
+</sect2>
+
+</sect1>
+
+<sect1 id="credentials">
+<title
+>Реєстраційні дані AWS</title>
+
+<para
+>У KIO S3 для розпізнавання у службах S3 використано стандартний ланцюжок облікових даних AWS. Облікові дані зчитуються з файла <filename
+>~/.aws/credentials</filename
+>, де може зберігатися декілька іменованих профілів:</para>
+
+<programlisting
+>[default]
+aws_access_key_id = ВАШ_КЛЮЧ
+aws_secret_access_key = ВАШІ_РЕЄСТРАЦІЙНІ_ДАНІ
+
+[mycloud]
+aws_access_key_id = ВАШ_КЛЮЧ_ДО_ХМАРИ
+aws_secret_access_key = ВАШІ_РЕЄСТРАЦІЙНІ_ДАНІ_ДО_ХМАРИ
+</programlisting>
+
+<para
+>У кожному профілі KIO S3 для вибору використаного розділу реєстраційних даних використано поле <guilabel
+>Профіль AWS</guilabel
+>. Наприклад, профіль, у якому для <guilabel
+>Профіль AWS</guilabel
+> встановлено значення <userinput
+>mycloud</userinput
+>, використовуватиме облікові дані з розділу <literal
+>[mycloud]</literal
+> вище.</para>
+
+<para
+>Якщо профілі не налаштовано, у KIO S3 буде використано типовий ланцюжок облікових даних AWS, зокрема змінні середовища (<envar
+>AWS_ACCESS_KEY_ID</envar
+>, <envar
+>AWS_SECRET_ACCESS_KEY</envar
+>), розділ <literal
+>[default]</literal
+> у <filename
+>~/.aws/credentials</filename
+> та ролі екземпляра EC2.</para>
+
+<para
+>Ви можете, не обов'язково, встановити область за допомогою <filename
+>~/.aws/config</filename
+>:</para>
+
+<programlisting
+>[default]
+region = eu-west-1
+
+[profile mycloud]
+region = auto
+</programlisting>
+
+<note
+><para
+>У <filename
+>~/.aws/config</filename
+> для іменованих профілів використовують префікс <literal
+>profile</literal
+> (наприклад, <literal
+>[profile mycloud]</literal
+>), тоді як у <filename
+>~/.aws/credentials</filename
+> префікс не використовується (наприклад, <literal
+>[mycloud]</literal
+>). Це узгоджені правила AWS SDK.</para
+></note>
+
+</sect1>
+
+<sect1 id="urls">
+<title
+>Схема адрес</title>
+
+<para
+>У KIO S3 використано схему адрес <literal
+>s3://</literal
+>. Ви можете вводити такі адреси безпосередньо до рядка адреси <application
+>Dolphin</application
+> або використовувати їх за допомогою інструментів командного рядка, таких як <command
+>kioclient</command
+>.</para>
+
+<variablelist>
+  <varlistentry>
+    <term
 ><userinput
 >s3://</userinput
-> або <userinput
+></term>
+    <listitem
+><para
+>Виводить список усіх кошиків, які доступні за типовими реєстраційними даними AWS.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
 >s3://<replaceable
->кошик/ключ</replaceable
+>мій_кошик</replaceable
+>/</userinput
+></term>
+    <listitem
+><para
+>Виводить список вмісту <replaceable
+>мій_кошик</replaceable
+>.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>мій_кошик</replaceable
+>/<replaceable
+>шлях/до/файл.txt</replaceable
 ></userinput
->.</para>
+></term>
+    <listitem
+><para
+>Надає доступ до певного файла у кошику.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://@<replaceable
+>профіль</replaceable
+>/</userinput
+></term>
+    <listitem
+><para
+>Виводить список усіх кошиків, які доступні для іменованого профілю.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>мій_кошик</replaceable
+>@<replaceable
+>профіль</replaceable
+>/</userinput
+></term>
+    <listitem
+><para
+>Виводить список вмісту <replaceable
+>мій_кошик</replaceable
+> на іменованому профілі.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>мій_кошик</replaceable
+>@<replaceable
+>профіль</replaceable
+>/<replaceable
+>шлях/до/файл.txt</replaceable
+></userinput
+></term>
+    <listitem
+><para
+>Надає доступ до вказаного файла у іменованому профілі.</para
+></listitem>
+  </varlistentry>
+</variablelist>
+
+<tip
+><para
+>Після додавання профілю у <guilabel
+>Системних параметрах</guilabel
+> буде автоматично створено пункт на панелі «Місця» <application
+>Dolphin</application
+>. Ви можете просто натиснути цей пункт, щоб перейти до навігації кошиками профілю.</para
+></tip>
+
+</sect1>
+
+<sect1 id="browsing">
+<title
+>Навігація файлами</title>
 
 <para
->Якщо скористатися першим варіантом адреси буде показано усі ваші кошики S3.</para>
+>Відкрийте <application
+>Dolphin</application
+> та введіть <userinput
+>s3://</userinput
+> до рядка адреси, щоб побачити ваші кошики S3. Натисніть пункт кошика, щоб переглянути його вміст. Кошики та файли буде показано так само, як і в локальній файловій системі.</para>
 
 <para
->Використання адреси <userinput
->s3://<replaceable
->кошик/ключ</replaceable
-></userinput
-> призведе до виведення списку файлів і тек з вашого кошика <userinput
->кошик</userinput
->.</para>
+>Щоб перейти до навігації певним профілем, введіть <userinput
+>s3://@<replaceable
+>профіль</replaceable
+>/</userinput
+> або натисніть пункт профілю на панелі «Місця».</para>
+
+<para
+>Навігація працює типовим чином: ви можете використовувати панель навігації, кнопки «Назад» та «Вперед», а також панель адреси. Ви також можете відкривати місця S3 у нових вкладках.</para>
+
+</sect1>
+
+<sect1 id="operations">
+<title
+>Дії над файлами</title>
+
+<sect2 id="operations-upload">
+<title
+>Вивантаження файлів</title>
+<para
+>Перетягніть файли з вашої локальної файлової системи та помістіть їх до теки S3 у <application
+>Dolphin</application
+>. Ви також можете використовувати копіювання та вставлення. Великі файли автоматично завантажуються за допомогою частинного завантаження, щоб уникнути надмірного використання пам’яті.</para>
+</sect2>
+
+<sect2 id="operations-download">
+<title
+>Отримання файлів</title>
+<para
+>Перетягніть файли з теки S3 до локальної теки або скористайтеся копіюванням зі вставленням. Ви також можете відкривати файли S3 безпосередньо в програмах — файл буде завантажено до тимчасової теки, а потім відкрито.</para>
+</sect2>
+
+<sect2 id="operations-copy">
+<title
+>Копіювання</title>
+<para
+>Ви можете копіювати файли в межах однієї служби S3 за допомогою копіювання зі вставленням або перетягування. Копіювання виконується на боці сервера, тому не потрібно отримувати файл, а потім повторно вивантажувати його.</para>
+</sect2>
+
+<sect2 id="operations-rename">
+<title
+>Перейменування</title>
+<para
+>Натисніть <keycap
+>F2</keycap
+> у <application
+>Dolphin</application
+>, щоб перейменувати файл або теку. Оскільки у S3 не передбачено вбудованої дій з перейменування, KIO S3 виконує копіювання на боці сервера з новою назвою, а потім вилучає оригінал. Для тек усі файли всередині теки буде скопійовано і вилучено окремо.</para>
+</sect2>
+
+<sect2 id="operations-delete">
+<title
+>Вилучення</title>
+<para
+>Позначте файли або теки та натисніть клавішу <keycap
+>Delete</keycap
+>. Під час вилучення теки всі файли та підтеки всередині неї буде вилучено рекурсивно.</para>
+</sect2>
+
+<sect2 id="operations-mkdir">
+<title
+>Створення тек</title>
+<para
+>Натисніть клавішу <keycap
+>F10</keycap
+> або скористайтеся пунктом меню <menuchoice
+><guimenu
+>Створити</guimenu
+> <guimenuitem
+>Тека...</guimenuitem
+></menuchoice
+>, щоб створити теку у кошику.</para>
+</sect2>
+
+</sect1>
+
+<sect1 id="multiprofile">
+<title
+>Робота з декількома профілями</title>
+
+<para
+>Якщо ви використовуєте декілька сумісних із S3 служб (наприклад, одну для резервних копій, а іншу для ресурсів сайта), ви можете налаштувати профіль для кожної з них і перемикатися між ними, не змінюючи жодних файлів налаштувань чи змінних середовища.</para>
+
+<para
+>Кожен профіль буде показано як окремий пункт на панелі «Місця» програми <application
+>Dolphin</application
+>. У відповідь на натискання пункту профілю програма покаже доступні у цій службі кошики. Усі дії (вивантаження, отримання, копіювання, перейменування, вилучення) працюють незалежно в кожному профілі.</para>
+
+<note
+><para
+>Підтримки копіювання або перейменовування файлів між різними профілями не передбачено. Копіювання на боці сервера S3 працює лише в межах однієї служби. Щоб перемістити файли між профілями, спочатку скопіюйте їх до локальної теки, а потім вивантажте до іншого профілю.</para
+></note>
+
+</sect1>
+
+<sect1 id="limitations">
+<title
+>Відомі обмеження</title>
+
+<itemizedlist>
+  <listitem
+><para
+>Підтримки створення і вилучення кошиків не передбачено. Для керування кошиками скористайтеся вебконсоллю або інструментами командного рядка надавача послуг.</para
+></listitem>
+  <listitem
+><para
+>Права доступу до файлів, які буде показано у <application
+>Dolphin</application
+>, є косметичними. S3 використовує власну модель керування доступом (правила IAM та правила кошика), яка не збігається із правилами доступу у Unix.</para
+></listitem>
+</itemizedlist>
+
+</sect1>
 
 </article>
