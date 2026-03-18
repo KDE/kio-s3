@@ -1,13 +1,13 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2026 This file is copyright:
 # This file is distributed under the same license as the kio-s3 package.
-# Vincenzo Reale <smart2128vr@gmail.com>, 2021, 2022.
+# SPDX-FileCopyrightText: 2021, 2022, 2026 Vincenzo Reale <smart2128vr@gmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-12 00:43+0000\n"
-"PO-Revision-Date: 2022-09-16 16:02+0200\n"
+"PO-Revision-Date: 2026-03-08 12:22+0100\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -15,125 +15,127 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.08.1\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #: kcm/ui/main.qml:25
 #, kde-format
 msgid "No S3 profiles configured"
-msgstr ""
+msgstr "Nessun profilo S3 configurato"
 
 #: kcm/ui/main.qml:26
 #, kde-format
 msgid "Add a profile to connect to an S3-compatible storage backend"
 msgstr ""
+"Aggiungi un profilo per connetterti a un motore di archiviazione compatibile "
+"con S3"
 
 #: kcm/ui/main.qml:30 kcm/ui/main.qml:37
 #, kde-format
 msgid "Add Profile…"
-msgstr ""
+msgstr "Aggiungi profilo…"
 
 #: kcm/ui/main.qml:72
 #, kde-format
 msgid "Default AWS endpoint"
-msgstr ""
+msgstr "Terminatore AWS predefinito"
 
 #: kcm/ui/main.qml:89
 #, kde-format
 msgid "Edit"
-msgstr ""
+msgstr "Modifica"
 
 #: kcm/ui/main.qml:94 kcm/ui/main.qml:242
 #, kde-format
 msgid "Delete"
-msgstr ""
+msgstr "Modifica"
 
 #: kcm/ui/main.qml:105
 #, kde-format
 msgid "Add S3 Profile"
-msgstr ""
+msgstr "Aggiungi profilo S3"
 
 #: kcm/ui/main.qml:105
 #, kde-format
 msgid "Edit S3 Profile"
-msgstr ""
+msgstr "Modifica profilo"
 
 #: kcm/ui/main.qml:116
 #, kde-format
 msgid "Add"
-msgstr ""
+msgstr "Aggiungi"
 
 #: kcm/ui/main.qml:116
 #, kde-format
 msgid "Save"
-msgstr ""
+msgstr "Salva"
 
 #: kcm/ui/main.qml:147
 #, kde-format
 msgid "Name:"
-msgstr ""
+msgstr "Nome:"
 
 #: kcm/ui/main.qml:148
 #, kde-format
 msgid "e.g., My S3 Storage"
-msgstr ""
+msgstr "Ad es. la mia archiviazione S3"
 
 #: kcm/ui/main.qml:155
 #, kde-format
 msgid "Endpoint URL:"
-msgstr ""
+msgstr "URL del terminatore:"
 
 #: kcm/ui/main.qml:156
 #, kde-format
 msgid "e.g., https://s3.example.com"
-msgstr ""
+msgstr "ad es., https://s3.esempio.com"
 
 #: kcm/ui/main.qml:164
 #, kde-format
 msgid "Region:"
-msgstr ""
+msgstr "Regione:"
 
 #: kcm/ui/main.qml:165
 #, kde-format
 msgid "e.g., us-east-1, auto"
-msgstr ""
+msgstr "ad es., us-east-1, auto"
 
 #: kcm/ui/main.qml:171
 #, kde-format
 msgctxt "@title:group"
 msgid "Authentication"
-msgstr ""
+msgstr "Autenticazione"
 
 #: kcm/ui/main.qml:180
 #, kde-format
 msgid "AWS Profile:"
-msgstr ""
+msgstr "Profilo AWS:"
 
 #: kcm/ui/main.qml:181
 #, kde-format
 msgid "Profile from ~/.aws/credentials"
-msgstr ""
+msgstr "Profilo da ~/.aws/credentials"
 
 #: kcm/ui/main.qml:187
 #, kde-format
 msgctxt "@title:group"
 msgid "Advanced"
-msgstr ""
+msgstr "Avanzate"
 
 #. i18n("Addressing:")
 #: kcm/ui/main.qml:199
 #, kde-format
 msgid "Use path-style S3 URLs"
-msgstr ""
+msgstr "Usa gli URL di percorso S3"
 
 #: kcm/ui/main.qml:235
 #, kde-format
 msgid "Delete Profile"
-msgstr ""
+msgstr "Elimina profilo"
 
 #: kcm/ui/main.qml:236
 #, kde-format
 msgid "Are you sure you want to delete the profile \"%1\"?"
-msgstr ""
+msgstr "Sei sicuro di voler eliminare il profilo «%1»?"
 
 #: s3backend.cpp:38
 #, kde-kuit-format
@@ -156,6 +158,7 @@ msgstr "Impossibile trovare bucket S3, controlla la tua configurazione di AWS."
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
 msgstr ""
+"Impossibile copiare tra diversi profili S3. Copia prima il file localmente."
 
 #: s3backend.cpp:555
 #, kde-kuit-format
@@ -167,7 +170,7 @@ msgstr "Impossibile copiare <link>%1</link> in <link>%2</link>"
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
-msgstr ""
+msgstr "Impossibile rinominare tra diversi profili S3."
 
 #: s3backend.cpp:729
 #, kde-format
@@ -176,6 +179,8 @@ msgid ""
 "Some source files could not be deleted after renaming. The renamed folder "
 "may still contain leftover files."
 msgstr ""
+"Alcuni file sorgente non sono stati eliminati dopo la rinomina. La cartella "
+"rinominata potrebbe contenere ancora dei file."
 
 #: s3backend.cpp:791 s3backend.cpp:852
 #, kde-format
@@ -183,3 +188,5 @@ msgctxt "@info"
 msgid ""
 "Could not retrieve the complete file listing. Some files may not be shown."
 msgstr ""
+"Impossibile recuperare l'elenco completo dei file. Alcuni file potrebbero "
+"non essere visualizzati."
