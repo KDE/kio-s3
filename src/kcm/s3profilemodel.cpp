@@ -5,6 +5,8 @@
 
 #include "s3profilemodel.h"
 
+#include <algorithm>
+
 #include <KConfig>
 #include <KConfigGroup>
 
@@ -174,6 +176,10 @@ void S3ProfileModel::loadFromConfig(KConfig &config)
         profile.pathStyle = group.readEntry("PathStyle", false);
         m_profiles.append(profile);
     }
+
+    std::sort(m_profiles.begin(), m_profiles.end(), [](const S3Profile &a, const S3Profile &b) {
+        return a.name.compare(b.name, Qt::CaseInsensitive) < 0;
+    });
 
     endResetModel();
     Q_EMIT profilesChanged();
