@@ -6,6 +6,7 @@
 #pragma once
 
 #include <QAbstractListModel>
+#include <QSet>
 
 class KConfig;
 
@@ -62,5 +63,6 @@ Q_SIGNALS:
     void profilesChanged();
 
 private:
+    static QString generateId(const QString &name, const QSet<QString> &existingIds);
     QList<S3Profile> m_profiles;
 };

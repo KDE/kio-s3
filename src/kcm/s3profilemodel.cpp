@@ -57,7 +57,7 @@ QHash<int, QByteArray> S3ProfileModel::roleNames() const
     };
 }
 
-void S3ProfileModel::addProfile(const QString &name, const QString &endpointUrl, const QString &region, const QString &awsProfile, bool pathStyle)
+QString S3ProfileModel::generateId(const QString &name, const QSet<QString> &existingIds)
 {
     // Sanitize: keep only alphanumeric, hyphen, and underscore.
     // This prevents KConfig corruption from special characters like [ ] \ or newlines.
@@ -74,15 +74,21 @@ void S3ProfileModel::addProfile(const QString &name, const QString &endpointUrl,
         id = QStringLiteral("profile");
     }
 
-    QSet<QString> existingIds;
-    for (const auto &p : m_profiles) {
-        existingIds.insert(p.id);
-    }
     QString baseId = id;
     int suffix = 2;
     while (existingIds.contains(id)) {
         id = QStringLiteral("%1-%2").arg(baseId).arg(suffix++);
     }
+    return id;
+}
+
+void S3ProfileModel::addProfile(const QString &name, const QString &endpointUrl, const QString &region, const QString &awsProfile, bool pathStyle)
+{
+    QSet<QString> existingIds;
+    for (const auto &p : m_profiles) {
+        existingIds.insert(p.id);
+    }
+    const QString id = generateId(name, existingIds);
 
     const int row = m_profiles.size();
     beginInsertRows(QModelIndex(), row, row);
@@ -97,7 +103,15 @@ void S3ProfileModel::editProfile(int row, const QString &name, const QString &en
         return;
     }
 
+    QSet<QString> existingIds;
+    for (int i = 0; i < m_profiles.size(); ++i) {
+        if (i != row) {
+            existingIds.insert(m_profiles[i].id);
+        }
+    }
+
     auto &profile = m_profiles[row];
+    profile.id = generateId(name, existingIds);
     profile.name = name;
     profile.endpointUrl = endpointUrl;
     profile.region = region;
