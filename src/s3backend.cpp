@@ -249,7 +249,21 @@ KIO::WorkerResult S3Backend::stat(const QUrl &url)
                 && headError.GetMessage() == Aws::String("No response body"));
             const bool isHttp404 = (httpCode == 404);
             if ((isSdkHead404 || isHttp404) && !s3url.key().endsWith(QLatin1Char('/'))) {
-                return KIO::WorkerResult::fail(KIO::ERR_DOES_NOT_EXIST, url.toDisplayString());
+                // The exact key does not exist, but a folder with a trailing
+                // slash might (e.g. "photos/" when stat is called for "photos").
+                // Do a lightweight ListObjects with the prefix and max-keys 1
+                // to check whether any objects exist under this path.
+                Aws::S3::Model::ListObjectsV2Request listRequest;
+                listRequest.SetBucket(s3url.BucketName());
+                listRequest.SetPrefix(s3url.Prefix());
+                listRequest.SetMaxKeys(1);
+
+                const auto listOutcome = client.ListObjectsV2(listRequest);
+                if (!listOutcome.IsSuccess() || listOutcome.GetResult().GetKeyCount() == 0) {
+                    return KIO::WorkerResult::fail(KIO::ERR_DOES_NOT_EXIST, url.toDisplayString());
+                }
+                // Objects exist under this prefix, so treat it as a folder
+                // and fall through to the directory entry below.
             }
             qCDebug(S3).nospace() << "Could not get HEAD object for key: " << s3url.key() << " - " << headError.GetMessage().c_str() << " (httpCode: " << httpCode << ") - assuming it's a folder.";
         }
