@@ -560,9 +560,39 @@ KIO::WorkerResult S3Backend::copy(const QUrl &src, const QUrl &dest, int permiss
 
 KIO::WorkerResult S3Backend::mkdir(const QUrl &url, int permissions)
 {
-    Q_UNUSED(url)
     Q_UNUSED(permissions)
-    qCDebug(S3) << "Pretending creation of folder" << url;
+
+    const auto s3url = S3Url(url);
+    qCDebug(S3) << "Going to create folder" << s3url;
+
+    if (!s3url.isKey()) {
+        return invalidUrlError();
+    }
+
+    const Aws::S3::S3Client client = createS3Client(s3url.profileName());
+
+    // S3 folders are 0-byte objects with a trailing slash key and
+    // content type "application/x-directory", matching the convention
+    // used by the AWS console, aws-cli, and Cyberduck.
+    Aws::String folderKey = s3url.Key();
+    if (!folderKey.empty() && folderKey.back() != '/') {
+        folderKey += '/';
+    }
+
+    const auto stream = std::make_shared<Aws::StringStream>();
+    Aws::S3::Model::PutObjectRequest request;
+    request.SetBucket(s3url.BucketName());
+    request.SetKey(folderKey);
+    request.SetContentType("application/x-directory");
+    request.SetBody(stream);
+    request.SetContentLength(0);
+
+    const auto outcome = client.PutObject(request);
+    if (!outcome.IsSuccess()) {
+        qCDebug(S3) << "Could not create folder" << s3url << "-" << outcome.GetError().GetMessage().c_str();
+        return KIO::WorkerResult::fail(KIO::ERR_CANNOT_MKDIR, url.toDisplayString());
+    }
+
     return KIO::WorkerResult::pass();
 }
 
