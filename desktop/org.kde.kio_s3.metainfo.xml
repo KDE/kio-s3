@@ -164,6 +164,13 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.0.1" date="2026-03-24">
+      <description>
+        <p>
+          Small bug fix release to fix renaming S3 profiles and implement mkdir operations in a more standard way.
+        </p>
+      </description>
+    </release>
     <release version="1.0.0" date="2026-03-13">
       <description>
         <p>Initial release of kio-s3, which provides access to S3 in Dolphin and other KDE Apps.</p>
