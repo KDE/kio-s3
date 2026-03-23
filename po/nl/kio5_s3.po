@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-12 00:43+0000\n"
+"POT-Creation-Date: 2026-03-23 00:43+0000\n"
 "PO-Revision-Date: 2026-03-12 12:25+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -152,7 +152,7 @@ msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr "S3-buckets zijn niet gevonden, controleer uw AWS-configuratie."
 
-#: s3backend.cpp:504
+#: s3backend.cpp:518
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
@@ -160,19 +160,19 @@ msgstr ""
 "Kan niet kopiëren tussen verschillende S3-profielen. Kopieer het bestand "
 "eerst lokaal."
 
-#: s3backend.cpp:555
+#: s3backend.cpp:569
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "Kon <link>%1</link> niet kopiëren naar <link>%2</link>"
 
-#: s3backend.cpp:600
+#: s3backend.cpp:644
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "Kan tussen verschillende S3-profielen niet hernoemen."
 
-#: s3backend.cpp:729
+#: s3backend.cpp:773
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -182,7 +182,7 @@ msgstr ""
 "Enige bronbestanden konden niet verwijderd worden na hernoemen. De hernoemde "
 "map kan nog steeds overgebleven bestanden bevatten."
 
-#: s3backend.cpp:791 s3backend.cpp:852
+#: s3backend.cpp:835 s3backend.cpp:896
 #, kde-format
 msgctxt "@info"
 msgid ""

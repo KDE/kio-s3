@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio5_s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-12 00:43+0000\n"
+"POT-Creation-Date: 2026-03-23 00:43+0000\n"
 "PO-Revision-Date: 2026-03-09 00:56+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -155,7 +155,7 @@ msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr "No se han encontrado depósitos S3. Compruebe la configuración de AWS."
 
-#: s3backend.cpp:504
+#: s3backend.cpp:518
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
@@ -163,19 +163,19 @@ msgstr ""
 "No se puede copiar entre distintos perfiles S3. Copie primero el archivo de "
 "forma local."
 
-#: s3backend.cpp:555
+#: s3backend.cpp:569
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "No se ha podido copiar <link>%1</link> en <link>%2</link>"
 
-#: s3backend.cpp:600
+#: s3backend.cpp:644
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "No se puede cambiar el nombre entre distintos perfiles S3."
 
-#: s3backend.cpp:729
+#: s3backend.cpp:773
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -186,7 +186,7 @@ msgstr ""
 "carpeta cuyo nombre se ha cambiado puede seguir conteniendo archivos "
 "sobrantes."
 
-#: s3backend.cpp:791 s3backend.cpp:852
+#: s3backend.cpp:835 s3backend.cpp:896
 #, kde-format
 msgctxt "@info"
 msgid ""
