@@ -169,6 +169,7 @@
         <p>
           Small bug fix release to fix renaming S3 profiles and implement mkdir operations in a more standard way.
         </p>
+        <p xml:lang="ar">إصدار صغير لإصلاح الأخطاء يهدف إلى تصحيح عملية إعادة تسمية ملفات تعريف S3 وتنفيذ عمليات إنشاء المجلدات (mkdir) بطريقة أكثر توافقاً مع المعايير.</p>
         <p xml:lang="ca">Llançament de correcció d'errors petits per a corregir el canvi de nom dels perfils S3 i implementar les operacions de «mkdir» d'una manera més estàndard.</p>
         <p xml:lang="ca-valencia">Llançament d'esmena d'errors petits per a corregir el canvi de nom dels perfils S3 i implementar les operacions de «mkdir» d'una manera més estàndard.</p>
         <p xml:lang="es">Pequeña actualización para corregir errores al cambiar el nombre de perfiles S3 e implementar operaciones de mkdir de una manera más estándar.</p>
