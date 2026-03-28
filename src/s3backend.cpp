@@ -338,8 +338,9 @@ KIO::WorkerResult S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags
     Q_UNUSED(permissions)
     Q_UNUSED(flags)
 
-    static constexpr qint64 MultipartThreshold = 8 * 1024 * 1024;
-    static constexpr qint64 MultipartChunkSize  = 8 * 1024 * 1024;
+    static constexpr qint64 MinChunkSize = 8 * 1024 * 1024;   // 8 MiB
+    static constexpr qint64 MaxChunkSize = 64 * 1024 * 1024;  // 64 MiB
+    static constexpr qint64 TargetPartCount = 1000;
 
     const auto s3url = S3Url(url);
     qCDebug(S3) << "Going to upload data to" << s3url;
@@ -348,10 +349,20 @@ KIO::WorkerResult S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags
     const Aws::String bucket = s3url.BucketName();
     const Aws::String key = s3url.Key();
 
+    // Determine chunk size from source file size if available.
+    // Some S3-compatible backends (e.g. Cloudflare R2) require all non-trailing
+    // parts to have the same size, so we must pick a fixed chunk size upfront.
+    const qint64 sourceSize = q->metaData(QStringLiteral("sourceSize")).toLongLong();
+    qint64 chunkSize = MinChunkSize;
+    if (sourceSize > 0) {
+        chunkSize = qBound(MinChunkSize, sourceSize / TargetPartCount, MaxChunkSize);
+        qCDebug(S3) << "Source size:" << sourceSize << "bytes, chunk size:" << chunkSize;
+    }
+
     // Read data from KIO, accumulating into partBuffer.
-    // Once partBuffer reaches MultipartThreshold we switch to multipart upload.
+    // Once partBuffer reaches chunkSize we switch to multipart upload.
     QByteArray partBuffer;
-    partBuffer.reserve(MultipartChunkSize);
+    partBuffer.reserve(chunkSize);
 
     Aws::String uploadId;
     Aws::Vector<Aws::S3::Model::CompletedPart> completedParts;
@@ -415,14 +426,14 @@ KIO::WorkerResult S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags
         }
 
         // If buffer reached chunk size and multipart is already started, flush it.
-        if (!uploadId.empty() && partBuffer.size() >= MultipartChunkSize) {
+        if (!uploadId.empty() && partBuffer.size() >= chunkSize) {
             if (!uploadPart()) {
                 return abortAndFail();
             }
         }
 
-        // If buffer reached threshold and multipart not yet started, initiate it.
-        if (uploadId.empty() && partBuffer.size() >= MultipartThreshold) {
+        // If buffer reached chunk size and multipart not yet started, initiate it.
+        if (uploadId.empty() && partBuffer.size() >= chunkSize) {
             Aws::S3::Model::CreateMultipartUploadRequest createReq;
             createReq.SetBucket(bucket);
             createReq.SetKey(key);
@@ -449,7 +460,7 @@ KIO::WorkerResult S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags
         return KIO::WorkerResult::fail(KIO::ERR_CANNOT_WRITE, url.toDisplayString());
     }
 
-    // Small file path: never reached MultipartThreshold, use simple PutObject.
+    // Small file path: never reached chunk size threshold, use simple PutObject.
     if (uploadId.empty()) {
         const auto stream = std::make_shared<Aws::StringStream>();
         stream->write(partBuffer.data(), partBuffer.size());
