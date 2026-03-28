@@ -489,6 +489,9 @@ KIO::WorkerResult S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags
     }
 
     // Complete the multipart upload.
+    // Use a separate client with extended timeout: the server may take minutes
+    // to assemble thousands of parts, and the default low-speed-limit would
+    // abort the request while the server is still processing.
     Aws::S3::Model::CompletedMultipartUpload completedUpload;
     for (auto &part : completedParts) {
         completedUpload.AddParts(part);
@@ -500,10 +503,33 @@ KIO::WorkerResult S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags
     completeReq.SetUploadId(uploadId);
     completeReq.SetMultipartUpload(completedUpload);
 
-    const auto completeOutcome = client.CompleteMultipartUpload(completeReq);
+    qCDebug(S3) << "Completing multipart upload:" << completedParts.size()
+                << "parts," << processedBytes << "bytes";
+
+    // Create a client with extended timeout for the completion request.
+    // The server may take minutes to assemble thousands of parts.
+    auto completeConfig = createClientConfiguration(s3url.profileName());
+    completeConfig.requestTimeoutMs = 300000; // 5 minutes
+    completeConfig.lowSpeedLimit = 0;         // disable low-speed abort
+    Aws::S3::S3Client completeClient(completeConfig);
+    if (!s3url.profileName().isEmpty()) {
+        KConfig kioConfig(QStringLiteral("kio_s3rc"), KConfig::SimpleConfig);
+        KConfigGroup profileGroup = kioConfig.group(QStringLiteral("Profile-%1").arg(s3url.profileName()));
+        const auto awsProfile = profileGroup.readEntry("AwsProfile", QString());
+        if (!awsProfile.isEmpty()) {
+            const auto creds = Aws::MakeShared<Aws::Auth::ProfileConfigFileAWSCredentialsProvider>("kio-s3", awsProfile.toStdString().c_str());
+            completeClient = Aws::S3::S3Client(creds, nullptr, completeConfig);
+        }
+    }
+
+    const auto completeOutcome = completeClient.CompleteMultipartUpload(completeReq);
     if (!completeOutcome.IsSuccess()) {
+        const auto &error = completeOutcome.GetError();
         qCWarning(S3) << "CompleteMultipartUpload failed:"
-                      << completeOutcome.GetError().GetMessage().c_str();
+                      << "message:" << error.GetMessage().c_str()
+                      << "httpCode:" << static_cast<int>(error.GetResponseCode())
+                      << "retryable:" << error.ShouldRetry()
+                      << "parts:" << completedParts.size();
         return abortAndFail();
     }
 
