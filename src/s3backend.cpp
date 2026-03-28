@@ -11,6 +11,8 @@
 #include <KConfigGroup>
 #include <KLocalizedString>
 
+#include <QThread>
+
 #include <aws/core/auth/AWSCredentialsProvider.h>
 #include <aws/core/config/ConfigAndCredentialsCacheManager.h>
 #include <aws/core/Aws.h>
@@ -522,15 +524,29 @@ KIO::WorkerResult S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags
         }
     }
 
-    const auto completeOutcome = completeClient.CompleteMultipartUpload(completeReq);
-    if (!completeOutcome.IsSuccess()) {
+    static constexpr int MaxCompleteRetries = 3;
+    for (int attempt = 1; attempt <= MaxCompleteRetries; ++attempt) {
+        const auto completeOutcome = completeClient.CompleteMultipartUpload(completeReq);
+        if (completeOutcome.IsSuccess()) {
+            break;
+        }
+
         const auto &error = completeOutcome.GetError();
-        qCWarning(S3) << "CompleteMultipartUpload failed:"
+        qCWarning(S3) << "CompleteMultipartUpload failed (attempt" << attempt
+                      << "/" << MaxCompleteRetries << "):"
                       << "message:" << error.GetMessage().c_str()
                       << "httpCode:" << static_cast<int>(error.GetResponseCode())
                       << "retryable:" << error.ShouldRetry()
                       << "parts:" << completedParts.size();
-        return abortAndFail();
+
+        if (!error.ShouldRetry() || attempt == MaxCompleteRetries) {
+            return abortAndFail();
+        }
+
+        // Exponential backoff: 2s, 4s before retrying.
+        const int backoffSeconds = 1 << attempt;
+        qCDebug(S3) << "Retrying CompleteMultipartUpload in" << backoffSeconds << "seconds...";
+        QThread::sleep(backoffSeconds);
     }
 
     qCDebug(S3) << "Uploaded" << processedBytes << "bytes in" << (partNumber - 1)
