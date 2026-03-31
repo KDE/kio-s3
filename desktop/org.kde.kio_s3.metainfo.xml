@@ -173,6 +173,7 @@
         <p xml:lang="ca">Llançament de correcció d'errors petits per a corregir el canvi de nom dels perfils S3 i implementar les operacions de «mkdir» d'una manera més estàndard.</p>
         <p xml:lang="ca-valencia">Llançament d'esmena d'errors petits per a corregir el canvi de nom dels perfils S3 i implementar les operacions de «mkdir» d'una manera més estàndard.</p>
         <p xml:lang="es">Pequeña actualización para corregir errores al cambiar el nombre de perfiles S3 e implementar operaciones de mkdir de una manera más estándar.</p>
+        <p xml:lang="eu">Akats konponketa txiki bat askatu da S3 profilak berrizendatzea konpontzeko eta mkdir eragiketak era estandarrago batean inplementatzeko.</p>
         <p xml:lang="fr">Petite version de correction de bogues pour la correction du renommage des profils « S3 » et l'implémentation des opérations « mkdir » de manière plus classique.</p>
         <p xml:lang="he">מהדורה קטנה לתיקון תקלה בשינוי שמות פרופילים של S3 ומימוש פעולות mkdir באופן תקני יותר.</p>
         <p xml:lang="ka">მცირე რელიზი შეცდომების გასასწორებლად, სადაც გასწორდა S3-ის პროფილების სახელის გადარქმევა და განხორციელდა mkdir უფრო სტანდარტულად.</p>
