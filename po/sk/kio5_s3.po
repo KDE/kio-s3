@@ -12,9 +12,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Lokalize 21.12.3\n"
 "X-Qt-Contexts: true\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: kcm/ui/main.qml:25
 #, kde-format
@@ -29,7 +29,7 @@ msgstr ""
 #: kcm/ui/main.qml:30 kcm/ui/main.qml:37
 #, kde-format
 msgid "Add Profile…"
-msgstr ""
+msgstr "Pridať profil"
 
 #: kcm/ui/main.qml:72
 #, kde-format
@@ -39,12 +39,12 @@ msgstr ""
 #: kcm/ui/main.qml:89
 #, kde-format
 msgid "Edit"
-msgstr ""
+msgstr "Upraviť"
 
 #: kcm/ui/main.qml:94 kcm/ui/main.qml:242
 #, kde-format
 msgid "Delete"
-msgstr ""
+msgstr "Vymazať zoznam"
 
 #: kcm/ui/main.qml:105
 #, kde-format
@@ -59,17 +59,17 @@ msgstr ""
 #: kcm/ui/main.qml:116
 #, kde-format
 msgid "Add"
-msgstr ""
+msgstr "Pridať"
 
 #: kcm/ui/main.qml:116
 #, kde-format
 msgid "Save"
-msgstr ""
+msgstr "Uložiť"
 
 #: kcm/ui/main.qml:147
 #, kde-format
 msgid "Name:"
-msgstr ""
+msgstr "Názov:"
 
 #: kcm/ui/main.qml:148
 #, kde-format
@@ -89,7 +89,7 @@ msgstr ""
 #: kcm/ui/main.qml:164
 #, kde-format
 msgid "Region:"
-msgstr ""
+msgstr "Región:"
 
 #: kcm/ui/main.qml:165
 #, kde-format
@@ -100,7 +100,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:group"
 msgid "Authentication"
-msgstr ""
+msgstr "Overenie"
 
 #: kcm/ui/main.qml:180
 #, kde-format
@@ -116,7 +116,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:group"
 msgid "Advanced"
-msgstr ""
+msgstr "Pokročilé"
 
 #. i18n("Addressing:")
 #: kcm/ui/main.qml:199
@@ -127,38 +127,35 @@ msgstr ""
 #: kcm/ui/main.qml:235
 #, kde-format
 msgid "Delete Profile"
-msgstr ""
+msgstr "Odstrániť profil"
 
 #: kcm/ui/main.qml:236
 #, kde-format
 msgid "Are you sure you want to delete the profile \"%1\"?"
-msgstr ""
+msgstr "Ste si istý, you want to delete the profile \"%1\"?"
 
 #: s3backend.cpp:38
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid ""
-#| "Invalid S3 URI, bucket name is missing from the host.<nl/>A valid S3 URI "
-#| "must be written in the form: <link>%1</link>"
+#, kde-kuit-format
 msgctxt "@info"
 msgid ""
 "Invalid S3 URI, bucket name is missing from the host.<nl/>A valid S3 URI "
 "must be written in the form: <link>s3://bucket/key</link>"
 msgstr ""
 "Neplatné URI S3, názov koša chýba z hostiteľa.<nl/>Platné S3 URI musí byť "
-"zapísané vo formáte: <link>%1</link>"
+"zapísané vo formáte:  <link>s3://bucket/key</link>"
 
 #: s3backend.cpp:137 s3backend.cpp:146
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
-msgstr ""
+msgstr "Nemôžem nájsť S3 buckety, skontrolujte vaše nastavenie AWS."
 
 #: s3backend.cpp:518
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
 msgstr ""
+"Nie je možné copy between different S3 profiles. Copy the file locally first."
 
 #: s3backend.cpp:569
 #, kde-kuit-format
@@ -170,7 +167,7 @@ msgstr "Nemôžem skopírovať <link>%1</link> do <link>%2</link>"
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
-msgstr ""
+msgstr "Nie je možné rename between different S3 profiles."
 
 #: s3backend.cpp:773
 #, kde-format
@@ -186,3 +183,5 @@ msgctxt "@info"
 msgid ""
 "Could not retrieve the complete file listing. Some files may not be shown."
 msgstr ""
+"Nepodarilo sa retrieve the complete file listing. Some files may not be "
+"shown."

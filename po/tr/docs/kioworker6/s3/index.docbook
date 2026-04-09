@@ -34,7 +34,7 @@
 ><affiliation
 ><address
 ><email
->emir_sari@îcloud.com</email
+>emir_sari@icloud.com</email
 ></address
 ></affiliation
 ><contrib
@@ -44,7 +44,7 @@
 </authorgroup>
 
 <date
->2026-03-13</date>
+>2026‒03‒13</date>
 <releaseinfo
 >kio-s3 1.0.0</releaseinfo>
 
@@ -52,35 +52,35 @@
 
 <sect1 id="introduction">
 <title
->Introduction</title>
+>Giriş</title>
 
 <para
->KIO S3 is a KIO worker that allows you to browse and manage files stored in Amazon S3 and S3-compatible storage services (such as Cloudflare R2, DigitalOcean Spaces, MinIO, and others) directly from <application
+>KIO S3; Amazon S3 ve S3 uyumlu depolama hizmetlerinde (Cloudflare R2, DigitalOcean Spaces, MinIO ve diğerleri gibi) depolanan dosyaları <application
 >Dolphin</application
-> and other KDE applications.</para>
+> ve diğer KDE uygulamalarından doğrudan taramanıza ve yönetmenize olanak tanıyan bir KIO çalışanıdır.</para>
 
 <para
->With KIO S3, you can:</para>
+>KIO S3 ile şunları yapabilirsiniz:</para>
 <itemizedlist>
   <listitem
 ><para
->Browse buckets and folders</para
+>Kovalara ve klasörlere göz atabilir;</para
 ></listitem>
   <listitem
 ><para
->Upload and download files</para
+>Dosyalar indirebilir ve karşıya yükleyebilir;</para
 ></listitem>
   <listitem
 ><para
->Copy, rename, and delete files and folders</para
+>Dosyaları ve klasörleri kopyalayabilir, yeniden adlandırabilir ve silebilir;</para
 ></listitem>
   <listitem
 ><para
->Create folders inside buckets</para
+>Kovalar içinde klasörler oluşturabilir;</para
 ></listitem>
   <listitem
 ><para
->Connect to multiple S3-compatible services at the same time using named profiles</para
+>Adlandırılmış profiller kullanarak aynı anda birden fazla S3 uyumlu hizmete bağlanabilirsiniz.</para
 ></listitem>
 </itemizedlist>
 
@@ -88,108 +88,108 @@
 
 <sect1 id="configuration">
 <title
->Configuring Profiles</title>
+>Profilleri Yapılandırmak</title>
 
 <para
->KIO S3 supports connecting to multiple S3-compatible storage services through named profiles. Each profile stores the connection settings for one service. You can manage profiles in <menuchoice
+>KIO S3, adlandırılmış profiller aracılığıyla birden fazla S3 uyumlu depolama hizmetine bağlanmayı destekler. Her profil, bir hizmet için bağlantı ayarlarını saklar. Profilleri <menuchoice
 ><guimenu
->System Settings</guimenu
+>Sistem Ayarları</guimenu
 > <guisubmenu
->Network</guisubmenu
+>Ağ</guisubmenu
 > <guimenuitem
->S3 Backends</guimenuitem
+>S3 Arka Uçları</guimenuitem
 ></menuchoice
->.</para>
+> bölümünden yönetebilirsiniz.</para>
 
 <sect2 id="configuration-adding">
 <title
->Adding a Profile</title>
+>Profil Eklemek</title>
 
 <para
->Click the <guibutton
->Add Profile...</guibutton
-> button and fill in the following fields:</para>
+><guibutton
+>Profil Ekle…</guibutton
+> düğmesine tıklayın ve aşağıdaki alanları doldurun:</para>
 
 <variablelist>
   <varlistentry>
     <term
 ><guilabel
->Name</guilabel
+>Ad</guilabel
 ></term>
     <listitem
 ><para
->A descriptive name for this profile (required), &eg; <userinput
->My Cloud Storage</userinput
->.</para
+>Bu profil için açıklayıcı bir ad gereklidir (örneğin, <userinput
+>Bulut Depolama Alanım</userinput
+>).</para
 ></listitem>
   </varlistentry>
   <varlistentry>
     <term
 ><guilabel
->Endpoint URL</guilabel
+>Bitiş ucu URL’si</guilabel
 ></term>
     <listitem
 ><para
->The URL of the S3-compatible service, &eg; <userinput
+>S3 uyumlu hizmetin URL’si, örneğin, <userinput
 >https://s3.example.com</userinput
->. Leave empty to use the default Amazon S3 endpoint.</para
+>. Öntanımlı Amazon S3 uç noktasını kullanmak için boş bırakın.</para
 ></listitem>
   </varlistentry>
   <varlistentry>
     <term
 ><guilabel
->Region</guilabel
+>Bölge</guilabel
 ></term>
     <listitem
 ><para
->The storage region, &eg; <userinput
+>Depolama bölgesi, örneğin, <userinput
 >us-east-1</userinput
-> or <userinput
+> veya <userinput
 >auto</userinput
->. Leave empty to use the region from your AWS configuration.</para
+>. AWS yapılandırmanızdaki bölgeyi kullanmak için boş bırakın.</para
 ></listitem>
   </varlistentry>
   <varlistentry>
     <term
 ><guilabel
->AWS Profile</guilabel
+>AWS profili</guilabel
 ></term>
     <listitem
 ><para
->The name of the credentials profile from <filename
+><filename
 >~/.aws/credentials</filename
->. If left empty, the profile identifier is used as the credentials profile name.</para
+> dosyasındaki kimlik bilgileri profilinin adı. Boş bırakılırsa profil tanımlayıcısı kimlik bilgileri profil adı olarak kullanılır.</para
 ></listitem>
   </varlistentry>
   <varlistentry>
     <term
 ><guilabel
->Use path-style S3 URLs</guilabel
+>Yol olarak biçimli S3 URL’leri kullan</guilabel
 ></term>
     <listitem
 ><para
->Enable this for services that do not support virtual-hosted-style addressing, such as MinIO or some Ceph deployments. Most services, including Amazon S3 and Cloudflare R2, do not need this.</para
+>MinIO veya bazı Ceph dağıtımları gibi sanal barındırma tarzı adreslemeyi desteklemeyen hizmetler için bunu etkinleştirin. Amazon S3 ve Cloudflare R2 içerilmek üzere çoğu hizmetin buna gereksinimi yoktur.</para
 ></listitem>
   </varlistentry>
 </variablelist>
 
 <para
->After adding a profile, click <guibutton
->Apply</guibutton
-> to save. The new profile will appear as a shortcut in the <application
+>Profil ekledikten sonra kaydetmek için <guibutton
+>Uygula</guibutton
+> düğmesine tıklayın. Yeni profil, <application
 >Dolphin</application
-> Places panel.</para>
+> Yerler panelinde bir kısayol olarak görünecektir.</para>
 
 </sect2>
 
 <sect2 id="configuration-editing">
 <title
->Editing and Deleting Profiles</title>
+>Profilleri Düzenlemek ve Silmek</title>
 
 <para
->Each profile in the list has an edit and a delete action. Editing opens the same dialog with the current values pre-filled. Deleting asks for confirmation before removing the profile. Remember to click <guibutton
->Apply</guibutton
-> to save your changes.</para>
+>Listedeki her profilin bir düzenleme ve bir silme işlemi vardır. Düzenleme, geçerli değerler önceden doldurulmuş olarak aynı iletişim kutusunu açar. Silme işlemi, profili kaldırmadan önce onay ister. Değişikliklerinizi kaydetmek için <guibutton
+>Uygula</guibutton
+> düğmesine tıklamayı unutmayın.</para>
 
 </sect2>
 
@@ -197,87 +197,87 @@
 
 <sect1 id="credentials">
 <title
->AWS Credentials</title>
+>AWS Kimlik Bilgileri</title>
 
 <para
->KIO S3 uses the standard AWS credentials chain to authenticate with S3 services. Credentials are read from <filename
+>KIO S3, S3 hizmetleriyle kimlik doğrulaması yapmak için standart AWS kimlik bilgileri zincirini kullanır. Kimlik bilgileri, birden fazla adlandırılmış profil içerebilen <filename
 >~/.aws/credentials</filename
->, which can contain multiple named profiles:</para>
+> dosyasından okunur:</para>
 
 <programlisting
 >[default]
-aws_access_key_id = YOUR_KEY
-aws_secret_access_key = YOUR_SECRET
+aws_access_key_id = ANAHTAR_KİMLİĞİNİZ
+aws_secret_access_key = GİZLİ_ERİŞİM_ANAHTARINIZ
 
-[mycloud]
-aws_access_key_id = YOUR_CLOUD_KEY
-aws_secret_access_key = YOUR_CLOUD_SECRET
+[bulutum]
+aws_access_key_id = BULUT_KİMLİĞİNİZ
+aws_secret_access_key = BULUT_ERİŞİMİ_ANAHTARINIZ
 </programlisting>
 
 <para
->Each KIO S3 profile uses the <guilabel
->AWS Profile</guilabel
-> field to select which credentials section to use. For example, a profile with <guilabel
->AWS Profile</guilabel
-> set to <userinput
+>Her KIO S3 profili, hangi kimlik bilgileri bölümünün kullanılacağını seçmek için <guilabel
+>AWS profili</guilabel
+> alanını kullanır. Örneğin, <guilabel
+>AWS profili</guilabel
+> değeri <userinput
 >mycloud</userinput
-> will use the credentials from the <literal
->[mycloud]</literal
-> section above.</para>
+> olarak ayarlanmış bir profil, yukarıdaki <literal
+>[bulutum]</literal
+> bölümündeki kimlik bilgilerini kullanacaktır.</para>
 
 <para
->If no profiles are configured, KIO S3 uses the default AWS credentials chain, which includes environment variables (<envar
+>Hiçbir profil yapılandırılmamışsa KIO S3, çevre değişkenlerini (<envar
 >AWS_ACCESS_KEY_ID</envar
 >, <envar
 >AWS_SECRET_ACCESS_KEY</envar
->), the <literal
->[default]</literal
-> section in <filename
+>), <filename
 >~/.aws/credentials</filename
->, and EC2 instance roles.</para>
+> dosyasındaki <literal
+>[default]</literal
+> bölümünü ve EC2 örnek rollerini içeren öntanımlı AWS kimlik bilgileri zincirini kullanır.</para>
 
 <para
->You can optionally set the region using <filename
+>İsteğe bağlı olarak, <filename
 >~/.aws/config</filename
->:</para>
+> dosyasını kullanarak bölgeyi ayarlayabilirsiniz:</para>
 
 <programlisting
 >[default]
 region = eu-west-1
 
-[profile mycloud]
+[profile bulutum]
 region = auto
 </programlisting>
 
 <note
 ><para
->In <filename
+><filename
 >~/.aws/config</filename
->, named profiles use the <literal
+> dosyasında, adlandırılmış profiller <literal
 >profile</literal
-> prefix (&eg; <literal
->[profile mycloud]</literal
->), while in <filename
+> önekini kullanır (örneğin, <literal
+>[profile bulutum]</literal
+>); ancak <filename
 >~/.aws/credentials</filename
-> the prefix is not used (&eg; <literal
+> dosyasında önek kullanılmaz (örneğin, <literal
 >[mycloud]</literal
->). This is a convention of the AWS SDK.</para
+>). Bu, AWS SDK’sının (yazılım geliştirme kitinin) bir kuralıdır.</para
 ></note>
 
 </sect1>
 
 <sect1 id="urls">
 <title
->URL Scheme</title>
+>URL Şeması</title>
 
 <para
->KIO S3 uses the <literal
+>KIO S3, <literal
 >s3://</literal
-> URL scheme. You can type these URLs directly in the <application
+> URL şemasını kullanır. Bu URL’leri doğrudan <application
 >Dolphin</application
-> location bar or use them with command-line tools such as <command
+> adres çubuğuna yazabilir veya <command
 >kioclient</command
->.</para>
+> gibi komut satırı araçlarıyla kullanabilirsiniz.</para>
 
 <variablelist>
   <varlistentry>
@@ -287,214 +287,214 @@ region = auto
 ></term>
     <listitem
 ><para
->Lists all buckets available with the default AWS credentials.</para
+>Öntanımlı AWS kimlik bilgileriyle kullanılabilen tüm kovaları listeler.</para
 ></listitem>
   </varlistentry>
   <varlistentry>
     <term
 ><userinput
 >s3://<replaceable
->mybucket</replaceable
+>kovam</replaceable
 >/</userinput
 ></term>
     <listitem
 ><para
->Lists the contents of <replaceable
->mybucket</replaceable
->.</para
+><replaceable
+>kovam</replaceable
+> içeriğini listeler.</para
 ></listitem>
   </varlistentry>
   <varlistentry>
     <term
 ><userinput
 >s3://<replaceable
->mybucket</replaceable
+>kovam</replaceable
 >/<replaceable
->path/to/file.txt</replaceable
+>dosyaya/olan/yol/dosya.txt</replaceable
 ></userinput
 ></term>
     <listitem
 ><para
->Accesses a specific file in the bucket.</para
+>Depolama alanındaki belirli bir dosyaya erişir.</para
 ></listitem>
   </varlistentry>
   <varlistentry>
     <term
 ><userinput
 >s3://@<replaceable
->profile</replaceable
+>profil</replaceable
 >/</userinput
 ></term>
     <listitem
 ><para
->Lists all buckets available on the named profile.</para
+>Belirtilen profilde bulunan tüm kovaları listeler.</para
 ></listitem>
   </varlistentry>
   <varlistentry>
     <term
 ><userinput
 >s3://<replaceable
->mybucket</replaceable
+>kovam</replaceable
 >@<replaceable
->profile</replaceable
+>profil</replaceable
 >/</userinput
 ></term>
     <listitem
 ><para
->Lists the contents of <replaceable
->mybucket</replaceable
-> on the named profile.</para
+>Belirtilen profildeki <replaceable
+>kovam</replaceable
+> içeriğini listeler.</para
 ></listitem>
   </varlistentry>
   <varlistentry>
     <term
 ><userinput
 >s3://<replaceable
->mybucket</replaceable
+>kovam</replaceable
 >@<replaceable
->profile</replaceable
+>profil</replaceable
 >/<replaceable
->path/to/file.txt</replaceable
+>dosyaya/olan/yol/dosya.txt</replaceable
 ></userinput
 ></term>
     <listitem
 ><para
->Accesses a specific file on the named profile.</para
+>Belirtilen profildeki belirli bir dosyaya erişir.</para
 ></listitem>
   </varlistentry>
 </variablelist>
 
 <tip
 ><para
->When you add a profile in <guilabel
->System Settings</guilabel
->, a shortcut is automatically created in the <application
+><guilabel
+>Sistem Ayarları</guilabel
+> bölümünde bir profil eklediğinizde, <application
 >Dolphin</application
-> Places panel. You can simply click it to browse that profile's buckets.</para
+> Yerler panelinde kendiliğinden bir kısayol oluşturulur. Bu kısayola tıklayarak profilin kovalarını kolayca görüntüleyebilirsiniz.</para
 ></tip>
 
 </sect1>
 
 <sect1 id="browsing">
 <title
->Browsing Files</title>
+>Dosyalara Göz Atmak</title>
 
 <para
->Open <application
+><application
 >Dolphin</application
-> and type <userinput
+> uygulamasını açın ve adres çubuğuna <userinput
 >s3://</userinput
-> in the location bar to see your S3 buckets. Click a bucket to browse its contents. Folders and files appear just like on a local filesystem.</para>
+> yazarak S3 kovalarınızı görüntüleyin. İçeriğine göz atmak için bir kovaya tıklayın. Klasörler ve dosyalar tıpkı yerel bir dosya sisteminde olduğu gibi görünür.</para>
 
 <para
->To browse a specific profile, type <userinput
+>Belirli bir profili görüntülemek için <userinput
 >s3://@<replaceable
->profile</replaceable
+>profil</replaceable
 >/</userinput
-> or click the profile shortcut in the Places panel.</para>
+> yazın veya Yerler panelindeki profil kısayoluna tıklayın.</para>
 
 <para
->Navigation works as expected: you can use the breadcrumb bar, the back and forward buttons, and the location bar. You can also open S3 locations in new tabs.</para>
+>Dolaşma beklendiği gibi çalışır: Yol gösterici çubuğu, geri ve ileri düğmelerini ve konum çubuğunu kullanabilirsiniz. Ayrıca S3 konumlarını yeni sekmelerde açabilirsiniz.</para>
 
 </sect1>
 
 <sect1 id="operations">
 <title
->File Operations</title>
+>Dosya İşlemleri</title>
 
 <sect2 id="operations-upload">
 <title
->Uploading Files</title>
+>Dosyaları Karşıya Yüklemek</title>
 <para
->Drag files from your local filesystem and drop them into an S3 folder in <application
+>Yerel dosya sisteminizden dosyaları sürükleyip <application
 >Dolphin</application
->. You can also use copy and paste. Large files are automatically uploaded using multipart upload to avoid excessive memory usage.</para>
+> içindeki bir S3 klasörüne bırakabilirsiniz. Kopyala–Yapıştır yöntemini de kullanabilirsiniz. Büyük dosyalar, aşırı bellek kullanımını önlemek için çok parçalı yükleme yöntemiyle kendiliğinden yüklenir.</para>
 </sect2>
 
 <sect2 id="operations-download">
 <title
->Downloading Files</title>
+>Dosyalar İndirmek</title>
 <para
->Drag files from an S3 folder to a local folder, or use copy and paste. You can also open S3 files directly in applications — the file will be downloaded to a temporary location and opened.</para>
+>S3 klasöründeki dosyaları yerel bir klasöre sürükleyin veya kopyala–yapıştır yöntemini kullanın. Ayrıca S3 dosyalarını doğrudan uygulamalarda da açabilirsiniz; dosya geçici bir konuma indirilecek ve orada açılacaktır.</para>
 </sect2>
 
 <sect2 id="operations-copy">
 <title
->Copying</title>
+>Kopyalamak</title>
 <para
->You can copy files within the same S3 service using copy and paste or drag and drop. The copy is performed server-side, so it does not require downloading and re-uploading the file.</para>
+>Aynı S3 hizmeti içindeki dosyaları kopyala–yapıştır veya sürükle–bırak yöntemleriyle kopyalayabilirsiniz. Kopyalama işlemi sunucu tarafında gerçekleştirildiğinden, dosyayı indirip yeniden yüklemenize gerek yoktur.</para>
 </sect2>
 
 <sect2 id="operations-rename">
 <title
->Renaming</title>
+>Yeniden Adlandırmak</title>
 <para
->Press <keycap
->F2</keycap
-> in <application
+><application
 >Dolphin</application
-> to rename a file or folder. Since S3 does not have a native rename operation, KIO S3 performs a server-side copy to the new name and then deletes the original. For folders, all files inside the folder are copied and deleted individually.</para>
+> uygulamasında bir dosya veya klasörü yeniden adlandırmak için <keycap
+>F2</keycap
+> düğmesine basın. S3’ün yerleşik bir yeniden adlandırma işlemi olmadığından, KIO S3 sunucu tarafında yeni adla bir kopyalama işlemi gerçekleştirir ve ardından özgün dosyayı siler. Klasörler için, klasör içindeki tüm dosyalar tek tek kopyalanır ve silinir.</para>
 </sect2>
 
 <sect2 id="operations-delete">
 <title
->Deleting</title>
+>Silmek</title>
 <para
->Select files or folders and press <keycap
->Delete</keycap
->. When deleting a folder, all files and subfolders inside it are deleted recursively.</para>
+>Dosyaları veya klasörleri seçin ve <keycap
+>Sil</keycap
+> düğmesine basın. Bir klasörü sildiğinizde, içindeki tüm dosyalar ve alt klasörler de kendiliğinden silinir.</para>
 </sect2>
 
 <sect2 id="operations-mkdir">
 <title
->Creating Folders</title>
+>Klasörler Oluşturmak</title>
 <para
->Press <keycap
+>Bir kova içinde yeni bir klasör oluşturmak için <keycap
 >F10</keycap
-> or use <menuchoice
+> düğmesine basın veya <menuchoice
 ><guimenu
->Create New</guimenu
+>Yeni Oluştur</guimenu
 > <guimenuitem
->Folder...</guimenuitem
+>Klasör…</guimenuitem
 ></menuchoice
-> to create a new folder inside a bucket.</para>
+> seçeneğini kullanın.</para>
 </sect2>
 
 </sect1>
 
 <sect1 id="multiprofile">
 <title
->Working with Multiple Profiles</title>
+>Birden Çok Profille Çalışmak</title>
 
 <para
->If you use several S3-compatible services (for example, one for backups and another for website assets), you can configure a profile for each one and switch between them without changing any configuration files or environment variables.</para>
+>Birden fazla S3 uyumlu hizmet kullanıyorsanız (örneğin, biri yedeklemeler için, diğeri web sitesi varlıkları için), her biri için bir profil yapılandırabilir ve herhangi bir yapılandırma dosyasını veya çevre değişkenini değiştirmeden bunlar arasında geçiş yapabilirsiniz.</para>
 
 <para
->Each profile appears as a separate shortcut in the <application
+>Her profil, <application
 >Dolphin</application
-> Places panel. Clicking a profile shortcut shows the buckets available on that service. All operations (upload, download, copy, rename, delete) work independently within each profile.</para>
+> Yerler panelinde ayrı bir kısayol olarak görünür. Bir profil kısayoluna tıklamak, o hizmette bulunan kovaları gösterir. Tüm işlemler (yükleme, indirme, kopyalama, yeniden adlandırma, silme) her profil içinde bağımsız olarak çalışır.</para>
 
 <note
 ><para
->Copying or renaming files between different profiles is not supported. S3 server-side copy only works within a single service. To move files between profiles, copy them to a local folder first, then upload to the other profile.</para
+>Farklı profiller arasında dosya kopyalama veya yeniden adlandırma desteklenmemektedir. S3 sunucu tarafı kopyalama yalnızca tek bir hizmet içinde çalışır. Dosyaları profiller arasında taşımak için önce yerel bir klasöre kopyalayın, ardından diğer profile yükleyin.</para
 ></note>
 
 </sect1>
 
 <sect1 id="limitations">
 <title
->Known Limitations</title>
+>Bilinen Sınırlamalar</title>
 
 <itemizedlist>
   <listitem
 ><para
->Bucket creation and deletion are not supported. Use the provider's web console or CLI tools to manage buckets.</para
+>Kova oluşturma ve silme işlemleri desteklenmemektedir. Kovaları yönetmek için sağlayıcının web konsolunu veya komut satırı arayüzü araçlarını kullanın.</para
 ></listitem>
   <listitem
 ><para
->File permissions shown in <application
+><application
 >Dolphin</application
-> are cosmetic. S3 uses its own access control model (IAM policies and bucket policies), which does not map to Unix permissions.</para
+> uygulamasında gösterilen dosya izinleri kozmetiktir. S3, UNIX izinleriyle eşleşmeyen kendi erişim denetim modelini (IAM politikaları ve kova politikaları) kullanır.</para
 ></listitem>
 </itemizedlist>
 
