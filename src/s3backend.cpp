@@ -14,6 +14,7 @@
 #include <QThread>
 
 #include <aws/core/auth/AWSCredentialsProvider.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/config/ConfigAndCredentialsCacheManager.h>
 #include <aws/core/Aws.h>
 #include <aws/s3/model/Bucket.h>
@@ -302,35 +303,85 @@ KIO::WorkerResult S3Backend::get(const QUrl &url)
 
     const Aws::S3::S3Client client = createS3Client(s3url.profileName());
 
+    // Stream the object body directly to KIO via a custom streambuf.
+    // The default SDK behavior buffers the entire response in a stringbuf,
+    // which exhausts memory for large files.
+    KIO::filesize_t processedBytes = 0;
+    long long contentLength = 0;
+    auto *worker = q;
+
     Aws::S3::Model::GetObjectRequest objectRequest;
     objectRequest.SetBucket(s3url.BucketName());
     objectRequest.SetKey(s3url.Key());
 
+    // Emit MIME type and total size from HTTP headers before body streaming begins.
+    objectRequest.SetHeadersReceivedEventHandler(
+        [worker, &contentLength](const Aws::Http::HttpRequest *, Aws::Http::HttpResponse *response) {
+            const auto ct = response->GetHeader("content-type");
+            worker->mimeType(QString::fromStdString(ct));
+
+            const auto cl = response->GetHeader("content-length");
+            if (!cl.empty()) {
+                contentLength = std::stoll(cl);
+                worker->totalSize(contentLength);
+            }
+        });
+
+    // Forward body data to KIO as it arrives, reporting progress after each chunk.
+    objectRequest.SetResponseStreamFactory([worker, &processedBytes]() -> Aws::IOStream * {
+        class KioStreamBuf : public std::streambuf
+        {
+        public:
+            KioStreamBuf(S3Worker *w, KIO::filesize_t &bytes)
+                : m_worker(w)
+                , m_bytes(bytes)
+            {
+            }
+
+        protected:
+            std::streamsize xsputn(const char *s, std::streamsize n) override
+            {
+                m_worker->data(QByteArray(s, n));
+                m_bytes += n;
+                m_worker->processedSize(m_bytes);
+                return n;
+            }
+
+            int overflow(int c) override
+            {
+                if (c != EOF) {
+                    char ch = static_cast<char>(c);
+                    xsputn(&ch, 1);
+                }
+                return c;
+            }
+
+        private:
+            S3Worker *m_worker;
+            KIO::filesize_t &m_bytes;
+        };
+        return Aws::New<Aws::IOStream>("kio-s3", new KioStreamBuf(worker, processedBytes));
+    });
+
     auto getObjectOutcome = client.GetObject(objectRequest);
     if (!getObjectOutcome.IsSuccess()) {
-        qCWarning(S3) << "Could not get object with key:" << s3url.key() << " - " << getObjectOutcome.GetError().GetMessage().c_str();
+        const auto &error = getObjectOutcome.GetError();
+        qCWarning(S3) << "Could not get object with key:" << s3url.key()
+                      << "message:" << error.GetMessage().c_str()
+                      << "httpCode:" << static_cast<int>(error.GetResponseCode())
+                      << "exception:" << error.GetExceptionName().c_str()
+                      << "retryable:" << error.ShouldRetry();
         return KIO::WorkerResult::fail(KIO::ERR_CANNOT_READ, url.toDisplayString());
     }
 
-    auto objectResult = getObjectOutcome.GetResultWithOwnership();
-
-    // Emit MIME type from the GetObject response directly (no extra HEAD request needed).
-    const auto ct = objectResult.GetContentType();
-    q->mimeType(QString::fromLatin1(ct.c_str(), ct.size()));
-
-    qCDebug(S3) << "Key" << s3url.key() << "has Content-Length:" << objectResult.GetContentLength();
-    q->totalSize(objectResult.GetContentLength());
-
-    auto& retrievedFile = objectResult.GetBody();
-    std::array<char, 1024*1024> buffer{};
-    while (!retrievedFile.eof()) {
-        const auto readBytes = retrievedFile.read(buffer.data(), buffer.size()).gcount();
-        if (readBytes > 0) {
-            q->data(QByteArray(buffer.data(), readBytes));
-        }
+    // Verify all bytes were received.
+    if (contentLength > 0 && static_cast<long long>(processedBytes) != contentLength) {
+        qCWarning(S3) << "Download incomplete:" << processedBytes << "of" << contentLength << "bytes";
+        return KIO::WorkerResult::fail(KIO::ERR_CANNOT_READ, url.toDisplayString());
     }
 
     q->data(QByteArray());
+    qCDebug(S3) << "Downloaded" << processedBytes << "bytes from key:" << s3url.key();
 
     return KIO::WorkerResult::pass();
 }
