@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio5_s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-23 00:43+0000\n"
+"POT-Creation-Date: 2026-04-11 00:45+0000\n"
 "PO-Revision-Date: 2026-03-12 23:59+0100\n"
 "Last-Translator: Philipp Kiemle <l10n.daphipz@fastmail.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -138,7 +138,7 @@ msgstr "Profil löschen"
 msgid "Are you sure you want to delete the profile \"%1\"?"
 msgstr "Möchten Sie das Profil „%1“ wirklich löschen?"
 
-#: s3backend.cpp:38
+#: s3backend.cpp:41
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -148,7 +148,7 @@ msgstr ""
 "Ungültige S3-URI, der Name des Buckets fehlt am Host.<nl/>Eine gültige S3-"
 "URI hat folgende Syntax: <link>s3://bucket/key</link>"
 
-#: s3backend.cpp:137 s3backend.cpp:146
+#: s3backend.cpp:140 s3backend.cpp:149
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
@@ -156,7 +156,7 @@ msgstr ""
 "S3-Buckets konnten nicht gefunden werden, bitte überprüfen Sie Ihre AWS-"
 "Konfiguration."
 
-#: s3backend.cpp:518
+#: s3backend.cpp:622
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
@@ -164,19 +164,19 @@ msgstr ""
 "Kopieren zwischen unterschiedlichen S3-Profilen nicht möglich. Kopieren Sie "
 "die Datei erst lokal."
 
-#: s3backend.cpp:569
+#: s3backend.cpp:673
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "<link>%1</link> kann nicht nach <link>%2</link> kopiert werden"
 
-#: s3backend.cpp:644
+#: s3backend.cpp:748
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "Umbenennen zwischen unterschiedlichen S3-Profilen nicht möglich."
 
-#: s3backend.cpp:773
+#: s3backend.cpp:877
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -186,7 +186,7 @@ msgstr ""
 "Einige Quelldateien können nach dem Umbenennen nicht gelöscht werden. Der "
 "umbenannte Ordner könnte immer noch übrig gebliebene Dateien enthalten."
 
-#: s3backend.cpp:835 s3backend.cpp:896
+#: s3backend.cpp:939 s3backend.cpp:1000
 #, kde-format
 msgctxt "@info"
 msgid ""

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-23 00:43+0000\n"
+"POT-Creation-Date: 2026-04-11 00:45+0000\n"
 "PO-Revision-Date: 2026-03-08 13:27+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -140,7 +140,7 @@ msgstr "Ezabatu profila"
 msgid "Are you sure you want to delete the profile \"%1\"?"
 msgstr "Ziur zaude \"%1\" profila ezabatu nahi duzula?"
 
-#: s3backend.cpp:38
+#: s3backend.cpp:41
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -150,7 +150,7 @@ msgstr ""
 "S3 URI baliogabea, ostalarian «bucket» izena falta da.<nl/>S3 URI baliodun "
 "bat idatzi behar da, formatu honekin: <link>s3://bucket/key</link>"
 
-#: s3backend.cpp:137 s3backend.cpp:146
+#: s3backend.cpp:140 s3backend.cpp:149
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
@@ -158,7 +158,7 @@ msgstr ""
 "Ezin izan da S3 «bucket»ik aurkitu, mesedez, egiaztatu zure AWS "
 "konfigurazioa."
 
-#: s3backend.cpp:518
+#: s3backend.cpp:622
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
@@ -166,19 +166,19 @@ msgstr ""
 "Ezin da S3 profil ezberdinen artean kopiatu. Aurrena fitxategia lokalki "
 "kopiatu."
 
-#: s3backend.cpp:569
+#: s3backend.cpp:673
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "Ezin izan du <link>%1</link> <link>%2</link>(e)ra kopiatu"
 
-#: s3backend.cpp:644
+#: s3backend.cpp:748
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "Ezin da S3 profil ezberdinen artean berrizendatu."
 
-#: s3backend.cpp:773
+#: s3backend.cpp:877
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -188,7 +188,7 @@ msgstr ""
 "Berrizendatu ondoren jatorrizko fitxategi batzuk ezin izan dira ezabatu. "
 "Baliteke berrizendatutako karpetan oraindik hondar-fitxategiak egotea."
 
-#: s3backend.cpp:835 s3backend.cpp:896
+#: s3backend.cpp:939 s3backend.cpp:1000
 #, kde-format
 msgctxt "@info"
 msgid ""

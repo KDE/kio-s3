@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-23 00:43+0000\n"
+"POT-Creation-Date: 2026-04-11 00:45+0000\n"
 "PO-Revision-Date: 2021-10-09 08:28+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -135,7 +135,7 @@ msgstr ""
 msgid "Are you sure you want to delete the profile \"%1\"?"
 msgstr ""
 
-#: s3backend.cpp:38
+#: s3backend.cpp:41
 #, fuzzy, kde-kuit-format
 #| msgctxt "@info"
 #| msgid ""
@@ -149,31 +149,31 @@ msgstr ""
 "Μη έγκυρο S3 URI, το όνομα του κουβά (bucket) λείπει από τον υπολογιστή.<nl/"
 ">Ένα έγκυρο S3 URI πρέπει να γραφτεί στη μορφή: <link>%1</link>"
 
-#: s3backend.cpp:137 s3backend.cpp:146
+#: s3backend.cpp:140 s3backend.cpp:149
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr ""
 
-#: s3backend.cpp:518
+#: s3backend.cpp:622
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
 msgstr ""
 
-#: s3backend.cpp:569
+#: s3backend.cpp:673
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "Αδυναμία αντιγραφής <link>%1</link> στο <link>%2</link>"
 
-#: s3backend.cpp:644
+#: s3backend.cpp:748
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr ""
 
-#: s3backend.cpp:773
+#: s3backend.cpp:877
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -181,7 +181,7 @@ msgid ""
 "may still contain leftover files."
 msgstr ""
 
-#: s3backend.cpp:835 s3backend.cpp:896
+#: s3backend.cpp:939 s3backend.cpp:1000
 #, kde-format
 msgctxt "@info"
 msgid ""
