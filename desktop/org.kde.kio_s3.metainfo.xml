@@ -181,6 +181,7 @@
         <p xml:lang="nl">Uitgave met kleine reparaties van fouten om het hernoemen van S3-profielen te corrigeren en mkdir-bewerkingen op een meer gestandaardiseerde manier te implementeren.</p>
         <p xml:lang="pt-BR">Pequena atualização de correção de bugs para corrigir a renomeação de perfis S3 e implementar operações mkdir de uma maneira mais padrão.</p>
         <p xml:lang="ru">Выпущена версия с исправлением мелких ошибок для устранения проблем с переименованием профилей S3 и реализацией операций mkdir более стандартным способом.</p>
+        <p xml:lang="sk">Small bug fix release to fix renaming S3 profiles and implement mkdir operations in a more standard way.</p>
         <p xml:lang="sl">Izdaja z manjšim popravkom napake za odpravo preimenovanja profilov S3 in implementacijo operacij mkdir na bolj standarden način.</p>
         <p xml:lang="tr">S3 profillerini yeniden adlandırmayı onaran ve mkdir işlemlerini daha standart bir şekilde işleyen ufak bir hata düzeltme sürümüdür.</p>
         <p xml:lang="uk">Випуск з виправленнями невеличких вад із перейменуванням профілів S3 та реалізацією дій mkdir у конвенційніший спосіб.</p>
@@ -203,6 +204,7 @@
         <p xml:lang="pl">Pierwsze wydanie kio-s3, które zapewnia dostęp do S3 w Dolpinie i innych aplikacjach KDE.</p>
         <p xml:lang="pt-BR">Lançamento inicial do kio-s3, que fornece acesso ao S3 no Dolphin e em outros aplicativos KDE.</p>
         <p xml:lang="ru">Начальная версия kio-s3, обеспечивающая доступ к S3 в Dolphin и других приложениях KDE.</p>
+        <p xml:lang="sk">Initial release of kio-s3, which provides access to S3 in Dolphin and other KDE Apps.</p>
         <p xml:lang="sl">Začetna izdaja kio-s3, ki omogoča dostop do S3 v Dolphinu in drugih aplikacijah KDE.</p>
         <p xml:lang="tr">kio-s3’ün ilk sürümü. Dolphin’de ve diğer KDE uygulamalarında S3’e kolay erişim sağlar.</p>
         <p xml:lang="uk">Початковий випуск kio-s3, у якому реалізовано надання доступу до S3 у Dolphin та інших програмах KDE.</p>
