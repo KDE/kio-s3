@@ -4,13 +4,13 @@
 # This file is distributed under the same license as the kio-s3 package.
 # Automatically generated, 2022.
 #
-# SPDX-FileCopyrightText: 2024 Kisaragi Hiu <mail@kisaragi-hiu.com>
+# SPDX-FileCopyrightText: 2024, 2026 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-11 00:45+0000\n"
-"PO-Revision-Date: 2024-01-04 23:14+0900\n"
+"PO-Revision-Date: 2026-04-17 19:55+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -18,125 +18,125 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 24.01.85\n"
+"X-Generator: Lokalize 26.07.70\n"
 
 #: kcm/ui/main.qml:25
 #, kde-format
 msgid "No S3 profiles configured"
-msgstr ""
+msgstr "未設定 S3 設定檔"
 
 #: kcm/ui/main.qml:26
 #, kde-format
 msgid "Add a profile to connect to an S3-compatible storage backend"
-msgstr ""
+msgstr "新增設定檔來連線到 S3 相容的儲存後端"
 
 #: kcm/ui/main.qml:30 kcm/ui/main.qml:37
 #, kde-format
 msgid "Add Profile…"
-msgstr ""
+msgstr "新增設定檔…"
 
 #: kcm/ui/main.qml:72
 #, kde-format
 msgid "Default AWS endpoint"
-msgstr ""
+msgstr "預設 AWS 端點"
 
 #: kcm/ui/main.qml:89
 #, kde-format
 msgid "Edit"
-msgstr ""
+msgstr "編輯"
 
 #: kcm/ui/main.qml:94 kcm/ui/main.qml:242
 #, kde-format
 msgid "Delete"
-msgstr ""
+msgstr "刪除"
 
 #: kcm/ui/main.qml:105
 #, kde-format
 msgid "Add S3 Profile"
-msgstr ""
+msgstr "新增 S3 設定檔"
 
 #: kcm/ui/main.qml:105
 #, kde-format
 msgid "Edit S3 Profile"
-msgstr ""
+msgstr "編輯 S3 設定檔"
 
 #: kcm/ui/main.qml:116
 #, kde-format
 msgid "Add"
-msgstr ""
+msgstr "新增"
 
 #: kcm/ui/main.qml:116
 #, kde-format
 msgid "Save"
-msgstr ""
+msgstr "儲存"
 
 #: kcm/ui/main.qml:147
 #, kde-format
 msgid "Name:"
-msgstr ""
+msgstr "名稱："
 
 #: kcm/ui/main.qml:148
 #, kde-format
 msgid "e.g., My S3 Storage"
-msgstr ""
+msgstr "例如「我的 S3 空間」"
 
 #: kcm/ui/main.qml:155
 #, kde-format
 msgid "Endpoint URL:"
-msgstr ""
+msgstr "端點網址："
 
 #: kcm/ui/main.qml:156
 #, kde-format
 msgid "e.g., https://s3.example.com"
-msgstr ""
+msgstr "例如 https://s3.example.com"
 
 #: kcm/ui/main.qml:164
 #, kde-format
 msgid "Region:"
-msgstr ""
+msgstr "區域："
 
 #: kcm/ui/main.qml:165
 #, kde-format
 msgid "e.g., us-east-1, auto"
-msgstr ""
+msgstr "例如 us-east-1、auto"
 
 #: kcm/ui/main.qml:171
 #, kde-format
 msgctxt "@title:group"
 msgid "Authentication"
-msgstr ""
+msgstr "認證"
 
 #: kcm/ui/main.qml:180
 #, kde-format
 msgid "AWS Profile:"
-msgstr ""
+msgstr "AWS 設定檔："
 
 #: kcm/ui/main.qml:181
 #, kde-format
 msgid "Profile from ~/.aws/credentials"
-msgstr ""
+msgstr "來自 ~/.aws/credentials 的設定檔"
 
 #: kcm/ui/main.qml:187
 #, kde-format
 msgctxt "@title:group"
 msgid "Advanced"
-msgstr ""
+msgstr "進階"
 
 #. i18n("Addressing:")
 #: kcm/ui/main.qml:199
 #, kde-format
 msgid "Use path-style S3 URLs"
-msgstr ""
+msgstr "使用路徑式的 S3 網址"
 
 #: kcm/ui/main.qml:235
 #, kde-format
 msgid "Delete Profile"
-msgstr ""
+msgstr "刪除設定檔"
 
 #: kcm/ui/main.qml:236
 #, kde-format
 msgid "Are you sure you want to delete the profile \"%1\"?"
-msgstr ""
+msgstr "確定要刪除設定檔「%1」嗎？"
 
 #: s3backend.cpp:41
 #, kde-kuit-format
@@ -158,7 +158,7 @@ msgstr "找不到 S3 儲存貯體，請檢查您的 AWS 配置。"
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
-msgstr ""
+msgstr "無法在不同 S3 設定檔之間複製。請先將檔案複製到本地端。"
 
 #: s3backend.cpp:673
 #, kde-kuit-format
@@ -170,7 +170,7 @@ msgstr "無法複製 <link>%1</link> 到 <link>%2</link>。"
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
-msgstr ""
+msgstr "無法在不同 S3 設定檔之間重新命名。"
 
 #: s3backend.cpp:877
 #, kde-format
@@ -179,10 +179,11 @@ msgid ""
 "Some source files could not be deleted after renaming. The renamed folder "
 "may still contain leftover files."
 msgstr ""
+"某些來源檔案在重新命名後無法刪除。重新命名後的資料夾可能仍包含遺留的檔案。"
 
 #: s3backend.cpp:939 s3backend.cpp:1000
 #, kde-format
 msgctxt "@info"
 msgid ""
 "Could not retrieve the complete file listing. Some files may not be shown."
-msgstr ""
+msgstr "無法取得完整檔案列表。某些檔案可能沒有被顯示出來。"
