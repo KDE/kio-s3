@@ -3,7 +3,7 @@
 
 cmake_minimum_required(VERSION 3.16)
 
-set(KIO_S3_VERSION 1.0.1)
+set(KIO_S3_VERSION 1.0.2)
 project(kio-s3 VERSION ${KIO_S3_VERSION})
 
 set(QT_MIN_VERSION 6.5.0)
