@@ -209,6 +209,7 @@
         <p xml:lang="tr">kio-s3’ün ilk sürümü. Dolphin’de ve diğer KDE uygulamalarında S3’e kolay erişim sağlar.</p>
         <p xml:lang="uk">Початковий випуск kio-s3, у якому реалізовано надання доступу до S3 у Dolphin та інших програмах KDE.</p>
         <p xml:lang="zh-CN">Kio-s3 的首个正式版本，它为 Dolphin 和其他 KDE 应用程序提供了对 S3 的访问。</p>
+        <p xml:lang="zh-TW">kio-s3 初始版本，為 Dolphin 及其他 KDE 應用程式提供 S3 的存取。</p>
       </description>
     </release>
   </releases>
