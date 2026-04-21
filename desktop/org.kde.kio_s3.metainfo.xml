@@ -186,6 +186,7 @@
         <p xml:lang="tr">S3 profillerini yeniden adlandırmayı onaran ve mkdir işlemlerini daha standart bir şekilde işleyen ufak bir hata düzeltme sürümüdür.</p>
         <p xml:lang="uk">Випуск з виправленнями невеличких вад із перейменуванням профілів S3 та реалізацією дій mkdir у конвенційніший спосіб.</p>
         <p xml:lang="zh-CN">这是一个小的修复版本，用于修复 S3 配置文件重命名的问题，并以更标准的方式实现 mkdir 操作。</p>
+        <p xml:lang="zh-TW">錯誤修正版本，修正 S3 設定檔的重新命名；用更標準的方式實作目錄建立 (mkdir) 操作。</p>
       </description>
     </release>
     <release version="1.0.0" date="2026-03-13">
