@@ -172,6 +172,7 @@
         <p xml:lang="ar">إصدار صغير لإصلاح الأخطاء يهدف إلى تصحيح عملية إعادة تسمية ملفات تعريف S3 وتنفيذ عمليات إنشاء المجلدات (mkdir) بطريقة أكثر توافقاً مع المعايير.</p>
         <p xml:lang="ca">Llançament de correcció d'errors petits per a corregir el canvi de nom dels perfils S3 i implementar les operacions de «mkdir» d'una manera més estàndard.</p>
         <p xml:lang="ca-valencia">Llançament d'esmena d'errors petits per a corregir el canvi de nom dels perfils S3 i implementar les operacions de «mkdir» d'una manera més estàndard.</p>
+        <p xml:lang="de">Kleine Veröffentlichung mit Fehlerbehebung bei der Umbenennung von S3-Profilen und einer standardkonformen Implementierung von „mkdir“-Operationen.</p>
         <p xml:lang="es">Pequeña actualización para corregir errores al cambiar el nombre de perfiles S3 e implementar operaciones de mkdir de una manera más estándar.</p>
         <p xml:lang="eu">Akats konponketa txiki bat askatu da S3 profilak berrizendatzea konpontzeko eta mkdir eragiketak era estandarrago batean inplementatzeko.</p>
         <p xml:lang="fr">Petite version de correction de bogues pour la correction du renommage des profils « S3 » et l'implémentation des opérations « mkdir » de manière plus classique.</p>
@@ -195,6 +196,7 @@
         <p xml:lang="ar">الإصدار الأولي من kio-s3، الذي يتيح الوصول إلى S3 في دولفين وتطبيقات كيدي الأخرى.</p>
         <p xml:lang="ca">Versió inicial del kio-s3, que proporciona accés a S3 al Dolphin i altres aplicacions de KDE.</p>
         <p xml:lang="ca-valencia">Versió inicial del kio-s3, que proporciona accés a S3 a Dolphin i altres aplicacions de KDE.</p>
+        <p xml:lang="de">Erstveröffentlichung von kio-s3 – ermöglicht den Zugriff auf S3 für Dolphin und andere KDE-Anwendungen.</p>
         <p xml:lang="es">Versión inicial de kio-s3, que proporciona acceso a S3 en Dolphin y en otras aplicaciones de KDE.</p>
         <p xml:lang="eu">kio-s3ren hasierako askapena, Dolphin eta beste KDE aplikazioetan S3ra sarbidea ematen duena.</p>
         <p xml:lang="fr">Première version de kio-s3, permettant l'accès à S3 dans Dolphin et dans d'autres applications de KDE.</p>
