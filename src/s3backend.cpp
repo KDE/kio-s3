@@ -126,6 +126,28 @@ Aws::S3::S3Client S3Backend::createS3Client(const QString &profileName) const
     return Aws::S3::S3Client(config);
 }
 
+std::shared_ptr<Aws::S3::S3Client> S3Backend::cachedS3Client(const QString &profileName)
+{
+    std::lock_guard<std::mutex> lock(m_clientCacheMutex);
+    auto it = m_clientCache.find(profileName);
+    if (it != m_clientCache.end()) {
+        return it->second;
+    }
+    auto client = std::make_shared<Aws::S3::S3Client>(createS3Client(profileName));
+    m_clientCache.emplace(profileName, client);
+    return client;
+}
+
+void S3Backend::invalidateClientCache(const QString &profileName)
+{
+    std::lock_guard<std::mutex> lock(m_clientCacheMutex);
+    if (profileName.isEmpty()) {
+        m_clientCache.clear();
+        return;
+    }
+    m_clientCache.erase(profileName);
+}
+
 KIO::WorkerResult S3Backend::listDir(const QUrl &url)
 {
     const auto s3url = S3Url(url);
