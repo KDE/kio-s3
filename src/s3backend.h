@@ -13,6 +13,10 @@
 
 #include <QUrl>
 
+#include <memory>
+#include <mutex>
+#include <unordered_map>
+
 #include <aws/s3/S3Client.h>
 #include <aws/s3/S3ClientConfiguration.h>
 
@@ -34,6 +38,8 @@ public:
     Q_REQUIRED_RESULT KIO::WorkerResult del(const QUrl &url, bool isFile);
     Q_REQUIRED_RESULT KIO::WorkerResult rename(const QUrl &src, const QUrl &dest, KIO::JobFlags flags);
 
+    void invalidateClientCache(const QString &profileName = QString());
+
 private:
     Q_DISABLE_COPY(S3Backend)
 
@@ -52,6 +58,11 @@ private:
 
     Aws::S3::S3ClientConfiguration createClientConfiguration(const QString &profileName = QString()) const;
     Aws::S3::S3Client createS3Client(const QString &profileName = QString()) const;
+
+    std::shared_ptr<Aws::S3::S3Client> cachedS3Client(const QString &profileName);
+
+    mutable std::mutex m_clientCacheMutex;
+    std::unordered_map<QString, std::shared_ptr<Aws::S3::S3Client>> m_clientCache;
 
     Aws::String m_configProfileName;    // This must be passed to the S3Client objects to get the proper region from ~/.aws/config
     Aws::String m_endpointOverride;
