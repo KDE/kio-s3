@@ -422,7 +422,8 @@ KIO::WorkerResult S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags
     const auto s3url = S3Url(url);
     qCDebug(S3) << "Going to upload data to" << s3url;
 
-    const Aws::S3::S3Client client = createS3Client(s3url.profileName());
+    const auto clientPtr = cachedS3Client(s3url.profileName());
+    const Aws::S3::S3Client &client = *clientPtr;
     const Aws::String bucket = s3url.BucketName();
     const Aws::String key = s3url.Key();
 
@@ -667,7 +668,8 @@ KIO::WorkerResult S3Backend::copy(const QUrl &src, const QUrl &dest, int permiss
         return KIO::WorkerResult::fail(KIO::ERR_WRITE_ACCESS_DENIED, dest.toDisplayString());
     }
 
-    const Aws::S3::S3Client client = createS3Client(s3src.profileName());
+    const auto clientPtr = cachedS3Client(s3src.profileName());
+    const Aws::S3::S3Client &client = *clientPtr;
 
     // Check if destination key already exists to prevent silent overwrites.
     // Skip this check when KIO::Overwrite is set (e.g. user chose "Replace" in Dolphin).
@@ -711,7 +713,8 @@ KIO::WorkerResult S3Backend::mkdir(const QUrl &url, int permissions)
         return invalidUrlError();
     }
 
-    const Aws::S3::S3Client client = createS3Client(s3url.profileName());
+    const auto clientPtr = cachedS3Client(s3url.profileName());
+    const Aws::S3::S3Client &client = *clientPtr;
 
     // S3 folders are 0-byte objects with a trailing slash key and
     // content type "application/x-directory", matching the convention
@@ -752,7 +755,8 @@ KIO::WorkerResult S3Backend::del(const QUrl &url, bool isFile)
         return invalidUrlError();
     }
 
-    const Aws::S3::S3Client client = createS3Client(s3url.profileName());
+    const auto clientPtr = cachedS3Client(s3url.profileName());
+    const Aws::S3::S3Client &client = *clientPtr;
 
     if (deletePrefix(client, s3url)) {
         return KIO::WorkerResult::pass();
@@ -776,7 +780,8 @@ KIO::WorkerResult S3Backend::rename(const QUrl &src, const QUrl &dest, KIO::JobF
         return KIO::WorkerResult::fail(KIO::ERR_CANNOT_RENAME, src.toDisplayString());
     }
 
-    const Aws::S3::S3Client client = createS3Client(s3src.profileName());
+    const auto clientPtr = cachedS3Client(s3src.profileName());
+    const Aws::S3::S3Client &client = *clientPtr;
 
     // Check if source is a folder by probing for objects under its prefix.
     Aws::S3::Model::ListObjectsV2Request probeRequest;
