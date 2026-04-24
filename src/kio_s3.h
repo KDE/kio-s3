@@ -30,6 +30,7 @@ public:
     KIO::WorkerResult mkdir(const QUrl &url, int permissions) override;
     KIO::WorkerResult del(const QUrl &url, bool isfile) override;
     KIO::WorkerResult rename(const QUrl &src, const QUrl &dest, KIO::JobFlags flags) override;
+    void reparseConfiguration() override;
 
 private:
     Q_DISABLE_COPY(S3Worker)

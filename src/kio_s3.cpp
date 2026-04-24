@@ -89,4 +89,10 @@ KIO::WorkerResult S3Worker::rename(const QUrl &src, const QUrl &dest, KIO::JobFl
     return d->rename(src, dest, flags);
 }
 
+void S3Worker::reparseConfiguration()
+{
+    d->invalidateClientCache();
+    WorkerBase::reparseConfiguration();
+}
+
 #include "kio_s3.moc"
