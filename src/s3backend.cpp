@@ -223,7 +223,8 @@ KIO::WorkerResult S3Backend::stat(const QUrl &url)
     const bool isRootKey = pathComponents.isEmpty();
     const auto fileName = isRootKey ? s3url.bucketName() : pathComponents.last();
 
-    const Aws::S3::S3Client client = createS3Client(s3url.profileName());
+    const auto clientPtr = cachedS3Client(s3url.profileName());
+    const Aws::S3::S3Client &client = *clientPtr;
 
     Aws::S3::Model::HeadObjectRequest headObjectRequest;
     headObjectRequest.SetBucket(s3url.BucketName());
@@ -323,7 +324,8 @@ KIO::WorkerResult S3Backend::get(const QUrl &url)
     const auto s3url = S3Url(url);
     qCDebug(S3) << "Going to get" << s3url;
 
-    const Aws::S3::S3Client client = createS3Client(s3url.profileName());
+    const auto clientPtr = cachedS3Client(s3url.profileName());
+    const Aws::S3::S3Client &client = *clientPtr;
 
     // Stream the object body directly to KIO via a custom streambuf.
     // The default SDK behavior buffers the entire response in a stringbuf,
@@ -905,7 +907,8 @@ KIO::WorkerResult S3Backend::renamePrefix(const Aws::S3::S3Client &client, const
 
 bool S3Backend::listBuckets(const S3Url &s3url)
 {
-    const Aws::S3::S3Client client = createS3Client(s3url.profileName());
+    const auto clientPtr = cachedS3Client(s3url.profileName());
+    const Aws::S3::S3Client &client = *clientPtr;
     const auto listBucketsOutcome = client.ListBuckets();
     bool hasBuckets = false;
 
@@ -940,7 +943,8 @@ bool S3Backend::listBuckets(const S3Url &s3url)
 
 void S3Backend::listBucket(const S3Url &s3url)
 {
-    const Aws::S3::S3Client client = createS3Client(s3url.profileName());
+    const auto clientPtr = cachedS3Client(s3url.profileName());
+    const Aws::S3::S3Client &client = *clientPtr;
     const Aws::String bucketName = s3url.BucketName();
     const auto bucket = QString::fromLatin1(bucketName.c_str(), bucketName.size());
     const auto profile = s3url.profileName();
@@ -1003,7 +1007,8 @@ void S3Backend::listBucket(const S3Url &s3url)
 
 void S3Backend::listKey(const S3Url &s3url)
 {
-    const Aws::S3::S3Client client = createS3Client(s3url.profileName());
+    const auto clientPtr = cachedS3Client(s3url.profileName());
+    const Aws::S3::S3Client &client = *clientPtr;
     const QString prefix = s3url.prefix();
 
     Aws::S3::Model::ListObjectsV2Request request;
@@ -1162,7 +1167,8 @@ QString S3Backend::contentType(const S3Url &s3url)
 {
     QString contentType;
 
-    const Aws::S3::S3Client client = createS3Client(s3url.profileName());
+    const auto clientPtr = cachedS3Client(s3url.profileName());
+    const Aws::S3::S3Client &client = *clientPtr;
 
     Aws::S3::Model::HeadObjectRequest headObjectRequest;
     headObjectRequest.SetBucket(s3url.BucketName());
