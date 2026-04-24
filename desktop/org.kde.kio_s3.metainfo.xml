@@ -167,7 +167,7 @@
     <release version="1.0.2" date="2026-04-23">
       <description>
         <p>
-          The release improve the handling of large files. Improving the chunking behavior for multipart uploads and
+          The release improves the handling of large files. Improving the chunking behavior for multipart uploads and
           streaming downloaded files instead of buffering them in memory.
         </p>
       </description>
