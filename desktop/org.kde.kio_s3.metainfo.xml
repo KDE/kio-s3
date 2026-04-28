@@ -172,12 +172,15 @@
         </p>
         <p xml:lang="ca">La versió millora la gestió de fitxers grans. Millora el comportament de la fragmentació per a les pujades multipart i els fitxers descarregats en flux de dades en lloc de desar-los a la memòria intermèdia.</p>
         <p xml:lang="ca-valencia">La versió millora la gestió de fitxers grans. Millora el comportament de la fragmentació per a les pujades multipart i els fitxers descarregats en flux de dades en lloc de guardar-los a la memòria intermèdia.</p>
+        <p xml:lang="es">Esta versión mejora el manejo de archivos grandes. Mejora el comportamiento de la división en fragmentos para cargas multiparte y la transmisión de archivos descargados en lugar de almacenarlos en memoria.</p>
+        <p xml:lang="eu">Argitalpen honek fitxategi handien kudeaketa hobetzen du. Zatikako zama-igoeretan zatikatzea hobetzen du eta zama-jaitsitako fitxategiak memorian pilatu ordez zuzenean transmititzen dira.</p>
         <p xml:lang="he">המהדורה הזאת משפרת את הטיפול בקבצים גדולים. ניכר שיפור בהתנהגות במקרים של העלאות רבות חלקים והזרמת קבצים שיורדים במקום לאחסן אותם בזכרון בחלקים.</p>
         <p xml:lang="ka">ამ ვერსიაში გაუმჯობესდა დიდ ფაილებთან მუშაობა. გაუმჯობესდა ფრაგმენტების დაყოფის ქცევა მრავალნაწილიანია ატვირთვებისთვის და გადმოწერილი ფაილების სტრიმინგი მათი მეხსიერებაში დაბუფერების მაგიერ.</p>
         <p xml:lang="nl">Deze uitgave verbetert de verwerking van grote bestanden. Het opsplitsen van bestanden in stukken is verbeterd voor uploads in meerdere delen, waardoor gedownloade bestanden worden gestreamd in plaats van in het geheugen te worden gebufferd.</p>
         <p xml:lang="pt-BR">Esta versão aprimora o processamento de arquivos grandes. Melhora o comportamento de fragmentação para uploads multipartes e o streaming de arquivos baixados, em vez de armazená-los em buffer na memória.</p>
         <p xml:lang="sk">Toto vydanie zlepšuje spracovanie veľkých súborov. Vylepšuje správanie rozdeľovania pri nahrávaniach na viac častí a streamovanie stiahnutých súborov namiesto ich ukladania do pamäte.</p>
         <p xml:lang="sl">Izdaja izboljšuje ravnanje z velikimi datotekami. Izboljšano je delovanje razvrščanja v bloke pri večdelnih nalaganjih in pretakanje prenesenih datotek namesto njihovega shranjevanja v pomnilniku.</p>
+        <p xml:lang="tr">Bu sürüm, büyük dosyaların işlenmesini iyileştiriyor. Çok parçalı yüklemeler için parçalama davranışını geliştiriyor ve indirilen dosyaları bellekte arabelleklemek yerine akış halinde işliyor.</p>
         <p xml:lang="uk">У цьому випуску покращено обробку великих файлів. Покращено поведінку фрагментації для вивантаження даних частинами та потокової передачі отримуваних файлів замість їхньої буферизації у пам'яті.</p>
       </description>
     </release>
