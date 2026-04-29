@@ -132,7 +132,7 @@ msgstr "Odstrániť profil"
 #: kcm/ui/main.qml:236
 #, kde-format
 msgid "Are you sure you want to delete the profile \"%1\"?"
-msgstr "Ste si istý, you want to delete the profile \"%1\"?"
+msgstr "Ste si istý, že chcete odstrániť profil \"%1\"?"
 
 #: s3backend.cpp:41
 #, kde-kuit-format
