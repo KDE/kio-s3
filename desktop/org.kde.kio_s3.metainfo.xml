@@ -170,6 +170,7 @@
           The release improves the handling of large files. Improving the chunking behavior for multipart uploads and
           streaming downloaded files instead of buffering them in memory.
         </p>
+        <p xml:lang="ar">يعمل هذا الإصدار على تحسين معالجة الملفات الكبيرة. ويشمل ذلك تحسين آلية تقسيم الملفات إلى أجزاء في عمليات التحميل متعددة الأجزاء، وكذلك بث الملفات التي تم تنزيلها بدلاً من تخزينها مؤقتًا في الذاكرة.</p>
         <p xml:lang="ca">La versió millora la gestió de fitxers grans. Millora el comportament de la fragmentació per a les pujades multipart i els fitxers descarregats en flux de dades en lloc de desar-los a la memòria intermèdia.</p>
         <p xml:lang="ca-valencia">La versió millora la gestió de fitxers grans. Millora el comportament de la fragmentació per a les pujades multipart i els fitxers descarregats en flux de dades en lloc de guardar-los a la memòria intermèdia.</p>
         <p xml:lang="es">Esta versión mejora el manejo de archivos grandes. Mejora el comportamiento de la división en fragmentos para cargas multiparte y la transmisión de archivos descargados en lugar de almacenarlos en memoria.</p>
