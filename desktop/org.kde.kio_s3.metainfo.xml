@@ -185,6 +185,7 @@
         <p xml:lang="sl">Izdaja izboljšuje ravnanje z velikimi datotekami. Izboljšano je delovanje razvrščanja v bloke pri večdelnih nalaganjih in pretakanje prenesenih datotek namesto njihovega shranjevanja v pomnilniku.</p>
         <p xml:lang="tr">Bu sürüm, büyük dosyaların işlenmesini iyileştiriyor. Çok parçalı yüklemeler için parçalama davranışını geliştiriyor ve indirilen dosyaları bellekte arabelleklemek yerine akış halinde işliyor.</p>
         <p xml:lang="uk">У цьому випуску покращено обробку великих файлів. Покращено поведінку фрагментації для вивантаження даних частинами та потокової передачі отримуваних файлів замість їхньої буферизації у пам'яті.</p>
+        <p xml:lang="zh-CN">此次发布改进了大文件的处理方式。优化了多部分上传的分块行为，并对下载的文件进行流式传输，而非将其缓存在内存中。</p>
       </description>
     </release>
     <release version="1.0.1" date="2026-03-24">
