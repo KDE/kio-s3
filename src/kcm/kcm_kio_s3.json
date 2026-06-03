@@ -18,6 +18,7 @@
         "Description[sk]": "Nastaviť profily backendu S3",
         "Description[sl]": "Konfigurira profile ozadja S3",
         "Description[tr]": "S3 arka uç profillerini yapılandırın",
+        "Description[ug]": "S3 ئارقا ئۇچ سەپلىمە ھۆججىتىنى سەپلەيدۇ",
         "Description[uk]": "Налаштовування профілів модулів S3",
         "Description[zh_CN]": "配置 S3 后端方案",
         "Description[zh_TW]": "設定 S3 後端設定檔",
@@ -40,6 +41,7 @@
         "Name[sk]": "Backendy S3",
         "Name[sl]": "Ozadja S3",
         "Name[tr]": "S3 Arka Uçları",
+        "Name[ug]": "S3 ئارقا ئۇچ",
         "Name[uk]": "Модулі обробки S3",
         "Name[zh_CN]": "S3 后端程序",
         "Name[zh_TW]": "S3 後端"
