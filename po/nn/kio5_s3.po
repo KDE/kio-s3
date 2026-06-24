@@ -1,12 +1,11 @@
 # Translation of kio5_s3 to Norwegian Nynorsk
 #
-# Karl Ove Hufthammer <karl@huftis.org>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-11 00:45+0000\n"
-"PO-Revision-Date: 2022-10-30 09:35+0100\n"
+"PO-Revision-Date: 2026-06-23 18:01+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@nuug.no>\n"
 "Language: nn\n"
@@ -14,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.08.2\n"
+"X-Generator: Lokalize 26.07.70\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -32,7 +31,7 @@ msgstr ""
 #: kcm/ui/main.qml:30 kcm/ui/main.qml:37
 #, kde-format
 msgid "Add Profile…"
-msgstr ""
+msgstr "Legg til profil …"
 
 #: kcm/ui/main.qml:72
 #, kde-format
@@ -42,42 +41,42 @@ msgstr ""
 #: kcm/ui/main.qml:89
 #, kde-format
 msgid "Edit"
-msgstr ""
+msgstr "Rediger"
 
 #: kcm/ui/main.qml:94 kcm/ui/main.qml:242
 #, kde-format
 msgid "Delete"
-msgstr ""
+msgstr "Slett"
 
 #: kcm/ui/main.qml:105
 #, kde-format
 msgid "Add S3 Profile"
-msgstr ""
+msgstr "Legg til S3-profil"
 
 #: kcm/ui/main.qml:105
 #, kde-format
 msgid "Edit S3 Profile"
-msgstr ""
+msgstr "Rediger S3-profil"
 
 #: kcm/ui/main.qml:116
 #, kde-format
 msgid "Add"
-msgstr ""
+msgstr "Legg til"
 
 #: kcm/ui/main.qml:116
 #, kde-format
 msgid "Save"
-msgstr ""
+msgstr "Lagra"
 
 #: kcm/ui/main.qml:147
 #, kde-format
 msgid "Name:"
-msgstr ""
+msgstr "Namn:"
 
 #: kcm/ui/main.qml:148
 #, kde-format
 msgid "e.g., My S3 Storage"
-msgstr ""
+msgstr "f.eks. «Mitt S3-lager»"
 
 #: kcm/ui/main.qml:155
 #, kde-format
@@ -87,55 +86,55 @@ msgstr ""
 #: kcm/ui/main.qml:156
 #, kde-format
 msgid "e.g., https://s3.example.com"
-msgstr ""
+msgstr "f.eks. https://s3.example.com"
 
 #: kcm/ui/main.qml:164
 #, kde-format
 msgid "Region:"
-msgstr ""
+msgstr "Region:"
 
 #: kcm/ui/main.qml:165
 #, kde-format
 msgid "e.g., us-east-1, auto"
-msgstr ""
+msgstr "f.eks. us-east-1, auto"
 
 #: kcm/ui/main.qml:171
 #, kde-format
 msgctxt "@title:group"
 msgid "Authentication"
-msgstr ""
+msgstr "Autentisering"
 
 #: kcm/ui/main.qml:180
 #, kde-format
 msgid "AWS Profile:"
-msgstr ""
+msgstr "AWS-profil:"
 
 #: kcm/ui/main.qml:181
 #, kde-format
 msgid "Profile from ~/.aws/credentials"
-msgstr ""
+msgstr "Profil frå ~/.aws/credentials"
 
 #: kcm/ui/main.qml:187
 #, kde-format
 msgctxt "@title:group"
 msgid "Advanced"
-msgstr ""
+msgstr "Avansert"
 
 #. i18n("Addressing:")
 #: kcm/ui/main.qml:199
 #, kde-format
 msgid "Use path-style S3 URLs"
-msgstr ""
+msgstr "Bruk S3-adresser på filsti-format"
 
 #: kcm/ui/main.qml:235
 #, kde-format
 msgid "Delete Profile"
-msgstr ""
+msgstr "Slett profil"
 
 #: kcm/ui/main.qml:236
 #, kde-format
 msgid "Are you sure you want to delete the profile \"%1\"?"
-msgstr ""
+msgstr "Er du sikker på at du vil sletta profilen «%1»?"
 
 #: s3backend.cpp:41
 #, kde-kuit-format
@@ -157,7 +156,7 @@ msgstr "Fann ikkje S3-bøtter. Kontroller AWS-oppsettet."
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
-msgstr ""
+msgstr "Kan ikkje kopiera mellom ulike S3-profilar. Kopier fila lokalt først."
 
 #: s3backend.cpp:673
 #, kde-kuit-format
@@ -169,7 +168,7 @@ msgstr "Klarte ikkje kopiera <link>%1</link> til <link>%2</link>"
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
-msgstr ""
+msgstr "Kan ikkje endra namn mellom ulike S3-profilar."
 
 #: s3backend.cpp:877
 #, kde-format
@@ -178,6 +177,8 @@ msgid ""
 "Some source files could not be deleted after renaming. The renamed folder "
 "may still contain leftover files."
 msgstr ""
+"Nokre kjeldefiler kunne ikkje slettast etter nameendringa. Mappa med endra "
+"namn kan framleis innehalda nokre filer."
 
 #: s3backend.cpp:939 s3backend.cpp:1000
 #, kde-format
@@ -185,3 +186,5 @@ msgctxt "@info"
 msgid ""
 "Could not retrieve the complete file listing. Some files may not be shown."
 msgstr ""
+"Klarte ikkje henta fullstendig filliste. Det kan vera ikkje alle filer vert "
+"viste."
