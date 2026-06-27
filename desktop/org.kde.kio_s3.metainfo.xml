@@ -184,6 +184,7 @@
         <p xml:lang="ko">큰 파일 처리를 개선했습니다. 멀티파트 업로드 및 다운로드 파일 스트리밍 시 메모리에 버퍼링하지 않고 청크 작업을 개선했습니다.</p>
         <p xml:lang="nl">Deze uitgave verbetert de verwerking van grote bestanden. Het opsplitsen van bestanden in stukken is verbeterd voor uploads in meerdere delen, waardoor gedownloade bestanden worden gestreamd in plaats van in het geheugen te worden gebufferd.</p>
         <p xml:lang="pt-BR">Esta versão aprimora o processamento de arquivos grandes. Melhora o comportamento de fragmentação para uploads multipartes e o streaming de arquivos baixados, em vez de armazená-los em buffer na memória.</p>
+        <p xml:lang="ru">Улучшена обработка больших файлов. Оптимизировано разбиение на части для составных загрузок и реализована потоковая передача скачиваемых файлов вместо их буферизации в памяти.</p>
         <p xml:lang="sk">Toto vydanie zlepšuje spracovanie veľkých súborov. Vylepšuje správanie rozdeľovania pri nahrávaniach na viac častí a streamovanie stiahnutých súborov namiesto ich ukladania do pamäte.</p>
         <p xml:lang="sl">Izdaja izboljšuje ravnanje z velikimi datotekami. Izboljšano je delovanje razvrščanja v bloke pri večdelnih nalaganjih in pretakanje prenesenih datotek namesto njihovega shranjevanja v pomnilniku.</p>
         <p xml:lang="tr">Bu sürüm, büyük dosyaların işlenmesini iyileştiriyor. Çok parçalı yüklemeler için parçalama davranışını geliştiriyor ve indirilen dosyaları bellekte arabelleklemek yerine akış halinde işliyor.</p>
