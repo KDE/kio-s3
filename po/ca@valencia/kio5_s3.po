@@ -40,4 +40,4 @@ msgstr "No s'ha trobat cap depòsit S3, comproveu la vostra configuració d'AWS.
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
-msgstr "No s'ha pogut copiar <link>%1</link> a <link>%2</link>"
+msgstr "No s'ha pogut copiar <link>%1</link> en <link>%2</link>"
