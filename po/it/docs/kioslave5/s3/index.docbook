@@ -71,8 +71,8 @@
 >L'URL <userinput
 >s3://<replaceable
 >miobucket/miachiave</replaceable
-></userinput
-> elenca tutti i file e le cartelle del tuo bucket <userinput
+> </userinput
+> elenca tutti i file e le cartelle del proprio bucket <userinput
 >miobucket</userinput
 >.</para>
 
