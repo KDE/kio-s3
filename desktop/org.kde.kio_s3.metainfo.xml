@@ -53,6 +53,7 @@
   <summary xml:lang="be">Інтэграцыя Amazon S3 з KDE Plasma і праграмамі KDE</summary>
   <summary xml:lang="ca">Integració de l'Amazon S3 amb el Plasma del KDE i les aplicacions KDE</summary>
   <summary xml:lang="ca-valencia">Integració d'Amazon S3 amb Plasma de KDE i les aplicacions KDE</summary>
+  <summary xml:lang="cs">Integrace služby Amazon S3 s KDE Plasma a aplikacemi KDE</summary>
   <summary xml:lang="de">Integration von Amazon S3 mit Plasma und den KDE-Anwendungen</summary>
   <summary xml:lang="el">Ενσωμάτωση του Amazon S3 με το KDE Plasma και τις εφαρμογές του KDE</summary>
   <summary xml:lang="en-GB">Amazon S3 integration with KDE Plasma and KDE applications</summary>
@@ -90,6 +91,7 @@
     <p xml:lang="be">KIO S3 дазваляе праграмам, якія працуюць з KIO (напрыклад, Dolphin, Kate або Gwenview), атрымліваць доступ і рэдагаваць файлы ў воблаку Amazon S3.</p>
     <p xml:lang="ca">El KIO S3 és un esclau del KIO que permet a les aplicacions preparades per al KIO (com el Dolphin, el Kate o el Gwenview) que accedeixin i editin els compartiments i objectes d'Amazon S3.</p>
     <p xml:lang="ca-valencia">KIO S3 és un esclau de KIO que permet a les aplicacions preparades per a KIO (com Dolphin, Kate o Gwenview) que accedisquen i editen els compartiments i objectes d'Amazon S3.</p>
+    <p xml:lang="cs">KIO S3 umožňuje aplikacím podporujícím KIO (jako jsou Dolphin, Kate nebo Gwenview) přistupovat k úložištím a objektům Amazon S3 a upravovat je.</p>
     <p xml:lang="de">KIO S3 ist ein Ein-/Ausgabemodul, mit dem Anwendungen wie Dolphin, Kate oder Gwenview auf Container und Objekte in Amazon S3 zugreifen und bearbeiten können.</p>
     <p xml:lang="el">Το KIO S# επιτρέπει σε εφαρμογές που χρησιμοποιούν το KIO (όπως οι Dolphin, Kate, Gwenview) να έχουν πρόσβαση και να επεξεργάζονται Amazon S3 buckets και αντικείμενα.</p>
     <p xml:lang="en-GB">KIO S3 enables KIO-aware applications (such as Dolphin, Kate or Gwenview) to access and edit Amazon S3 buckets and objects.</p>
@@ -132,6 +134,7 @@
       <caption xml:lang="be">Dolphin паказвае выяву, запампаваную ў кантэйнер Amazon S3.</caption>
       <caption xml:lang="ca">El Dolphin mostrant una imatge carregada sobre un compartiment d'Amazon S3.</caption>
       <caption xml:lang="ca-valencia">Dolphin mostrant una imatge carregada sobre un compartiment d'Amazon S3.</caption>
+      <caption xml:lang="cs">Dolphin zobrazuje obrázek nahraný do úložiště Amazon S3.</caption>
       <caption xml:lang="de">Dolphin mit der Anzeige eines Bilds, das zu  Container in Amazon S3 hochgeladen wurde.</caption>
       <caption xml:lang="el">Το Dolphin δείχνει μια εικόνα που έχει σταλεί σε ένα Amazon S3 bucket.</caption>
       <caption xml:lang="en-GB">Dolphin showing a picture uploaded on an Amazon S3 bucket.</caption>
@@ -175,6 +178,7 @@
         <p xml:lang="ar">يعمل هذا الإصدار على تحسين معالجة الملفات الكبيرة. ويشمل ذلك تحسين آلية تقسيم الملفات إلى أجزاء في عمليات التحميل متعددة الأجزاء، وكذلك بث الملفات التي تم تنزيلها بدلاً من تخزينها مؤقتًا في الذاكرة.</p>
         <p xml:lang="ca">La versió millora la gestió de fitxers grans. Millora el comportament de la fragmentació per a les pujades multipart i els fitxers descarregats en flux de dades en lloc de desar-los a la memòria intermèdia.</p>
         <p xml:lang="ca-valencia">La versió millora la gestió de fitxers grans. Millora el comportament de la fragmentació per a les pujades multipart i els fitxers descarregats en flux de dades en lloc de guardar-los a la memòria intermèdia.</p>
+        <p xml:lang="cs">Tato verze vylepšuje práci s velkými soubory. Zlepšuje způsob rozdělování na části u mnohodílných nahrávek a umožňuje streamování stahovaných souborů namísto jejich ukládání do vyrovnávací paměti.</p>
         <p xml:lang="es">Esta versión mejora el manejo de archivos grandes. Mejora el comportamiento de la división en fragmentos para cargas multiparte y la transmisión de archivos descargados en lugar de almacenarlos en memoria.</p>
         <p xml:lang="eu">Argitalpen honek fitxategi handien kudeaketa hobetzen du. Zatikako zama-igoeretan zatikatzea hobetzen du eta zama-jaitsitako fitxategiak memorian pilatu ordez zuzenean transmititzen dira.</p>
         <p xml:lang="fr">La version améliore la gestion des fichiers volumineux. Elle améliore le comportement du découpage pour les envois en plusieurs morceaux et le streaming des fichiers téléchargés au lieu de les mettre en mémoire cache.</p>
@@ -203,6 +207,7 @@
         <p xml:lang="ar">إصدار صغير لإصلاح الأخطاء يهدف إلى تصحيح عملية إعادة تسمية ملفات تعريف S3 وتنفيذ عمليات إنشاء المجلدات (mkdir) بطريقة أكثر توافقاً مع المعايير.</p>
         <p xml:lang="ca">Llançament de correcció d'errors petits per a corregir el canvi de nom dels perfils S3 i implementar les operacions de «mkdir» d'una manera més estàndard.</p>
         <p xml:lang="ca-valencia">Llançament d'esmena d'errors petits per a corregir el canvi de nom dels perfils S3 i implementar les operacions de «mkdir» d'una manera més estàndard.</p>
+        <p xml:lang="cs">Malá oprava chyb, která řeší přejmenování profilů S3 a zavádí operace mkdir standardnějším způsobem.</p>
         <p xml:lang="de">Kleine Veröffentlichung mit Fehlerbehebung bei der Umbenennung von S3-Profilen und einer standardkonformen Implementierung von „mkdir“-Operationen.</p>
         <p xml:lang="es">Pequeña actualización para corregir errores al cambiar el nombre de perfiles S3 e implementar operaciones de mkdir de una manera más estándar.</p>
         <p xml:lang="eu">Akats konponketa txiki bat askatu da S3 profilak berrizendatzea konpontzeko eta mkdir eragiketak era estandarrago batean inplementatzeko.</p>
@@ -230,6 +235,7 @@
         <p xml:lang="ar">الإصدار الأولي من kio-s3، الذي يتيح الوصول إلى S3 في دولفين وتطبيقات كيدي الأخرى.</p>
         <p xml:lang="ca">Versió inicial del kio-s3, que proporciona accés a S3 al Dolphin i altres aplicacions de KDE.</p>
         <p xml:lang="ca-valencia">Versió inicial del kio-s3, que proporciona accés a S3 a Dolphin i altres aplicacions de KDE.</p>
+        <p xml:lang="cs">První vydání balíčku kio-s3, který umožňuje přístup k úložišti S3 v Dolphinu a dalších aplikacích KDE.</p>
         <p xml:lang="de">Erstveröffentlichung von kio-s3 – ermöglicht den Zugriff auf S3 für Dolphin und andere KDE-Anwendungen.</p>
         <p xml:lang="es">Versión inicial de kio-s3, que proporciona acceso a S3 en Dolphin y en otras aplicaciones de KDE.</p>
         <p xml:lang="eu">kio-s3ren hasierako askapena, Dolphin eta beste KDE aplikazioetan S3ra sarbidea ematen duena.</p>
