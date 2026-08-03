@@ -1,5 +1,6 @@
 # Translation of kio5_s3 to Norwegian Nynorsk
 #
+# Karl Ove Hufthammer <karl@huftis.org>, 2022, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
