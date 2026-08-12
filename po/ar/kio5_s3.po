@@ -156,7 +156,7 @@ msgstr "لم يعثر على حاوية اس3، رجاء تأكد من ضبط AW
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
-msgstr "لا يمكن النسخ بين ملفات تشكيلات S3 مختلفة. انسخ الملف محليًا أولاً."
+msgstr "لا يمكن النسخ بين ملفات تشكيلات S3 مختلفة. انسخ الملف محليًا أولًا."
 
 #: s3backend.cpp:673
 #, kde-kuit-format
