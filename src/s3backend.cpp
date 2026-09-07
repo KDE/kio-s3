@@ -20,6 +20,7 @@
 #include <aws/s3/model/Bucket.h>
 #include <aws/s3/model/CopyObjectRequest.h>
 #include <aws/s3/model/DeleteObjectRequest.h>
+#include <aws/s3/model/DeleteObjectsRequest.h>
 #include <aws/s3/model/GetObjectRequest.h>
 #include <aws/s3/model/HeadObjectRequest.h>
 #include <aws/s3/model/ListObjectsV2Request.h>
@@ -34,6 +35,9 @@
 #include <aws/s3/S3ClientConfiguration.h>
 
 #include <array>
+
+// The DeleteObjects API rejects requests carrying more than 1000 keys.
+constexpr int DeleteBatchSize = 1000;
 
 static KIO::WorkerResult invalidUrlError() {
     static const auto s_invalidUrlError = KIO::WorkerResult::fail(
@@ -758,11 +762,7 @@ KIO::WorkerResult S3Backend::del(const QUrl &url, bool isFile)
     const auto clientPtr = cachedS3Client(s3url.profileName());
     const Aws::S3::S3Client &client = *clientPtr;
 
-    if (deletePrefix(client, s3url)) {
-        return KIO::WorkerResult::pass();
-    } else {
-        return KIO::WorkerResult::fail(KIO::ERR_CANNOT_DELETE, url.toDisplayString());
-    }
+    return deletePrefix(client, s3url);
 }
 
 KIO::WorkerResult S3Backend::rename(const QUrl &src, const QUrl &dest, KIO::JobFlags flags)
@@ -1106,7 +1106,61 @@ void S3Backend::listCwdEntry(CwdAccess access)
     q->listEntry(entry);
 }
 
-bool S3Backend::deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url)
+S3Backend::BatchDeleteResult S3Backend::batchDelete(const Aws::S3::S3Client &client,
+                                                    const Aws::String &bucket,
+                                                    const QList<Aws::String> &keys,
+                                                    BatchProgressCallback progress)
+{
+    BatchDeleteResult result;
+
+    for (qsizetype offset = 0; offset < keys.size(); offset += DeleteBatchSize) {
+        const qsizetype chunkSize = qMin<qsizetype>(DeleteBatchSize, keys.size() - offset);
+
+        Aws::Vector<Aws::S3::Model::ObjectIdentifier> identifiers;
+        identifiers.reserve(chunkSize);
+        for (qsizetype i = 0; i < chunkSize; ++i) {
+            Aws::S3::Model::ObjectIdentifier identifier;
+            identifier.SetKey(keys.at(offset + i));
+            identifiers.push_back(std::move(identifier));
+        }
+
+        Aws::S3::Model::Delete deletePayload;
+        deletePayload.SetObjects(std::move(identifiers));
+
+        Aws::S3::Model::DeleteObjectsRequest request;
+        request.SetBucket(bucket);
+        request.SetDelete(std::move(deletePayload));
+
+        const auto outcome = client.DeleteObjects(request);
+        if (!outcome.IsSuccess()) {
+            // The service never processed this batch, so none of its keys can be
+            // accounted for. Report them all and stop instead of firing the
+            // remaining requests at a service that just refused us.
+            const Aws::String errorMessage = outcome.GetError().GetMessage();
+            for (qsizetype i = 0; i < chunkSize; ++i) {
+                result.failedKeys.append(qMakePair(keys.at(offset + i), errorMessage));
+            }
+            return result;
+        }
+
+        // A successful request can still refuse individual keys, so the per-key
+        // errors are accumulated while the run continues.
+        const auto &batch = outcome.GetResult();
+        for (const auto &error : batch.GetErrors()) {
+            result.failedKeys.append(qMakePair(error.GetKey(), error.GetMessage()));
+        }
+        result.deletedCount += static_cast<qint64>(batch.GetDeleted().size());
+        qCDebug(S3) << "DeleteObjects batch of" << chunkSize << "keys, deleted so far:" << result.deletedCount;
+
+        if (progress) {
+            progress(result.deletedCount);
+        }
+    }
+
+    return result;
+}
+
+KIO::WorkerResult S3Backend::deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url)
 {
     const Aws::String prefix = s3url.Prefix();
     const Aws::String bucketName = s3url.BucketName();
@@ -1126,7 +1180,7 @@ bool S3Backend::deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url
         const auto listOutcome = client.ListObjectsV2(listRequest);
         if (!listOutcome.IsSuccess()) {
             qCWarning(S3) << "Could not list prefix:" << prefix.c_str() << "-" << listOutcome.GetError().GetMessage().c_str();
-            return false;
+            return KIO::WorkerResult::fail(KIO::ERR_CANNOT_DELETE, s3url.url().toDisplayString());
         }
 
         const auto &result = listOutcome.GetResult();
@@ -1140,9 +1194,9 @@ bool S3Backend::deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url
             auto deleteOutcome = client.DeleteObject(request);
             if (!deleteOutcome.IsSuccess()) {
                 qCWarning(S3) << "Could not delete object with key:" << s3url.key() << "-" << deleteOutcome.GetError().GetMessage().c_str();
-                return false;
+                return KIO::WorkerResult::fail(KIO::ERR_CANNOT_DELETE, s3url.url().toDisplayString());
             }
-            return true;
+            return KIO::WorkerResult::pass();
         }
 
         for (const auto &object : objects) {
@@ -1165,7 +1219,11 @@ bool S3Backend::deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url
     } while (isTruncated);
 
     qCDebug(S3) << "Deleted" << totalDeleted << "objects under prefix:" << prefix.c_str();
-    return allDeleted;
+    if (!allDeleted) {
+        return KIO::WorkerResult::fail(KIO::ERR_CANNOT_DELETE, s3url.url().toDisplayString());
+    }
+
+    return KIO::WorkerResult::pass();
 }
 
 QString S3Backend::contentType(const S3Url &s3url)

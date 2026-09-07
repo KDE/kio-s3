@@ -11,8 +11,11 @@
 #include <KIO/Job>
 #include <KIO/WorkerBase>
 
+#include <QList>
+#include <QPair>
 #include <QUrl>
 
+#include <functional>
 #include <memory>
 #include <mutex>
 #include <unordered_map>
@@ -48,11 +51,31 @@ private:
         WritableCwd
     };
 
+    // Outcome of a batched DeleteObjects run: how many keys the service
+    // confirmed as deleted, plus the keys it refused along with the reason.
+    struct BatchDeleteResult
+    {
+        qint64 deletedCount = 0;
+        QList<QPair<Aws::String, Aws::String>> failedKeys; // key, errorMessage
+
+        bool success() const
+        {
+            return failedKeys.isEmpty();
+        }
+    };
+
+    // Invoked after every completed batch with the running total of deleted keys.
+    using BatchProgressCallback = std::function<void(qint64 cumulative)>;
+
     bool listBuckets(const S3Url &s3url);
     void listBucket(const S3Url &s3url);
     void listKey(const S3Url &s3url);
     void listCwdEntry(CwdAccess access = WritableCwd);
-    bool deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url);
+    BatchDeleteResult batchDelete(const Aws::S3::S3Client &client,
+                                  const Aws::String &bucket,
+                                  const QList<Aws::String> &keys,
+                                  BatchProgressCallback progress = {});
+    Q_REQUIRED_RESULT KIO::WorkerResult deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url);
     Q_REQUIRED_RESULT KIO::WorkerResult renamePrefix(const Aws::S3::S3Client &client, const S3Url &s3src, const S3Url &s3dest);
     QString contentType(const S3Url &s3url);
 
