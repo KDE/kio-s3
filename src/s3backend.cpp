@@ -11,6 +11,7 @@
 #include <KConfigGroup>
 #include <KLocalizedString>
 
+#include <QStringList>
 #include <QThread>
 
 #include <aws/core/auth/AWSCredentialsProvider.h>
@@ -1106,6 +1107,36 @@ void S3Backend::listCwdEntry(CwdAccess access)
     q->listEntry(entry);
 }
 
+// Builds the message shown when a batched delete could not remove every key:
+// the first few offending keys with the reason the service gave, plus a count
+// of whatever did not fit. KUIT resolves markup only inside the template and
+// not inside substituted arguments, so the key list itself stays markup-free.
+static QString failedKeysMessage(const QList<QPair<Aws::String, Aws::String>> &failedKeys, qsizetype totalCount)
+{
+    constexpr qsizetype MaxReportedKeys = 10;
+    const qsizetype reportedCount = qMin(MaxReportedKeys, failedKeys.size());
+
+    QStringList reported;
+    reported.reserve(reportedCount + 1);
+    for (qsizetype i = 0; i < reportedCount; ++i) {
+        const auto &failure = failedKeys.at(i);
+        reported.append(QStringLiteral("%1 (%2)")
+                            .arg(QString::fromUtf8(failure.first.c_str(), failure.first.size()),
+                                 QString::fromUtf8(failure.second.c_str(), failure.second.size())));
+    }
+
+    const qsizetype remaining = failedKeys.size() - reportedCount;
+    if (remaining > 0) {
+        reported.append(i18ncp("@item", "and %1 more object", "and %1 more objects", remaining));
+    }
+
+    return xi18nc("@info",
+                  "Failed to delete %1 of %2 objects. Affected keys: %3",
+                  failedKeys.size(),
+                  totalCount,
+                  reported.join(QStringLiteral(", ")));
+}
+
 S3Backend::BatchDeleteResult S3Backend::batchDelete(const Aws::S3::S3Client &client,
                                                     const Aws::String &bucket,
                                                     const QList<Aws::String> &keys,
@@ -1173,8 +1204,8 @@ KIO::WorkerResult S3Backend::deletePrefix(const Aws::S3::S3Client &client, const
     listRequest.SetBucket(bucketName);
     listRequest.SetPrefix(prefix);
 
-    bool allDeleted = true;
-    int totalDeleted = 0;
+    BatchDeleteResult total;
+    qint64 seenKeys = 0;
     bool isTruncated = false;
     do {
         const auto listOutcome = client.ListObjectsV2(listRequest);
@@ -1183,15 +1214,15 @@ KIO::WorkerResult S3Backend::deletePrefix(const Aws::S3::S3Client &client, const
             return KIO::WorkerResult::fail(KIO::ERR_CANNOT_DELETE, s3url.url().toDisplayString());
         }
 
-        const auto &result = listOutcome.GetResult();
-        const auto &objects = result.GetContents();
+        const auto &listResult = listOutcome.GetResult();
+        const auto &objects = listResult.GetContents();
 
-        if (objects.empty() && totalDeleted == 0) {
+        if (objects.empty() && seenKeys == 0) {
             // The prefix was a file or a 0-sized folder object — delete the key directly.
             Aws::S3::Model::DeleteObjectRequest request;
             request.SetBucket(bucketName);
             request.SetKey(s3url.Key());
-            auto deleteOutcome = client.DeleteObject(request);
+            const auto deleteOutcome = client.DeleteObject(request);
             if (!deleteOutcome.IsSuccess()) {
                 qCWarning(S3) << "Could not delete object with key:" << s3url.key() << "-" << deleteOutcome.GetError().GetMessage().c_str();
                 return KIO::WorkerResult::fail(KIO::ERR_CANNOT_DELETE, s3url.url().toDisplayString());
@@ -1199,28 +1230,40 @@ KIO::WorkerResult S3Backend::deletePrefix(const Aws::S3::S3Client &client, const
             return KIO::WorkerResult::pass();
         }
 
+        // A listing page carries at most 1000 keys and DeleteObjects accepts at
+        // most 1000, so every page is deleted as soon as it arrives. Memory then
+        // stays flat no matter how many objects the prefix holds, and removal
+        // begins after the first page instead of after the entire listing.
+        QList<Aws::String> pageKeys;
+        pageKeys.reserve(static_cast<qsizetype>(objects.size()));
         for (const auto &object : objects) {
-            Aws::S3::Model::DeleteObjectRequest request;
-            request.SetBucket(bucketName);
-            request.SetKey(object.GetKey());
-            auto deleteOutcome = client.DeleteObject(request);
-            if (!deleteOutcome.IsSuccess()) {
-                qCWarning(S3) << "Could not delete object:" << object.GetKey().c_str() << "-" << deleteOutcome.GetError().GetMessage().c_str();
-                allDeleted = false;
-            } else {
-                totalDeleted++;
-            }
+            pageKeys.append(object.GetKey());
+        }
+        seenKeys += pageKeys.size();
+
+        const BatchDeleteResult pageResult = batchDelete(client, bucketName, pageKeys);
+        total.deletedCount += pageResult.deletedCount;
+        total.failedKeys.append(pageResult.failedKeys);
+
+        // A page that failed in its entirety means the service is refusing the
+        // operation as such; walking the remaining pages would only accumulate
+        // identical errors and delay the report.
+        if (pageResult.deletedCount == 0 && !pageResult.failedKeys.isEmpty()) {
+            qCWarning(S3) << "Aborting: entire batch of" << pageKeys.size() << "keys was refused";
+            break;
         }
 
-        isTruncated = result.GetIsTruncated();
+        isTruncated = listResult.GetIsTruncated();
         if (isTruncated) {
-            listRequest.SetContinuationToken(result.GetNextContinuationToken());
+            listRequest.SetContinuationToken(listResult.GetNextContinuationToken());
         }
     } while (isTruncated);
 
-    qCDebug(S3) << "Deleted" << totalDeleted << "objects under prefix:" << prefix.c_str();
-    if (!allDeleted) {
-        return KIO::WorkerResult::fail(KIO::ERR_CANNOT_DELETE, s3url.url().toDisplayString());
+    qCDebug(S3) << "Deleted" << total.deletedCount << "of" << seenKeys << "objects under prefix:" << prefix.c_str();
+
+    if (!total.success()) {
+        qCWarning(S3) << "batchDelete reported" << total.failedKeys.size() << "failed keys out of" << seenKeys;
+        return KIO::WorkerResult::fail(KIO::ERR_WORKER_DEFINED, failedKeysMessage(total.failedKeys, seenKeys));
     }
 
     return KIO::WorkerResult::pass();
