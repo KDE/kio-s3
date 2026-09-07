@@ -1204,10 +1204,26 @@ KIO::WorkerResult S3Backend::deletePrefix(const Aws::S3::S3Client &client, const
     listRequest.SetBucket(bucketName);
     listRequest.SetPrefix(prefix);
 
+    // No progress is reported here on purpose. KIO::DeleteJob hands the whole
+    // prefix to the worker as a single directory (that is what deleteRecursive
+    // buys us) and derives its percentage from directory and file counts, so
+    // totalSize()/processedSize() from a worker cannot move it — they only feed
+    // a byte counter. infoMessage() does reach the job but Dolphin does not
+    // display it for this operation. Verified against KIO::DeleteJob directly;
+    // see doc/design/deletejob-probe/ and section D4 of the design document.
     BatchDeleteResult total;
     qint64 seenKeys = 0;
     bool isTruncated = false;
+
     do {
+        // Removing a large prefix runs for a long time. Without this check the
+        // Cancel button in the file manager would appear to do nothing until
+        // the whole walk finished.
+        if (q->wasKilled()) {
+            qCDebug(S3) << "Delete cancelled after" << total.deletedCount << "objects under prefix:" << prefix.c_str();
+            return KIO::WorkerResult::fail(KIO::ERR_USER_CANCELED, s3url.url().toDisplayString());
+        }
+
         const auto listOutcome = client.ListObjectsV2(listRequest);
         if (!listOutcome.IsSuccess()) {
             qCWarning(S3) << "Could not list prefix:" << prefix.c_str() << "-" << listOutcome.GetError().GetMessage().c_str();
