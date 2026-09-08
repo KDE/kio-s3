@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-11 00:45+0000\n"
+"POT-Creation-Date: 2026-09-08 00:45+0000\n"
 "PO-Revision-Date: 2026-04-17 19:55+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -148,31 +148,31 @@ msgstr ""
 "無效的 S3 URI，主機缺乏儲存貯體名稱。<nl/>有效的 S3 URI 必須使用此格式："
 "<link>s3://儲存貯體/金鑰</link>"
 
-#: s3backend.cpp:140 s3backend.cpp:149
+#: s3backend.cpp:162 s3backend.cpp:171
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr "找不到 S3 儲存貯體，請檢查您的 AWS 配置。"
 
-#: s3backend.cpp:622
+#: s3backend.cpp:647
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
 msgstr "無法在不同 S3 設定檔之間複製。請先將檔案複製到本地端。"
 
-#: s3backend.cpp:673
+#: s3backend.cpp:699
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "無法複製 <link>%1</link> 到 <link>%2</link>。"
 
-#: s3backend.cpp:748
+#: s3backend.cpp:776
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "無法在不同 S3 設定檔之間重新命名。"
 
-#: s3backend.cpp:877
+#: s3backend.cpp:906
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -181,7 +181,7 @@ msgid ""
 msgstr ""
 "某些來源檔案在重新命名後無法刪除。重新命名後的資料夾可能仍包含遺留的檔案。"
 
-#: s3backend.cpp:939 s3backend.cpp:1000
+#: s3backend.cpp:970 s3backend.cpp:1032
 #, kde-format
 msgctxt "@info"
 msgid ""

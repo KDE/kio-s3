@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-11 00:45+0000\n"
+"POT-Creation-Date: 2026-09-08 00:45+0000\n"
 "PO-Revision-Date: 2026-03-08 04:00+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -146,14 +146,14 @@ msgstr ""
 "S3-ის არასწორი URI. ჰოსტს bucket-ის სახელი აკლია.<nl/>S3-ის ჩანაწერის სწორი "
 "ფორმაა: <link>s3://bucket/key</link>"
 
-#: s3backend.cpp:140 s3backend.cpp:149
+#: s3backend.cpp:162 s3backend.cpp:171
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr ""
 "S3-ის ბაკეტების პოვნა შეუძლებელია. შეამოწმეთ თქვენი AWS-ის კონფიგურაცია."
 
-#: s3backend.cpp:622
+#: s3backend.cpp:647
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
@@ -161,19 +161,19 @@ msgstr ""
 "სხვადსხვა S3-ის პროფილებს შორის კოპირება შეუძლებელია. ჯერ ფაილი ლოკალურად "
 "დააკოპირეთ."
 
-#: s3backend.cpp:673
+#: s3backend.cpp:699
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "<link>%1</link>-დან <link>%2</link>მდე კოპირების შეცდომა"
 
-#: s3backend.cpp:748
+#: s3backend.cpp:776
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "სხვადსხვა S3-ის პროფილებს შორის სახელის გადარქმევა შეუძლებელია."
 
-#: s3backend.cpp:877
+#: s3backend.cpp:906
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -183,7 +183,7 @@ msgstr ""
 "სახელის გადარქმევის შემდეგ ზოგიერთი წყარო ფაილის წაშლა შეუძლებელია. "
 "სახელგადარქმეული საქაღალდე, შეიძლება, ჯერ კიდევ შეიცავდეს ნარჩენ ფაილებს."
 
-#: s3backend.cpp:939 s3backend.cpp:1000
+#: s3backend.cpp:970 s3backend.cpp:1032
 #, kde-format
 msgctxt "@info"
 msgid ""
