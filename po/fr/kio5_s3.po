@@ -178,7 +178,7 @@ msgid ""
 "Some source files could not be deleted after renaming. The renamed folder "
 "may still contain leftover files."
 msgstr ""
-"Certains fichiers sources n’ont pas pu être supprimés après renommage. Le "
+"Certains fichiers sources n'ont pas pu être supprimés après renommage. Le "
 "dossier renommé peut encore contenir des fichiers restants."
 
 #: s3backend.cpp:970 s3backend.cpp:1032
