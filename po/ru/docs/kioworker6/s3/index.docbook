@@ -1,0 +1,503 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % addindex "IGNORE">
+<!ENTITY % Russian "INCLUDE">
+]>
+<!--
+    SPDX-License-Identifier: CC0-1.0
+    SPDX-FileCopyrightText: 2020 Elvis Angelaccio <elvis.angelaccio@kde.org>
+-->
+<article lang="&language;" id="s3">
+<title
+>kio-s3</title>
+
+<articleinfo>
+
+<authorgroup>
+  <author
+><firstname
+>Elvis</firstname
+><surname
+>Angelaccio</surname
+> <affiliation
+> <address
+> <email
+>elvis.angelaccio@kde.org</email>
+      </address>
+    </affiliation>
+  </author>
+<othercredit role="translator"
+><firstname
+>Александр</firstname
+><surname
+>Яворский</surname
+><affiliation
+><address
+><email
+>kekcuha@gmail.com</email
+></address
+></affiliation
+><contrib
+>Перевод на русский</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>2026-03-13</date>
+<releaseinfo
+>kio-s3 1.0.0</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Введение</title>
+
+<para
+>KIO S3 — это обработчик KIO, позволяющий просматривать файлы, хранящиеся в Amazon S3 и совместимых с S3 службах хранения (таких как Cloudflare R2, DigitalOcean Spaces, MinIO и других), и управлять ими напрямую из <application
+>Dolphin</application
+> и других приложений KDE.</para>
+
+<para
+>С помощью KIO S3 можно:</para>
+<itemizedlist>
+  <listitem
+><para
+>Просмотр контейнеров и папок</para
+></listitem>
+  <listitem
+><para
+>Выгрузка и загрузка файлов</para
+></listitem>
+  <listitem
+><para
+>Копирование, переименование и удаление файлов и папок</para
+></listitem>
+  <listitem
+><para
+>Создание папок внутри контейнеров</para
+></listitem>
+  <listitem
+><para
+>Одновременное подключение к нескольким службам, совместимым с S3, с использованием именованных профилей</para
+></listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="configuration">
+<title
+>Настройка профилей</title>
+
+<para
+>KIO S3 поддерживает подключение к нескольким совместимым с S3 службам хранения через именованные профили. Каждый профиль хранит параметры подключения к одной службе. Управлять профилями можно в <menuchoice
+><guimenu
+>Параметры системы</guimenu
+> <guisubmenu
+>Сеть</guisubmenu
+> <guimenuitem
+>Модули S3</guimenuitem
+></menuchoice
+>.</para>
+
+<sect2 id="configuration-adding">
+<title
+>Добавление профиля</title>
+
+<para
+>Нажмите кнопку <guibutton
+>Добавить профиль…</guibutton
+> и заполните следующие поля:</para>
+
+<variablelist>
+  <varlistentry>
+    <term
+><guilabel
+>Имя</guilabel
+></term>
+    <listitem
+><para
+>Описательное имя профиля (обязательно), например, <userinput
+>My Cloud Storage</userinput
+>.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>Адрес конечной точки</guilabel
+></term>
+    <listitem
+><para
+>URL-адрес службы, совместимой с S3, например, <userinput
+>https://s3.example.com</userinput
+>. Оставьте поле пустым, чтобы использовать конечную точку Amazon S3 по умолчанию.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>Регион</guilabel
+></term>
+    <listitem
+><para
+>Регион хранилища, например, <userinput
+>us-east-1</userinput
+> или <userinput
+>auto</userinput
+>. Если оставить поле пустым, будет использоваться регион из конфигурации AWS.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>Профиль AWS</guilabel
+></term>
+    <listitem
+><para
+>Имя профиля учётных данных из <filename
+>~/.aws/credentials</filename
+>. Если оставить поле пустым, в качестве имени профиля учётных данных используется идентификатор профиля.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>Использовать URL S3 в стиле пути</guilabel
+></term>
+    <listitem
+><para
+>Включите этот параметр для служб, которые не поддерживают адресацию в стиле виртуального узла, например MinIO или некоторые развёртывания Ceph. Большинству служб, включая Amazon S3 и Cloudflare R2, этот параметр не требуется.</para
+></listitem>
+  </varlistentry>
+</variablelist>
+
+<para
+>После добавления профиля нажмите <guibutton
+>Применить</guibutton
+>, чтобы сохранить. Новый профиль появится в виде ярлыка на панели «Точки входа» <application
+>Dolphin</application
+>.</para>
+
+</sect2>
+
+<sect2 id="configuration-editing">
+<title
+>Изменение и удаление профилей</title>
+
+<para
+>Для каждого профиля в списке доступны действия изменения и удаления. При изменении открывается тот же диалог с уже заполненными текущими значениями. Перед удалением профиля запрашивается подтверждение. Чтобы сохранить изменения, нажмите кнопку <guibutton
+>Применить</guibutton
+>.</para>
+
+</sect2>
+
+</sect1>
+
+<sect1 id="credentials">
+<title
+>Учётные данные AWS</title>
+
+<para
+>KIO S3 использует стандартную цепочку учётных данных AWS для аутентификации в службах S3. Учётные данные читаются из <filename
+>~/.aws/credentials</filename
+>, который может содержать несколько именованных профилей:</para>
+
+<programlisting
+>[default]
+aws_access_key_id = YOUR_KEY
+aws_secret_access_key = YOUR_SECRET
+
+[mycloud]
+aws_access_key_id = YOUR_CLOUD_KEY
+aws_secret_access_key = YOUR_CLOUD_SECRET
+</programlisting>
+
+<para
+>Каждый профиль KIO S3 с помощью поля <guilabel
+>Профиль AWS</guilabel
+> выбирает раздел учётных данных. Например, профиль, в котором для поля <guilabel
+>Профиль AWS</guilabel
+> задано значение <userinput
+>mycloud</userinput
+>, будет использовать учётные данные из раздела <literal
+>[mycloud]</literal
+> выше.</para>
+
+<para
+>Если профили не настроены, KIO S3 использует цепочку учётных данных AWS по умолчанию, которая включает переменные среды (<envar
+>AWS_ACCESS_KEY_ID</envar
+>, <envar
+>AWS_SECRET_ACCESS_KEY</envar
+>), раздел <literal
+>[default]</literal
+> в <filename
+>~/.aws/credentials</filename
+> и роли экземпляров EC2.</para>
+
+<para
+>При необходимости регион можно задать в файле <filename
+>~/.aws/config</filename
+>:</para>
+
+<programlisting
+>[default]
+region = eu-west-1
+
+[profile mycloud]
+region = auto
+</programlisting>
+
+<note
+><para
+>В файле <filename
+>~/.aws/config</filename
+> именованные профили используют префикс <literal
+>profile</literal
+> (например, <literal
+>[profile mycloud]</literal
+>), а в файле <filename
+>~/.aws/credentials</filename
+> этот префикс не используется (например, <literal
+>[mycloud]</literal
+>). Таково соглашение AWS SDK.</para
+></note>
+
+</sect1>
+
+<sect1 id="urls">
+<title
+>Схема URL</title>
+
+<para
+>KIO S3 использует схему URL <literal
+>s3://</literal
+>. Такие URL-адреса можно вводить непосредственно в адресной строке <application
+>Dolphin</application
+> или использовать их в утилитах командной строки, таких как <command
+>kioclient</command
+>.</para>
+
+<variablelist>
+  <varlistentry>
+    <term
+><userinput
+>s3://</userinput
+></term>
+    <listitem
+><para
+>Выводит список всех контейнеров, доступных с учётными данными AWS по умолчанию.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>mybucket</replaceable
+>/</userinput
+></term>
+    <listitem
+><para
+>Выводит содержимое <replaceable
+>mybucket</replaceable
+>.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>mybucket</replaceable
+>/<replaceable
+>path/to/file.txt</replaceable
+></userinput
+></term>
+    <listitem
+><para
+>Обеспечивает доступ к определённому файлу в контейнере.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://@<replaceable
+>profile</replaceable
+>/</userinput
+></term>
+    <listitem
+><para
+>Перечисляет все контейнеры, доступные в именованном профиле.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>mybucket</replaceable
+>@<replaceable
+>profile</replaceable
+>/</userinput
+></term>
+    <listitem
+><para
+>Выводит список содержимого <replaceable
+>mybucket</replaceable
+> в именованном профиле.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>mybucket</replaceable
+>@<replaceable
+>profile</replaceable
+>/<replaceable
+>path/to/file.txt</replaceable
+></userinput
+></term>
+    <listitem
+><para
+>Обеспечивает доступ к определённому файлу в именованном профиле.</para
+></listitem>
+  </varlistentry>
+</variablelist>
+
+<tip
+><para
+>При добавлении профиля в приложении <guilabel
+>Параметры системы</guilabel
+> на панели «Точки входа» <application
+>Dolphin</application
+> автоматически создаётся ярлык. Чтобы просмотреть контейнеры этого профиля, достаточно щёлкнуть по ярлыку.</para
+></tip>
+
+</sect1>
+
+<sect1 id="browsing">
+<title
+>Просмотр файлов</title>
+
+<para
+>Откройте <application
+>Dolphin</application
+> и введите <userinput
+>s3://</userinput
+> в адресной строке, чтобы увидеть контейнеры S3. Щёлкните по контейнеру, чтобы просмотреть его содержимое. Папки и файлы показываются так же, как в локальной файловой системе.</para>
+
+<para
+>Чтобы открыть определённый профиль, введите <userinput
+>s3://@<replaceable
+>профиль</replaceable
+>/</userinput
+> или нажмите ярлык профиля на панели «Точки входа».</para>
+
+<para
+>Навигация работает ожидаемым образом: можно использовать навигационную цепочку, кнопки «Назад» и «Вперёд», а также адресную строку. Кроме того, адреса S3 можно открывать в новых вкладках.</para>
+
+</sect1>
+
+<sect1 id="operations">
+<title
+>Операции с файлами</title>
+
+<sect2 id="operations-upload">
+<title
+>Выгрузка файлов</title>
+<para
+>Перетащите файлы из локальной файловой системы в папку S3 в <application
+>Dolphin</application
+>. Также можно использовать копирование и вставку. Большие файлы автоматически загружаются посредством составной загрузки, что позволяет избежать чрезмерного расхода памяти.</para>
+</sect2>
+
+<sect2 id="operations-download">
+<title
+>Загрузка файлов</title>
+<para
+>Файлы можно перетаскивать из папки S3 в локальную папку либо использовать копирование и вставку. Кроме того, файлы S3 можно открывать непосредственно в приложениях — файл будет загружен во временное расположение и открыт.</para>
+</sect2>
+
+<sect2 id="operations-copy">
+<title
+>Копирование</title>
+<para
+>Файлы в пределах одной службы S3 можно копировать с помощью копирования и вставки или перетаскиванием. Копирование выполняется на стороне сервера, поэтому не требуется загружать файл и отправлять его повторно.</para>
+</sect2>
+
+<sect2 id="operations-rename">
+<title
+>Переименование</title>
+<para
+>Чтобы переименовать файл или папку, нажмите <keycap
+>F2</keycap
+> в <application
+>Dolphin</application
+>. Поскольку в S3 нет собственной операции переименования, KIO S3 выполняет копирование на стороне сервера под новым именем, а затем удаляет исходный объект. Для папок все файлы внутри копируются и удаляются по отдельности.</para>
+</sect2>
+
+<sect2 id="operations-delete">
+<title
+>Удаление</title>
+<para
+>Выделите файлы или папки и нажмите <keycap
+>Delete</keycap
+>. При удалении папки все файлы и вложенные папки внутри неё удаляются рекурсивно.</para>
+</sect2>
+
+<sect2 id="operations-mkdir">
+<title
+>Создание папок</title>
+<para
+>Нажмите <keycap
+>F10</keycap
+> или выберите <menuchoice
+><guimenu
+>Создать</guimenu
+> <guimenuitem
+>Папка…</guimenuitem
+></menuchoice
+>, чтобы создать новую папку внутри контейнера.</para>
+</sect2>
+
+</sect1>
+
+<sect1 id="multiprofile">
+<title
+>Работа с несколькими профилями</title>
+
+<para
+>Если используется несколько совместимых с S3 служб (например, одна для резервных копий, а другая для ресурсов веб-сайта), можно настроить профиль для каждой из них и переключаться между ними, не изменяя файлы конфигурации и переменные среды.</para>
+
+<para
+>Каждый профиль появляется в виде отдельного ярлыка на панели «Точки входа» <application
+>Dolphin</application
+>. Щелчок по ярлыку профиля показывает контейнеры, доступные в этой службе. Все операции (отправка, загрузка, копирование, переименование, удаление) выполняются независимо в каждом профиле.</para>
+
+<note
+><para
+>Копирование и переименование файлов между разными профилями не поддерживается. Копирование на стороне сервера S3 работает только в пределах одной службы. Чтобы переместить файлы между профилями, сначала скопируйте их в локальную папку, а затем загрузите в другой профиль.</para
+></note>
+
+</sect1>
+
+<sect1 id="limitations">
+<title
+>Известные ограничения</title>
+
+<itemizedlist>
+  <listitem
+><para
+>Создание и удаление контейнеров не поддерживается. Для управления контейнерами используйте веб-консоль или средства командной строки поставщика.</para
+></listitem>
+  <listitem
+><para
+>Права доступа к файлам, показываемые в <application
+>Dolphin</application
+>, носят лишь внешний характер. S3 использует собственную модель управления доступом (политики IAM и политики контейнеров), которая не соответствует правам доступа Unix.</para
+></listitem>
+</itemizedlist>
+
+</sect1>
+
+</article>
