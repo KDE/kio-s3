@@ -1,13 +1,13 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2026 This file is copyright:
 # This file is distributed under the same license as the kio-s3 package.
-# Tommi Nieminen <translator@legisign.org>, 2021, 2022.
+# SPDX-FileCopyrightText: 2021, 2022, 2026 Tommi Nieminen <translator@legisign.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-08 00:45+0000\n"
-"PO-Revision-Date: 2022-10-30 16:13+0200\n"
+"PO-Revision-Date: 2026-09-03 19:23+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -15,124 +15,126 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #: kcm/ui/main.qml:25
 #, kde-format
 msgid "No S3 profiles configured"
-msgstr ""
+msgstr "S3-profiileja ei ole määritetty"
 
 #: kcm/ui/main.qml:26
 #, kde-format
 msgid "Add a profile to connect to an S3-compatible storage backend"
 msgstr ""
+"Yhdistä S3-yhteensopivaan talletustilajärjestelmään lisäämällä profiili"
 
 #: kcm/ui/main.qml:30 kcm/ui/main.qml:37
 #, kde-format
 msgid "Add Profile…"
-msgstr ""
+msgstr "Lisää profiili…"
 
 #: kcm/ui/main.qml:72
 #, kde-format
 msgid "Default AWS endpoint"
-msgstr ""
+msgstr "AWS-oletuspäätepiste"
 
 #: kcm/ui/main.qml:89
 #, kde-format
 msgid "Edit"
-msgstr ""
+msgstr "Muokkaa"
 
 #: kcm/ui/main.qml:94 kcm/ui/main.qml:242
 #, kde-format
 msgid "Delete"
-msgstr ""
+msgstr "Poista"
 
 #: kcm/ui/main.qml:105
 #, kde-format
 msgid "Add S3 Profile"
-msgstr ""
+msgstr "Lisää S3-profiili"
 
 #: kcm/ui/main.qml:105
 #, kde-format
 msgid "Edit S3 Profile"
-msgstr ""
+msgstr "Muokkaa S3-profiilia"
 
 #: kcm/ui/main.qml:116
 #, kde-format
 msgid "Add"
-msgstr ""
+msgstr "Lisää"
 
 #: kcm/ui/main.qml:116
 #, kde-format
 msgid "Save"
-msgstr ""
+msgstr "Tallenna"
 
 #: kcm/ui/main.qml:147
 #, kde-format
 msgid "Name:"
-msgstr ""
+msgstr "Nimi:"
 
 #: kcm/ui/main.qml:148
 #, kde-format
 msgid "e.g., My S3 Storage"
-msgstr ""
+msgstr "esim. Oma S3-talletustila"
 
 #: kcm/ui/main.qml:155
 #, kde-format
 msgid "Endpoint URL:"
-msgstr ""
+msgstr "Päätepisteen verkko-osoite:"
 
 #: kcm/ui/main.qml:156
 #, kde-format
 msgid "e.g., https://s3.example.com"
-msgstr ""
+msgstr "esim. https://s3.esimerkki.fi/"
 
 #: kcm/ui/main.qml:164
 #, kde-format
 msgid "Region:"
-msgstr ""
+msgstr "Alue:"
 
 #: kcm/ui/main.qml:165
 #, kde-format
 msgid "e.g., us-east-1, auto"
-msgstr ""
+msgstr "esim. us-east-1, auto"
 
 #: kcm/ui/main.qml:171
 #, kde-format
 msgctxt "@title:group"
 msgid "Authentication"
-msgstr ""
+msgstr "Todennus"
 
 #: kcm/ui/main.qml:180
 #, kde-format
 msgid "AWS Profile:"
-msgstr ""
+msgstr "AWS-profiili:"
 
 #: kcm/ui/main.qml:181
 #, kde-format
 msgid "Profile from ~/.aws/credentials"
-msgstr ""
+msgstr "Profiili ~/.aws/credentials-tiedostosta"
 
 #: kcm/ui/main.qml:187
 #, kde-format
 msgctxt "@title:group"
 msgid "Advanced"
-msgstr ""
+msgstr "Lisäasetukset"
 
 #. i18n("Addressing:")
 #: kcm/ui/main.qml:199
 #, kde-format
 msgid "Use path-style S3 URLs"
-msgstr ""
+msgstr "Käytä polkutyylisiä S3-verkko-osoitteita"
 
 #: kcm/ui/main.qml:235
 #, kde-format
 msgid "Delete Profile"
-msgstr ""
+msgstr "Poista profiili"
 
 #: kcm/ui/main.qml:236
 #, kde-format
 msgid "Are you sure you want to delete the profile \"%1\"?"
-msgstr ""
+msgstr "Haluatko varmasti poistaa profiilin ”%1”?"
 
 #: s3backend.cpp:41
 #, kde-kuit-format
@@ -155,6 +157,8 @@ msgstr "S3-säilöjä ei löytynyt: tarkista AWS-määrityksesi."
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
 msgstr ""
+"Ei voida kopioida S3-profiilista toiseen. Kopioi tiedosto ensin "
+"paikalliseksi."
 
 #: s3backend.cpp:699
 #, kde-kuit-format
@@ -166,7 +170,7 @@ msgstr "Ei voitu kopioida: <link>%1</link> → <link>%2</link>"
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
-msgstr ""
+msgstr "Ei voida muutta nimiä S3-profiilien välillä."
 
 #: s3backend.cpp:906
 #, kde-format
@@ -175,6 +179,8 @@ msgid ""
 "Some source files could not be deleted after renaming. The renamed folder "
 "may still contain leftover files."
 msgstr ""
+"Joitakin lähdetiedostoja ei voi poistaa nimen muuttamisen jälkeen. Uuden "
+"niminen kansio voi yhä sisältää jäännöstiedostoja."
 
 #: s3backend.cpp:970 s3backend.cpp:1032
 #, kde-format
@@ -182,3 +188,5 @@ msgctxt "@info"
 msgid ""
 "Could not retrieve the complete file listing. Some files may not be shown."
 msgstr ""
+"Ei voitu noutaa täyttä tiedostoluetteloa. Joitakin tiedostoja ei ehkä "
+"näytetä."
