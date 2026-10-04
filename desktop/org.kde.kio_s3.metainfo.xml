@@ -180,6 +180,7 @@
         <p xml:lang="cs">Tato verze vylepšuje práci s velkými soubory. Zlepšuje způsob rozdělování na části u mnohodílných nahrávek a umožňuje streamování stahovaných souborů namísto jejich ukládání do vyrovnávací paměti.</p>
         <p xml:lang="es">Esta versión mejora el manejo de archivos grandes. Mejora el comportamiento de la división en fragmentos para cargas multiparte y la transmisión de archivos descargados en lugar de almacenarlos en memoria.</p>
         <p xml:lang="eu">Argitalpen honek fitxategi handien kudeaketa hobetzen du. Zatikako zama-igoeretan zatikatzea hobetzen du eta zama-jaitsitako fitxategiak memorian pilatu ordez zuzenean transmititzen dira.</p>
+        <p xml:lang="fi">Julkaisu parantaa suurten tiedostojen käsittelyä, useampiosaisten lähetysten lohkoamista sekä ladattujen tiedostojen suoratoistoa muistiin puskuroinnin sijaan.</p>
         <p xml:lang="fr">La version améliore la gestion des fichiers volumineux. Elle améliore le comportement du découpage pour les envois en plusieurs morceaux et le streaming des fichiers téléchargés au lieu de les mettre en mémoire cache.</p>
         <p xml:lang="he">המהדורה הזאת משפרת את הטיפול בקבצים גדולים. ניכר שיפור בהתנהגות במקרים של העלאות רבות חלקים והזרמת קבצים שיורדים במקום לאחסן אותם בזכרון בחלקים.</p>
         <p xml:lang="it">Questa versione migliora la gestione di grandi file. Miglioramenti nella suddivisione in blocchi per i caricamenti in più parti e nello streaming dei file scaricati, invece di memorizzarli temporaneamente in memoria.</p>
@@ -210,6 +211,7 @@
         <p xml:lang="de">Kleine Veröffentlichung mit Fehlerbehebung bei der Umbenennung von S3-Profilen und einer standardkonformen Implementierung von „mkdir“-Operationen.</p>
         <p xml:lang="es">Pequeña actualización para corregir errores al cambiar el nombre de perfiles S3 e implementar operaciones de mkdir de una manera más estándar.</p>
         <p xml:lang="eu">Akats konponketa txiki bat askatu da S3 profilak berrizendatzea konpontzeko eta mkdir eragiketak era estandarrago batean inplementatzeko.</p>
+        <p xml:lang="fi">Pieni viankorjausjulkaisu, joka korjaa S3-profiilien nimien muuttamisen ja toteuttaa mkdir-toimenpiteet vakiomuotoisemmalla tavalla.</p>
         <p xml:lang="fr">Petite version de correction de bogues pour la correction du renommage des profils « S3 » et l'implémentation des opérations « mkdir » de manière plus classique.</p>
         <p xml:lang="he">מהדורה קטנה לתיקון תקלה בשינוי שמות פרופילים של S3 ומימוש פעולות mkdir באופן תקני יותר.</p>
         <p xml:lang="it">Piccolo rilascio per correggere la rinomina dei profili S3 e per implementare le operazioni mkdir in modo più standard.</p>
@@ -238,6 +240,7 @@
         <p xml:lang="de">Erstveröffentlichung von kio-s3 – ermöglicht den Zugriff auf S3 für Dolphin und andere KDE-Anwendungen.</p>
         <p xml:lang="es">Versión inicial de kio-s3, que proporciona acceso a S3 en Dolphin y en otras aplicaciones de KDE.</p>
         <p xml:lang="eu">kio-s3ren hasierako askapena, Dolphin eta beste KDE aplikazioetan S3ra sarbidea ematen duena.</p>
+        <p xml:lang="fi">Alustava kio-s3-julkaisu, joka tarjoaa Dolphinista ja muista KDE-sovelluksista pääsyn S3:een.</p>
         <p xml:lang="fr">Première version de kio-s3, permettant l'accès à S3 dans Dolphin et dans d'autres applications de KDE.</p>
         <p xml:lang="he">המהדורה הראשונית של kio-s3, שמספקת גישה ל־S3 דרך Dolphin ויישומים אחרים של KDE.</p>
         <p xml:lang="it">Rilascio iniziale di kio-s3, che fornisce l'accesso a S3 in Dolphin e in altre applicazioni di KDE.</p>
