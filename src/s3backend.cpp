@@ -853,6 +853,15 @@ KIO::WorkerResult S3Backend::renamePrefix(const Aws::S3::S3Client &client, const
 
         const auto &result = listOutcome.GetResult();
         for (const auto &object : result.GetContents()) {
+            // Copying costs one request per object, so the check runs per object.
+            // Phase 2 is not interrupted: once every copy exists, finishing the
+            // deletion is the only way to avoid objects in both places.
+            if (q->wasKilled()) {
+                qCDebug(S3) << "Rename canceled after copying" << destKeys.size() << "objects, rolling back";
+                rollback();
+                return KIO::WorkerResult::fail(KIO::ERR_USER_CANCELED, s3src.url().toDisplayString());
+            }
+
             const Aws::String &srcKey = object.GetKey();
             const Aws::String destKey = destPrefix + srcKey.substr(srcPrefix.size());
 
