@@ -830,16 +830,10 @@ KIO::WorkerResult S3Backend::renamePrefix(const Aws::S3::S3Client &client, const
     QList<Aws::String> srcKeys;
     QList<Aws::String> destKeys;
 
-    auto rollback = [&client, &destBucket, &destKeys]() {
-        for (const auto &key : destKeys) {
-            Aws::S3::Model::DeleteObjectRequest delReq;
-            delReq.SetBucket(destBucket);
-            delReq.SetKey(key);
-            const auto delOutcome = client.DeleteObject(delReq);
-            if (!delOutcome.IsSuccess()) {
-                qCWarning(S3) << "Rollback: could not delete" << key.c_str()
-                              << "-" << delOutcome.GetError().GetMessage().c_str();
-            }
+    auto rollback = [this, &client, &destBucket, &destKeys]() {
+        const BatchDeleteResult rollbackResult = batchDelete(client, destBucket, destKeys);
+        for (const auto &[key, message] : rollbackResult.failedKeys) {
+            qCWarning(S3) << "Rollback: could not delete" << key.c_str() << "-" << message.c_str();
         }
     };
 
