@@ -884,20 +884,12 @@ KIO::WorkerResult S3Backend::renamePrefix(const Aws::S3::S3Client &client, const
 
     // Phase 2: Delete all source objects. If deletion fails, the data is safe
     // at the destination — warn the user but still report success.
-    bool allDeleted = true;
-    for (const auto &key : srcKeys) {
-        Aws::S3::Model::DeleteObjectRequest delRequest;
-        delRequest.SetBucket(srcBucket);
-        delRequest.SetKey(key);
-        const auto delOutcome = client.DeleteObject(delRequest);
-        if (!delOutcome.IsSuccess()) {
-            qCWarning(S3) << "Could not delete source object:" << key.c_str()
-                          << "-" << delOutcome.GetError().GetMessage().c_str();
-            allDeleted = false;
-        }
+    const BatchDeleteResult deleteResult = batchDelete(client, srcBucket, srcKeys);
+    for (const auto &[key, message] : deleteResult.failedKeys) {
+        qCWarning(S3) << "Could not delete source object:" << key.c_str() << "-" << message.c_str();
     }
 
-    if (!allDeleted) {
+    if (!deleteResult.success()) {
         q->warning(i18nc("@info", "Some source files could not be deleted after renaming. The renamed folder may still contain leftover files."));
     }
 
