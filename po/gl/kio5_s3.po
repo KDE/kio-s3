@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-08 00:45+0000\n"
+"POT-Creation-Date: 2026-10-22 00:50+0000\n"
 "PO-Revision-Date: 2023-04-30 08:57+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
@@ -135,7 +135,7 @@ msgstr ""
 msgid "Are you sure you want to delete the profile \"%1\"?"
 msgstr ""
 
-#: s3backend.cpp:41
+#: s3backend.cpp:46
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -145,32 +145,32 @@ msgstr ""
 "URI de S3 incorrecto, falta o nome do balde na parte do servidor.<nl/>Un URI "
 "de S3 correcto ten que ter esta forma: <link>s3://balde/clave</link>"
 
-#: s3backend.cpp:162 s3backend.cpp:171
+#: s3backend.cpp:167 s3backend.cpp:176
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr ""
 "Non é posíbel atopar baldes de S3, comproba a túa configuración de AWS."
 
-#: s3backend.cpp:647
+#: s3backend.cpp:652
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
 msgstr ""
 
-#: s3backend.cpp:699
+#: s3backend.cpp:704
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "Non foi posíbel copiar <link>%1</link> a <link>%2</link>"
 
-#: s3backend.cpp:776
+#: s3backend.cpp:777
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr ""
 
-#: s3backend.cpp:906
+#: s3backend.cpp:907
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -178,9 +178,23 @@ msgid ""
 "may still contain leftover files."
 msgstr ""
 
-#: s3backend.cpp:970 s3backend.cpp:1032
+#: s3backend.cpp:971 s3backend.cpp:1033
 #, kde-format
 msgctxt "@info"
 msgid ""
 "Could not retrieve the complete file listing. Some files may not be shown."
+msgstr ""
+
+#: s3backend.cpp:1130
+#, kde-format
+msgctxt "@item"
+msgid "and %1 more object"
+msgid_plural "and %1 more objects"
+msgstr[0] ""
+msgstr[1] ""
+
+#: s3backend.cpp:1134
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Failed to delete %1 of %2 objects. Affected keys: %3"
 msgstr ""
