@@ -193,12 +193,12 @@ msgstr ""
 msgctxt "@item"
 msgid "and %1 more object"
 msgid_plural "and %1 more objects"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "a ešte %1 objekt"
+msgstr[1] "a ešte %1 objekty"
+msgstr[2] "a ešte %1 objektov"
 
 #: s3backend.cpp:1134
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"
-msgstr ""
+msgstr "Nepodarilo sa odstrániť %1 z %2 objektov. Dotknuté kľúče: %3"

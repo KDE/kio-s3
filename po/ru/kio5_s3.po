@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-22 00:50+0000\n"
-"PO-Revision-Date: 2026-03-08 08:41+0200\n"
-"Last-Translator: Alexander Yavorskiy <kekcuha@gmail.com>\n"
+"PO-Revision-Date: 2026-10-22 05:43+0200\n"
+"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -77,7 +77,7 @@ msgstr "Название:"
 #: kcm/ui/main.qml:148
 #, kde-format
 msgid "e.g., My S3 Storage"
-msgstr "Например, «Мое хранилище S3»"
+msgstr "Например, «Моё хранилище S3»"
 
 #: kcm/ui/main.qml:155
 #, kde-format
@@ -198,16 +198,16 @@ msgstr ""
 msgctxt "@item"
 msgid "and %1 more object"
 msgid_plural "and %1 more objects"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "и ещё %1 объект"
+msgstr[1] "и ещё %1 объекта"
+msgstr[2] "и ещё %1 объектов"
+msgstr[3] "и ещё %1 объект"
 
 #: s3backend.cpp:1134
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"
-msgstr ""
+msgstr "Не удалось удалить объекты (%1 из %2). Затронутые ключи: %3"
 
 #~ msgid "Advanced"
 #~ msgstr "Дополнительно"

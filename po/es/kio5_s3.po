@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the kio-s3 package.
 # Automatically generated, 2021.
 #
-# SPDX-FileCopyrightText: 2021, 2022, 2025, 2026 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2021-2022, 2025-2026 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: kio5_s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-22 00:50+0000\n"
-"PO-Revision-Date: 2026-03-09 00:56+0100\n"
+"PO-Revision-Date: 2026-10-22 17:19+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.12.3\n"
+"X-Generator: Lokalize 26.08.2\n"
 
 #: kcm/ui/main.qml:25
 #, kde-format
@@ -200,14 +200,11 @@ msgstr ""
 msgctxt "@item"
 msgid "and %1 more object"
 msgid_plural "and %1 more objects"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "y %1 objeto más"
+msgstr[1] "y %1 objetos más"
 
 #: s3backend.cpp:1134
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"
-msgstr ""
-
-#~ msgid "Advanced"
-#~ msgstr "Avanzado"
+msgstr "No ha sido posible borrar %1 de %2 objetos. Claves afectadas: %3"
