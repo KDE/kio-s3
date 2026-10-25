@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-22 00:50+0000\n"
+"POT-Creation-Date: 2026-10-25 00:50+0000\n"
 "PO-Revision-Date: 2026-09-23 06:56+0900\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
@@ -168,7 +168,7 @@ msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr ""
 
-#: s3backend.cpp:907
+#: s3backend.cpp:902
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -176,21 +176,21 @@ msgid ""
 "may still contain leftover files."
 msgstr ""
 
-#: s3backend.cpp:971 s3backend.cpp:1033
+#: s3backend.cpp:966 s3backend.cpp:1028
 #, kde-format
 msgctxt "@info"
 msgid ""
 "Could not retrieve the complete file listing. Some files may not be shown."
 msgstr ""
 
-#: s3backend.cpp:1130
+#: s3backend.cpp:1125
 #, kde-format
 msgctxt "@item"
 msgid "and %1 more object"
 msgid_plural "and %1 more objects"
 msgstr[0] ""
 
-#: s3backend.cpp:1134
+#: s3backend.cpp:1129
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"

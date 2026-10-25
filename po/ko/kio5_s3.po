@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-22 00:50+0000\n"
+"POT-Creation-Date: 2026-10-25 00:50+0000\n"
 "PO-Revision-Date: 2026-06-06 14:17+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -170,7 +170,7 @@ msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "서로 다른 S3 프로필간에서는 이름을 바꿀 수 없습니다."
 
-#: s3backend.cpp:907
+#: s3backend.cpp:902
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -180,7 +180,7 @@ msgstr ""
 "일부 원본 파일의 이름을 바꾼 후 삭제할 수 없습니다. 이름이 바뀐 폴더에는 이"
 "전 파일이 남아 있을 수도 있습니다."
 
-#: s3backend.cpp:971 s3backend.cpp:1033
+#: s3backend.cpp:966 s3backend.cpp:1028
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -188,14 +188,14 @@ msgid ""
 msgstr ""
 "전체 파일 목록을 가져올 수 없습니다. 일부 파일이 표시되지 않을 수도 있습니다."
 
-#: s3backend.cpp:1130
+#: s3backend.cpp:1125
 #, kde-format
 msgctxt "@item"
 msgid "and %1 more object"
 msgid_plural "and %1 more objects"
 msgstr[0] ""
 
-#: s3backend.cpp:1134
+#: s3backend.cpp:1129
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"

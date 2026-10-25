@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-22 00:50+0000\n"
+"POT-Creation-Date: 2026-10-25 00:50+0000\n"
 "PO-Revision-Date: 2026-10-22 09:06+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -178,7 +178,7 @@ msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "No s'ha pogut canviar de nom entre diferents perfils S3."
 
-#: s3backend.cpp:907
+#: s3backend.cpp:902
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -188,7 +188,7 @@ msgstr ""
 "Alguns fitxers d'origen no s'han pogut suprimir després de canviar-ne el "
 "nom. La carpeta reanomenada encara pot contindre fitxers sobrants."
 
-#: s3backend.cpp:971 s3backend.cpp:1033
+#: s3backend.cpp:966 s3backend.cpp:1028
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -197,7 +197,7 @@ msgstr ""
 "No s'ha pogut recuperar el llistat complet de fitxers. És possible que "
 "alguns fitxers no es mostren."
 
-#: s3backend.cpp:1130
+#: s3backend.cpp:1125
 #, kde-format
 msgctxt "@item"
 msgid "and %1 more object"
@@ -205,7 +205,7 @@ msgid_plural "and %1 more objects"
 msgstr[0] "i %1 objecte més"
 msgstr[1] "i %1 objectes més"
 
-#: s3backend.cpp:1134
+#: s3backend.cpp:1129
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"

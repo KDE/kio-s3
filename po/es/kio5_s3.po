@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio5_s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-22 00:50+0000\n"
+"POT-Creation-Date: 2026-10-25 00:50+0000\n"
 "PO-Revision-Date: 2026-10-22 17:19+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -175,7 +175,7 @@ msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "No se puede cambiar el nombre entre distintos perfiles S3."
 
-#: s3backend.cpp:907
+#: s3backend.cpp:902
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -186,7 +186,7 @@ msgstr ""
 "carpeta cuyo nombre se ha cambiado puede seguir conteniendo archivos "
 "sobrantes."
 
-#: s3backend.cpp:971 s3backend.cpp:1033
+#: s3backend.cpp:966 s3backend.cpp:1028
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -195,7 +195,7 @@ msgstr ""
 "No se ha podido obtener el listado completo de archivos. Es posible que no "
 "se muestren algunos archivos."
 
-#: s3backend.cpp:1130
+#: s3backend.cpp:1125
 #, kde-format
 msgctxt "@item"
 msgid "and %1 more object"
@@ -203,7 +203,7 @@ msgid_plural "and %1 more objects"
 msgstr[0] "y %1 objeto más"
 msgstr[1] "y %1 objetos más"
 
-#: s3backend.cpp:1134
+#: s3backend.cpp:1129
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"

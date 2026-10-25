@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-22 00:50+0000\n"
+"POT-Creation-Date: 2026-10-25 00:50+0000\n"
 "PO-Revision-Date: 2026-10-22 19:26+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -171,7 +171,7 @@ msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "Farklı S3 profilleri arasında yeniden adlandırma yapılamıyor."
 
-#: s3backend.cpp:907
+#: s3backend.cpp:902
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -181,14 +181,14 @@ msgstr ""
 "Yeniden adlandırma sonrası bazı kaynak dosyaları silinemedi. Yeniden "
 "adlandırılan klasörde hâlâ kalan dosyalar olabilir."
 
-#: s3backend.cpp:971 s3backend.cpp:1033
+#: s3backend.cpp:966 s3backend.cpp:1028
 #, kde-format
 msgctxt "@info"
 msgid ""
 "Could not retrieve the complete file listing. Some files may not be shown."
 msgstr "Tam dosya listesi alınamadı. Bazı dosyalar gösterilmiyor olabilir."
 
-#: s3backend.cpp:1130
+#: s3backend.cpp:1125
 #, kde-format
 msgctxt "@item"
 msgid "and %1 more object"
@@ -196,7 +196,7 @@ msgid_plural "and %1 more objects"
 msgstr[0] "ve %1 nesne daha"
 msgstr[1] "ve %1 nesne daha"
 
-#: s3backend.cpp:1134
+#: s3backend.cpp:1129
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"

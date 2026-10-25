@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-22 00:50+0000\n"
+"POT-Creation-Date: 2026-10-25 00:50+0000\n"
 "PO-Revision-Date: 2026-10-22 12:19+0200\n"
 "Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -172,7 +172,7 @@ msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "Nelze přejmenovat mezi různými profily S3."
 
-#: s3backend.cpp:907
+#: s3backend.cpp:902
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -182,7 +182,7 @@ msgstr ""
 "Některé zdrojové soubory se po přejmenování nepodařilo odstranit. "
 "Přejmenovaná složka může stále obsahovat zbytkové soubory."
 
-#: s3backend.cpp:971 s3backend.cpp:1033
+#: s3backend.cpp:966 s3backend.cpp:1028
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -191,7 +191,7 @@ msgstr ""
 "Nepodařilo se načíst úplný seznam souborů. Některé soubory se nemusí "
 "zobrazit."
 
-#: s3backend.cpp:1130
+#: s3backend.cpp:1125
 #, kde-format
 msgctxt "@item"
 msgid "and %1 more object"
@@ -200,7 +200,7 @@ msgstr[0] "a %1 další objekt"
 msgstr[1] "a %1 další objekty"
 msgstr[2] "a %1 dalších objektů"
 
-#: s3backend.cpp:1134
+#: s3backend.cpp:1129
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"

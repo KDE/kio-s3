@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-22 00:50+0000\n"
+"POT-Creation-Date: 2026-10-25 00:50+0000\n"
 "PO-Revision-Date: 2026-10-22 18:17+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -172,7 +172,7 @@ msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "Kan tussen verschillende S3-profielen niet hernoemen."
 
-#: s3backend.cpp:907
+#: s3backend.cpp:902
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -182,7 +182,7 @@ msgstr ""
 "Enige bronbestanden konden niet verwijderd worden na hernoemen. De hernoemde "
 "map kan nog steeds overgebleven bestanden bevatten."
 
-#: s3backend.cpp:971 s3backend.cpp:1033
+#: s3backend.cpp:966 s3backend.cpp:1028
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -191,7 +191,7 @@ msgstr ""
 "Kon de volledige lijstmet bestanden niet ophalen. Sommige bestanden kunnen "
 "niet getoond worden."
 
-#: s3backend.cpp:1130
+#: s3backend.cpp:1125
 #, kde-format
 msgctxt "@item"
 msgid "and %1 more object"
@@ -199,7 +199,7 @@ msgid_plural "and %1 more objects"
 msgstr[0] "en %1 object meer"
 msgstr[1] "en %1 objecten meer"
 
-#: s3backend.cpp:1134
+#: s3backend.cpp:1129
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"

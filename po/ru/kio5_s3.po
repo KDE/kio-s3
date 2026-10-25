@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-22 00:50+0000\n"
+"POT-Creation-Date: 2026-10-25 00:50+0000\n"
 "PO-Revision-Date: 2026-10-22 05:43+0200\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -174,7 +174,7 @@ msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "Невозможно переименовать между разными профилями S3."
 
-#: s3backend.cpp:907
+#: s3backend.cpp:902
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -184,7 +184,7 @@ msgstr ""
 "Некоторые исходные файлы не удалось удалить после переименования. "
 "Переименованная папка может содержать оставшиеся файлы."
 
-#: s3backend.cpp:971 s3backend.cpp:1033
+#: s3backend.cpp:966 s3backend.cpp:1028
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -193,7 +193,7 @@ msgstr ""
 "Не удалось получить полный список файлов. Некоторые файлы могут "
 "отсутствовать."
 
-#: s3backend.cpp:1130
+#: s3backend.cpp:1125
 #, kde-format
 msgctxt "@item"
 msgid "and %1 more object"
@@ -203,7 +203,7 @@ msgstr[1] "и ещё %1 объекта"
 msgstr[2] "и ещё %1 объектов"
 msgstr[3] "и ещё %1 объект"
 
-#: s3backend.cpp:1134
+#: s3backend.cpp:1129
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"

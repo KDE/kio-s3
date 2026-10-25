@@ -1,18 +1,18 @@
-# SPDX-FileCopyrightText: 2021, 2022, 2026 Xavier Besnard <xavier.besnard@kde.org>
+# SPDX-FileCopyrightText: 2021-2022, 2026 Xavier Besnard <xavier.besnard@kde.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-22 00:50+0000\n"
-"PO-Revision-Date: 2026-03-09 09:04+0100\n"
+"POT-Creation-Date: 2026-10-25 00:50+0000\n"
+"PO-Revision-Date: 2026-10-23 09:19+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
-"Language-Team: \n"
+"Language-Team: fr\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.12.3\n"
+"X-Generator: Lokalize 26.08.1\n"
 
 #: kcm/ui/main.qml:25
 #, kde-format
@@ -171,7 +171,7 @@ msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "Impossible de faire un renommage entre différents profils S3."
 
-#: s3backend.cpp:907
+#: s3backend.cpp:902
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -181,7 +181,7 @@ msgstr ""
 "Certains fichiers sources n'ont pas pu être supprimés après renommage. Le "
 "dossier renommé peut encore contenir des fichiers restants."
 
-#: s3backend.cpp:971 s3backend.cpp:1033
+#: s3backend.cpp:966 s3backend.cpp:1028
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -190,19 +190,19 @@ msgstr ""
 "Impossible de recharger la liste complète des fichiers. Certains fichiers "
 "peuvent ne pas être affichés."
 
-#: s3backend.cpp:1130
+#: s3backend.cpp:1125
 #, kde-format
 msgctxt "@item"
 msgid "and %1 more object"
 msgid_plural "and %1 more objects"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "et %1 objet de plus"
+msgstr[1] " et %1 objets de plus..."
 
-#: s3backend.cpp:1134
+#: s3backend.cpp:1129
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"
-msgstr ""
+msgstr "Échec de la suppression de %1 parmi %2 objets. Clés concernées : %3"
 
 #~ msgid "Advanced"
 #~ msgstr "Avancé"

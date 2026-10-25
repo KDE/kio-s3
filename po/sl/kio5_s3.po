@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-22 00:50+0000\n"
+"POT-Creation-Date: 2026-10-25 00:50+0000\n"
 "PO-Revision-Date: 2026-10-22 07:33+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -173,7 +173,7 @@ msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "Preimenovanje med različnimi profili S3 ni mogoče."
 
-#: s3backend.cpp:907
+#: s3backend.cpp:902
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -183,7 +183,7 @@ msgstr ""
 "Nekaterih izvornih datotek po preimenovanju ni bilo mogoče izbrisati. "
 "Preimenovana mapa lahko še vedno vsebuje preostale datoteke."
 
-#: s3backend.cpp:971 s3backend.cpp:1033
+#: s3backend.cpp:966 s3backend.cpp:1028
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -192,7 +192,7 @@ msgstr ""
 "Celotnega seznama datotek ni bilo mogoče pridobiti. Nekatere datoteke morda "
 "niso prikazane."
 
-#: s3backend.cpp:1130
+#: s3backend.cpp:1125
 #, kde-format
 msgctxt "@item"
 msgid "and %1 more object"
@@ -202,7 +202,7 @@ msgstr[1] "in še %1 predmet"
 msgstr[2] "in še %1 predmeta"
 msgstr[3] "in še %1 predmeti"
 
-#: s3backend.cpp:1134
+#: s3backend.cpp:1129
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"
