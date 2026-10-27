@@ -116,9 +116,8 @@ Aws::S3::S3ClientConfiguration S3Backend::createClientConfiguration(const QStrin
     return config;
 }
 
-Aws::S3::S3Client S3Backend::createS3Client(const QString &profileName) const
+Aws::S3::S3Client S3Backend::createS3Client(const QString &profileName, const Aws::S3::S3ClientConfiguration &config) const
 {
-    const auto config = createClientConfiguration(profileName);
     if (!profileName.isEmpty()) {
         KConfig kioConfig(QStringLiteral("kio_s3rc"), KConfig::SimpleConfig);
         KConfigGroup profileGroup = kioConfig.group(QStringLiteral("Profile-%1").arg(profileName));
@@ -131,6 +130,19 @@ Aws::S3::S3Client S3Backend::createS3Client(const QString &profileName) const
     return Aws::S3::S3Client(config);
 }
 
+// Constructing a configuration calls the EC2 instance metadata service unless
+// IMDS is disabled, and outside EC2 that takes seconds. Both clients of a
+// profile are therefore built from one configuration. The caller holds
+// m_clientCacheMutex.
+const Aws::S3::S3ClientConfiguration &S3Backend::cachedClientConfiguration(const QString &profileName)
+{
+    auto it = m_configCache.find(profileName);
+    if (it == m_configCache.end()) {
+        it = m_configCache.emplace(profileName, createClientConfiguration(profileName)).first;
+    }
+    return it->second;
+}
+
 std::shared_ptr<Aws::S3::S3Client> S3Backend::cachedS3Client(const QString &profileName)
 {
     std::lock_guard<std::mutex> lock(m_clientCacheMutex);
@@ -138,8 +150,26 @@ std::shared_ptr<Aws::S3::S3Client> S3Backend::cachedS3Client(const QString &prof
     if (it != m_clientCache.end()) {
         return it->second;
     }
-    auto client = std::make_shared<Aws::S3::S3Client>(createS3Client(profileName));
+    auto client = std::make_shared<Aws::S3::S3Client>(createS3Client(profileName, cachedClientConfiguration(profileName)));
     m_clientCache.emplace(profileName, client);
+    return client;
+}
+
+std::shared_ptr<Aws::S3::S3Client> S3Backend::cachedCopyClient(const QString &profileName)
+{
+    std::lock_guard<std::mutex> lock(m_clientCacheMutex);
+    auto it = m_copyClientCache.find(profileName);
+    if (it != m_copyClientCache.end()) {
+        return it->second;
+    }
+    // A server copies the data before it answers a CopyObject and sends nothing
+    // meanwhile. With the default requestTimeoutMs of 3000, curl aborts any copy
+    // that takes longer than 3 seconds, and the SDK sends it again. lowSpeedLimit
+    // keeps its default of 1 byte/s, so a stalled server still ends the request.
+    auto config = cachedClientConfiguration(profileName);
+    config.requestTimeoutMs = 300000; // 5 minutes
+    auto client = std::make_shared<Aws::S3::S3Client>(createS3Client(profileName, config));
+    m_copyClientCache.emplace(profileName, client);
     return client;
 }
 
@@ -147,10 +177,14 @@ void S3Backend::invalidateClientCache(const QString &profileName)
 {
     std::lock_guard<std::mutex> lock(m_clientCacheMutex);
     if (profileName.isEmpty()) {
+        m_configCache.clear();
         m_clientCache.clear();
+        m_copyClientCache.clear();
         return;
     }
+    m_configCache.erase(profileName);
     m_clientCache.erase(profileName);
+    m_copyClientCache.erase(profileName);
 }
 
 KIO::WorkerResult S3Backend::listDir(const QUrl &url)
@@ -698,7 +732,7 @@ KIO::WorkerResult S3Backend::copy(const QUrl &src, const QUrl &dest, int permiss
     request.SetBucket(s3dest.BucketName());
     request.SetKey(s3dest.Key());
 
-    auto copyObjectOutcome = client.CopyObject(request);
+    auto copyObjectOutcome = cachedCopyClient(s3src.profileName())->CopyObject(request);
     if (!copyObjectOutcome.IsSuccess()) {
         qCDebug(S3) << "Could not copy" << src << "to" << dest << "- " << copyObjectOutcome.GetError().GetMessage().c_str();
         return KIO::WorkerResult::fail(KIO::ERR_WORKER_DEFINED, xi18nc("@info", "Could not copy <link>%1</link> to <link>%2</link>", src.toDisplayString(), dest.toDisplayString()));
@@ -822,6 +856,7 @@ KIO::WorkerResult S3Backend::renamePrefix(const Aws::S3::S3Client &client, const
     const Aws::String destBucket = s3dest.BucketName();
     const Aws::String srcPrefix = s3src.Prefix();
     const Aws::String destPrefix = s3dest.Prefix();
+    const auto copyClient = cachedCopyClient(s3src.profileName());
     qCDebug(S3) << "Renaming folder:" << srcPrefix.c_str() << "to" << destPrefix.c_str();
 
     // Phase 1: List all objects under the source prefix and copy each to the destination.
@@ -870,7 +905,7 @@ KIO::WorkerResult S3Backend::renamePrefix(const Aws::S3::S3Client &client, const
             copyRequest.SetBucket(destBucket);
             copyRequest.SetKey(destKey);
 
-            const auto copyOutcome = client.CopyObject(copyRequest);
+            const auto copyOutcome = copyClient->CopyObject(copyRequest);
             if (!copyOutcome.IsSuccess()) {
                 qCWarning(S3) << "Could not copy object:" << srcKey.c_str()
                               << "to" << destKey.c_str()

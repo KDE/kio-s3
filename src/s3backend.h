@@ -80,12 +80,16 @@ private:
     QString contentType(const S3Url &s3url);
 
     Aws::S3::S3ClientConfiguration createClientConfiguration(const QString &profileName = QString()) const;
-    Aws::S3::S3Client createS3Client(const QString &profileName = QString()) const;
+    Aws::S3::S3Client createS3Client(const QString &profileName, const Aws::S3::S3ClientConfiguration &config) const;
 
+    const Aws::S3::S3ClientConfiguration &cachedClientConfiguration(const QString &profileName);
     std::shared_ptr<Aws::S3::S3Client> cachedS3Client(const QString &profileName);
+    std::shared_ptr<Aws::S3::S3Client> cachedCopyClient(const QString &profileName);
 
     mutable std::mutex m_clientCacheMutex;
+    std::unordered_map<QString, Aws::S3::S3ClientConfiguration> m_configCache;
     std::unordered_map<QString, std::shared_ptr<Aws::S3::S3Client>> m_clientCache;
+    std::unordered_map<QString, std::shared_ptr<Aws::S3::S3Client>> m_copyClientCache;
 
     Aws::String m_configProfileName;    // This must be passed to the S3Client objects to get the proper region from ~/.aws/config
     Aws::String m_endpointOverride;
