@@ -92,6 +92,7 @@ KIO::WorkerResult S3Worker::rename(const QUrl &src, const QUrl &dest, KIO::JobFl
 void S3Worker::reparseConfiguration()
 {
     d->invalidateClientCache();
+    d->clearObjectInfoCache();
     WorkerBase::reparseConfiguration();
 }
 

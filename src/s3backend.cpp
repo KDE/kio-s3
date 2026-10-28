@@ -40,6 +40,13 @@
 // The DeleteObjects API rejects requests carrying more than 1000 keys.
 constexpr int DeleteBatchSize = 1000;
 
+constexpr qsizetype ObjectInfoCacheSize = 10000;
+
+static S3ObjectId objectIdOf(const QString &profileName, const QString &bucketName, const Aws::String &key)
+{
+    return S3ObjectId{profileName, bucketName, QString::fromUtf8(key.c_str(), key.size())};
+}
+
 static KIO::WorkerResult invalidUrlError() {
     static const auto s_invalidUrlError = KIO::WorkerResult::fail(
         KIO::ERR_WORKER_DEFINED,
@@ -52,6 +59,8 @@ static KIO::WorkerResult invalidUrlError() {
 S3Backend::S3Backend(S3Worker *q)
     : q(q)
 {
+    m_objectInfoCache.setMaxCost(ObjectInfoCacheSize);
+
     m_configProfileName = Aws::Auth::GetConfigProfileName();
     qCDebug(S3) << "S3 backend initialized, config profile name:" << m_configProfileName.c_str();
     // Service-specific env var takes priority over global one.
@@ -184,6 +193,60 @@ void S3Backend::invalidateClientCache(const QString &profileName)
     m_copyClientCache.erase(profileName);
 }
 
+void S3Backend::clearObjectInfoCache()
+{
+    m_objectInfoCache.clear();
+}
+
+void S3Backend::rememberObjectInfo(const S3ObjectId &id, qint64 size, const Aws::String &etag)
+{
+    m_objectInfoCache.insert(id, new ObjectInfo{size, etag});
+}
+
+std::optional<S3Backend::ObjectInfo> S3Backend::cachedObjectInfo(const S3Url &s3url) const
+{
+    const ObjectInfo *info = m_objectInfoCache.object(s3url.objectId());
+    if (!info) {
+        return std::nullopt;
+    }
+    return *info;
+}
+
+// Refills the cache after a miss with one listing that starts at the missing
+// key. CopyJob lists a whole tree before it copies, so in a tree larger than
+// the cache the first entries are evicted before their copies start. A folder
+// copy takes the files of a folder in listing order, so the page also holds
+// the files it copies next.
+void S3Backend::fillObjectInfoAround(const Aws::S3::S3Client &client, const S3Url &s3url)
+{
+    const QString key = s3url.key().mid(1);
+    const QByteArray parentPrefix = key.left(key.lastIndexOf(QLatin1Char('/')) + 1).toUtf8();
+    const Aws::String startAfter = s3url.StartAfter();
+
+    Aws::S3::Model::ListObjectsV2Request request;
+    request.SetBucket(s3url.BucketName());
+    request.SetPrefix(Aws::String(parentPrefix.constData(), parentPrefix.size()));
+    request.SetDelimiter("/");
+    request.SetMaxKeys(1000);
+    if (!startAfter.empty()) {
+        request.SetStartAfter(startAfter);
+    }
+
+    const auto outcome = client.ListObjectsV2(request);
+    if (!outcome.IsSuccess()) {
+        qCDebug(S3) << "Could not list objects after" << startAfter.c_str() << "-" << outcome.GetError().GetMessage().c_str();
+        return;
+    }
+
+    const QString profileName = s3url.profileName();
+    const QString bucketName = s3url.bucketName();
+    const auto &objects = outcome.GetResult().GetContents();
+    for (const auto &object : objects) {
+        rememberObjectInfo(objectIdOf(profileName, bucketName, object.GetKey()), object.GetSize(), object.GetETag());
+    }
+    qCDebug(S3) << "Remembered" << objects.size() << "objects listed after" << startAfter.c_str();
+}
+
 KIO::WorkerResult S3Backend::listDir(const QUrl &url)
 {
     const auto s3url = S3Url(url);
@@ -291,6 +354,7 @@ KIO::WorkerResult S3Backend::stat(const QUrl &url)
             entry.fastInsert(KIO::UDSEntry::UDS_ACCESS, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH );
             const auto lastModifiedTime = headObjectRequestOutcome.GetResult().GetLastModified();
             entry.fastInsert(KIO::UDSEntry::UDS_MODIFICATION_TIME, lastModifiedTime.SecondsWithMSPrecision());
+            rememberObjectInfo(s3url.objectId(), headObjectRequestOutcome.GetResult().GetContentLength(), headObjectRequestOutcome.GetResult().GetETag());
         }
 
         q->statEntry(entry);
@@ -462,6 +526,7 @@ KIO::WorkerResult S3Backend::put(const QUrl &url, int permissions, KIO::JobFlags
     const Aws::S3::S3Client &client = *clientPtr;
     const Aws::String bucket = s3url.BucketName();
     const Aws::String key = s3url.Key();
+    m_objectInfoCache.remove(s3url.objectId());
 
     // Determine chunk size from source file size if available.
     // Some S3-compatible backends (e.g. Cloudflare R2) require all non-trailing
@@ -729,6 +794,7 @@ KIO::WorkerResult S3Backend::copy(const QUrl &src, const QUrl &dest, int permiss
     request.SetBucket(s3dest.BucketName());
     request.SetKey(s3dest.Key());
 
+    m_objectInfoCache.remove(s3dest.objectId());
     auto copyObjectOutcome = cachedCopyClient(s3src.profileName())->CopyObject(request);
     if (!copyObjectOutcome.IsSuccess()) {
         qCDebug(S3) << "Could not copy" << src << "to" << dest << "- " << copyObjectOutcome.GetError().GetMessage().c_str();
@@ -853,7 +919,10 @@ KIO::WorkerResult S3Backend::renamePrefix(const Aws::S3::S3Client &client, const
     const Aws::String destBucket = s3dest.BucketName();
     const Aws::String srcPrefix = s3src.Prefix();
     const Aws::String destPrefix = s3dest.Prefix();
-    const auto copyClient = cachedCopyClient(s3src.profileName());
+    const QString profileName = s3src.profileName();
+    const QString srcBucketName = s3src.bucketName();
+    const QString destBucketName = s3dest.bucketName();
+    const auto copyClient = cachedCopyClient(profileName);
     qCDebug(S3) << "Renaming folder:" << srcPrefix.c_str() << "to" << destPrefix.c_str();
 
     // Phase 1: List all objects under the source prefix and copy each to the destination.
@@ -902,6 +971,9 @@ KIO::WorkerResult S3Backend::renamePrefix(const Aws::S3::S3Client &client, const
             copyRequest.SetBucket(destBucket);
             copyRequest.SetKey(destKey);
 
+            // The destination is written now, the source is deleted in phase 2.
+            m_objectInfoCache.remove(objectIdOf(profileName, destBucketName, destKey));
+            m_objectInfoCache.remove(objectIdOf(profileName, srcBucketName, srcKey));
             const auto copyOutcome = copyClient->CopyObject(copyRequest);
             if (!copyOutcome.IsSuccess()) {
                 qCWarning(S3) << "Could not copy object:" << srcKey.c_str()
@@ -1003,6 +1075,7 @@ void S3Backend::listBucket(const S3Url &s3url)
         const auto &result = outcome.GetResult();
 
         for (const auto &object : result.GetContents()) {
+            rememberObjectInfo(objectIdOf(profile, bucket, object.GetKey()), object.GetSize(), object.GetETag());
             KIO::UDSEntry entry;
             const auto objectKey = QString::fromUtf8(object.GetKey().c_str());
             entry.reserve(6);
@@ -1043,6 +1116,8 @@ void S3Backend::listKey(const S3Url &s3url)
     const auto clientPtr = cachedS3Client(s3url.profileName());
     const Aws::S3::S3Client &client = *clientPtr;
     const QString prefix = s3url.prefix();
+    const QString profileName = s3url.profileName();
+    const QString bucketName = s3url.bucketName();
 
     Aws::S3::Model::ListObjectsV2Request request;
     request.SetBucket(s3url.BucketName());
@@ -1066,6 +1141,7 @@ void S3Backend::listKey(const S3Url &s3url)
         qCDebug(S3) << "Prefix" << prefix << "has" << result.GetContents().size() << "objects";
 
         for (const auto &object : result.GetContents()) {
+            rememberObjectInfo(objectIdOf(profileName, bucketName, object.GetKey()), object.GetSize(), object.GetETag());
             QString key = QString::fromUtf8(object.GetKey().c_str(), object.GetKey().size());
             // Note: key might be empty. 0-sized virtual folders have object.GetKey() equal to prefix.
             key.remove(0, prefix.length());
@@ -1222,6 +1298,8 @@ KIO::WorkerResult S3Backend::deletePrefix(const Aws::S3::S3Client &client, const
 {
     const Aws::String prefix = s3url.Prefix();
     const Aws::String bucketName = s3url.BucketName();
+    const QString profile = s3url.profileName();
+    const QString bucket = s3url.bucketName();
     qCDebug(S3) << "Going to delete all objects under prefix:" << prefix.c_str();
 
     // Flat listing (no delimiter) returns all objects under the prefix,
@@ -1261,7 +1339,8 @@ KIO::WorkerResult S3Backend::deletePrefix(const Aws::S3::S3Client &client, const
         const auto &objects = listResult.GetContents();
 
         if (objects.empty() && seenKeys == 0) {
-            // The prefix was a file or a 0-sized folder object — delete the key directly.
+            // The prefix was a file or a 0-sized folder object, so delete the key directly.
+            m_objectInfoCache.remove(s3url.objectId());
             Aws::S3::Model::DeleteObjectRequest request;
             request.SetBucket(bucketName);
             request.SetKey(s3url.Key());
@@ -1281,6 +1360,7 @@ KIO::WorkerResult S3Backend::deletePrefix(const Aws::S3::S3Client &client, const
         pageKeys.reserve(static_cast<qsizetype>(objects.size()));
         for (const auto &object : objects) {
             pageKeys.append(object.GetKey());
+            m_objectInfoCache.remove(objectIdOf(profile, bucket, object.GetKey()));
         }
         seenKeys += pageKeys.size();
 
