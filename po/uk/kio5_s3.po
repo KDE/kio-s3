@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-25 00:50+0000\n"
+"POT-Creation-Date: 2026-10-28 01:00+0000\n"
 "PO-Revision-Date: 2026-10-22 13:39+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -148,7 +148,7 @@ msgstr ""
 "Некоректна адреса S3 — у записі вузла не вистачає назви кошика.<nl/>Коректна "
 "адреса S3 повинна мати таку форму: <link>s3://bucket/key</link>"
 
-#: s3backend.cpp:167 s3backend.cpp:176
+#: s3backend.cpp:201 s3backend.cpp:210
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
@@ -156,7 +156,7 @@ msgstr ""
 "Не вдалося знайти кошики S3. Будь ласка, перевірте, чи правильно вказано "
 "налаштування AWS."
 
-#: s3backend.cpp:652
+#: s3backend.cpp:686
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
@@ -164,19 +164,19 @@ msgstr ""
 "Копіювання між різними профілями S3 неможливе. Спочатку скопіюйте файл на "
 "ваш комп'ютер."
 
-#: s3backend.cpp:704
+#: s3backend.cpp:738
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "Не вдалося скопіювати <link>%1</link> до <link>%2</link>"
 
-#: s3backend.cpp:777
+#: s3backend.cpp:811
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "Перейменування між різними профілями S3 неможливе."
 
-#: s3backend.cpp:902
+#: s3backend.cpp:937
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -186,7 +186,7 @@ msgstr ""
 "Деякі початкові файли не вдалося вилучити після перейменування. У "
 "перейменованій теці можуть усе ще міститися залишки початкових файлів."
 
-#: s3backend.cpp:966 s3backend.cpp:1028
+#: s3backend.cpp:1001 s3backend.cpp:1063
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -194,7 +194,7 @@ msgid ""
 msgstr ""
 "Не вдалося отримати повний список файлів. Деякі файли може бути не показано."
 
-#: s3backend.cpp:1125
+#: s3backend.cpp:1160
 #, kde-format
 msgctxt "@item"
 msgid "and %1 more object"
@@ -204,7 +204,7 @@ msgstr[1] "і ще %1 об'єкти"
 msgstr[2] "і ще %1 об'єктів"
 msgstr[3] "і ще %1 об'єкт"
 
-#: s3backend.cpp:1129
+#: s3backend.cpp:1164
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"

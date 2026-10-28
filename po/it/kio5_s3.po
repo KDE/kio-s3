@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-25 00:50+0000\n"
+"POT-Creation-Date: 2026-10-28 01:00+0000\n"
 "PO-Revision-Date: 2026-10-22 14:28+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -147,32 +147,32 @@ msgstr ""
 "URI S3 non valido, nome del bucket mancante dall'host.<nl/>Un URI S3 valido "
 "deve essere scritto nella forma: <link>s3://bucket/key</link>"
 
-#: s3backend.cpp:167 s3backend.cpp:176
+#: s3backend.cpp:201 s3backend.cpp:210
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr "Impossibile trovare bucket S3, controlla la tua configurazione di AWS."
 
-#: s3backend.cpp:652
+#: s3backend.cpp:686
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
 msgstr ""
 "Impossibile copiare tra diversi profili S3. Copia prima il file localmente."
 
-#: s3backend.cpp:704
+#: s3backend.cpp:738
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "Impossibile copiare <link>%1</link> in <link>%2</link>"
 
-#: s3backend.cpp:777
+#: s3backend.cpp:811
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "Impossibile rinominare tra diversi profili S3."
 
-#: s3backend.cpp:902
+#: s3backend.cpp:937
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -182,7 +182,7 @@ msgstr ""
 "Alcuni file sorgente non sono stati eliminati dopo la rinomina. La cartella "
 "rinominata potrebbe contenere ancora dei file."
 
-#: s3backend.cpp:966 s3backend.cpp:1028
+#: s3backend.cpp:1001 s3backend.cpp:1063
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -191,7 +191,7 @@ msgstr ""
 "Impossibile recuperare l'elenco completo dei file. Alcuni file potrebbero "
 "non essere visualizzati."
 
-#: s3backend.cpp:1125
+#: s3backend.cpp:1160
 #, kde-format
 msgctxt "@item"
 msgid "and %1 more object"
@@ -199,7 +199,7 @@ msgid_plural "and %1 more objects"
 msgstr[0] "e %1 altro oggetto"
 msgstr[1] "e %1 altri oggetti"
 
-#: s3backend.cpp:1129
+#: s3backend.cpp:1164
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"

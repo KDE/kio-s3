@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-25 00:50+0000\n"
+"POT-Creation-Date: 2026-10-28 01:00+0000\n"
 "PO-Revision-Date: 2024-02-18 14:43+0000\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -146,31 +146,31 @@ msgstr ""
 "URI S3 nevalid, denumirea găleții lipsește de la gazdă.<nl/>Un URI S3 valid "
 "trebuie scris sub forma: <link>s3://găleată/cheie</link>"
 
-#: s3backend.cpp:167 s3backend.cpp:176
+#: s3backend.cpp:201 s3backend.cpp:210
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr "Nu au fost găsite găleți S3, verificați configurația AWS locală."
 
-#: s3backend.cpp:652
+#: s3backend.cpp:686
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
 msgstr ""
 
-#: s3backend.cpp:704
+#: s3backend.cpp:738
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "Nu s-a putut copia <link>%1</link> la <link>%2</link>"
 
-#: s3backend.cpp:777
+#: s3backend.cpp:811
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr ""
 
-#: s3backend.cpp:902
+#: s3backend.cpp:937
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -178,14 +178,14 @@ msgid ""
 "may still contain leftover files."
 msgstr ""
 
-#: s3backend.cpp:966 s3backend.cpp:1028
+#: s3backend.cpp:1001 s3backend.cpp:1063
 #, kde-format
 msgctxt "@info"
 msgid ""
 "Could not retrieve the complete file listing. Some files may not be shown."
 msgstr ""
 
-#: s3backend.cpp:1125
+#: s3backend.cpp:1160
 #, kde-format
 msgctxt "@item"
 msgid "and %1 more object"
@@ -194,7 +194,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: s3backend.cpp:1129
+#: s3backend.cpp:1164
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"

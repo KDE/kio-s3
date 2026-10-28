@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-25 00:50+0000\n"
+"POT-Creation-Date: 2026-10-28 01:00+0000\n"
 "PO-Revision-Date: 2022-02-10 11:24+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: Hindi <kde-l10n-hi@kde.org>\n"
@@ -149,31 +149,31 @@ msgstr ""
 "अमान्य S3 URI, होस्ट से बकेट नाम गायब है।<nl/>एक मान्य S3 URI को फॉर्म में लिखा जाना "
 "चाहिए: <link>%1</link>"
 
-#: s3backend.cpp:167 s3backend.cpp:176
+#: s3backend.cpp:201 s3backend.cpp:210
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr ""
 
-#: s3backend.cpp:652
+#: s3backend.cpp:686
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
 msgstr ""
 
-#: s3backend.cpp:704
+#: s3backend.cpp:738
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not copy <link>%1</link> to <link>%2</link>"
 msgstr "<link>%1</link> को <link>%2</link> में कॉपी नहीं किया जा सका"
 
-#: s3backend.cpp:777
+#: s3backend.cpp:811
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr ""
 
-#: s3backend.cpp:902
+#: s3backend.cpp:937
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -181,14 +181,14 @@ msgid ""
 "may still contain leftover files."
 msgstr ""
 
-#: s3backend.cpp:966 s3backend.cpp:1028
+#: s3backend.cpp:1001 s3backend.cpp:1063
 #, kde-format
 msgctxt "@info"
 msgid ""
 "Could not retrieve the complete file listing. Some files may not be shown."
 msgstr ""
 
-#: s3backend.cpp:1125
+#: s3backend.cpp:1160
 #, kde-format
 msgctxt "@item"
 msgid "and %1 more object"
@@ -196,7 +196,7 @@ msgid_plural "and %1 more objects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: s3backend.cpp:1129
+#: s3backend.cpp:1164
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"
