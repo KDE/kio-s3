@@ -87,6 +87,8 @@ private:
                                   BatchProgressCallback progress = {});
     Q_REQUIRED_RESULT KIO::WorkerResult deletePrefix(const Aws::S3::S3Client &client, const S3Url &s3url);
     Q_REQUIRED_RESULT KIO::WorkerResult renamePrefix(const Aws::S3::S3Client &client, const S3Url &s3src, const S3Url &s3dest);
+    Q_REQUIRED_RESULT KIO::WorkerResult multipartCopy(const Aws::S3::S3Client &client, const S3Url &s3src, const S3Url &s3dest);
+    Aws::S3::Model::HeadObjectOutcome headObject(const Aws::S3::S3Client &client, const S3Url &s3url);
     QString contentType(const S3Url &s3url);
 
     void rememberObjectInfo(const S3ObjectId &id, qint64 size, const Aws::String &etag);

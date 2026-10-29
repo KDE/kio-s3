@@ -7,3 +7,8 @@ ecm_add_test(
     s3urltest.cpp ../src/s3url.cpp
     LINK_LIBRARIES Qt6::Test ${AWSSDK_LINK_LIBRARIES}
     TEST_NAME s3urltest)
+
+ecm_add_test(
+    copypartstest.cpp
+    LINK_LIBRARIES Qt6::Test
+    TEST_NAME copypartstest)

@@ -4,6 +4,7 @@
 */
 
 #include "s3backend.h"
+#include "copyparts.h"
 #include "kio_s3.h"
 #include "s3debug.h"
 
@@ -23,6 +24,7 @@
 #include <aws/s3/model/DeleteObjectRequest.h>
 #include <aws/s3/model/DeleteObjectsRequest.h>
 #include <aws/s3/model/GetObjectRequest.h>
+#include <aws/s3/model/GetObjectTaggingRequest.h>
 #include <aws/s3/model/HeadObjectRequest.h>
 #include <aws/s3/model/ListObjectsV2Request.h>
 #include <aws/s3/model/AbortMultipartUploadRequest.h>
@@ -31,11 +33,15 @@
 #include <aws/s3/model/CompletedPart.h>
 #include <aws/s3/model/CreateMultipartUploadRequest.h>
 #include <aws/s3/model/PutObjectRequest.h>
+#include <aws/s3/model/UploadPartCopyRequest.h>
 #include <aws/s3/model/UploadPartRequest.h>
 
 #include <aws/s3/S3ClientConfiguration.h>
 
 #include <array>
+#include <chrono>
+#include <future>
+#include <vector>
 
 // The DeleteObjects API rejects requests carrying more than 1000 keys.
 constexpr int DeleteBatchSize = 1000;
@@ -54,6 +60,18 @@ static KIO::WorkerResult invalidUrlError() {
     );
 
     return s_invalidUrlError;
+}
+
+// Plain text: the dialog Dolphin shows for a failed copy prints markup as is.
+static KIO::WorkerResult copyError(const QUrl &src, const QUrl &dest)
+{
+    return KIO::WorkerResult::fail(KIO::ERR_WORKER_DEFINED, i18nc("@info", "Could not copy %1 to %2", src.toDisplayString(), dest.toDisplayString()));
+}
+
+// The server refused a copy guarded by CopySourceIfMatch: the ETag differs.
+static KIO::WorkerResult sourceChangedError(const QUrl &src, const QUrl &dest)
+{
+    return KIO::WorkerResult::fail(KIO::ERR_WORKER_DEFINED, i18nc("@info", "%1 changed while it was copied to %2.", src.toDisplayString(), dest.toDisplayString()));
 }
 
 S3Backend::S3Backend(S3Worker *q)
@@ -801,6 +819,228 @@ KIO::WorkerResult S3Backend::copy(const QUrl &src, const QUrl &dest, int permiss
         return KIO::WorkerResult::fail(KIO::ERR_WORKER_DEFINED, xi18nc("@info", "Could not copy <link>%1</link> to <link>%2</link>", src.toDisplayString(), dest.toDisplayString()));
     }
 
+    return KIO::WorkerResult::pass();
+}
+
+Aws::S3::Model::HeadObjectOutcome S3Backend::headObject(const Aws::S3::S3Client &client, const S3Url &s3url)
+{
+    Aws::S3::Model::HeadObjectRequest request;
+    request.SetBucket(s3url.BucketName());
+    request.SetKey(s3url.Key());
+    auto outcome = client.HeadObject(request);
+    if (outcome.IsSuccess()) {
+        rememberObjectInfo(s3url.objectId(), outcome.GetResult().GetContentLength(), outcome.GetResult().GetETag());
+    }
+    return outcome;
+}
+
+// A multipart upload has no copy source, so the headers, the user metadata and
+// the tags that CopyObject carries over are read from the source first.
+KIO::WorkerResult S3Backend::multipartCopy(const Aws::S3::S3Client &client, const S3Url &s3src, const S3Url &s3dest)
+{
+    const QUrl src = s3src.url();
+    const QUrl dest = s3dest.url();
+
+    const auto headOutcome = headObject(client, s3src);
+    if (!headOutcome.IsSuccess()) {
+        qCDebug(S3) << "Could not get HEAD object for" << s3src << "-" << headOutcome.GetError().GetMessage().c_str();
+        if (headOutcome.GetError().GetResponseCode() == Aws::Http::HttpResponseCode::NOT_FOUND) {
+            return KIO::WorkerResult::fail(KIO::ERR_DOES_NOT_EXIST, src.toDisplayString());
+        }
+        return copyError(src, dest);
+    }
+    const auto &head = headOutcome.GetResult();
+    const qint64 size = head.GetContentLength();
+    const Aws::String etag = head.GetETag();
+
+    const QByteArray srcKey = s3src.key().mid(1).toUtf8();
+    const Aws::String copySource = s3src.BucketName() + "/" + Aws::String(srcKey.constData(), srcKey.size());
+    const Aws::String destBucket = s3dest.BucketName();
+    const Aws::String destKey = s3dest.Key();
+
+    Aws::S3::Model::CreateMultipartUploadRequest createRequest;
+    createRequest.SetBucket(destBucket);
+    createRequest.SetKey(destKey);
+    if (!head.GetContentType().empty()) {
+        createRequest.SetContentType(head.GetContentType());
+    }
+    if (!head.GetContentEncoding().empty()) {
+        createRequest.SetContentEncoding(head.GetContentEncoding());
+    }
+    if (!head.GetContentDisposition().empty()) {
+        createRequest.SetContentDisposition(head.GetContentDisposition());
+    }
+    if (!head.GetContentLanguage().empty()) {
+        createRequest.SetContentLanguage(head.GetContentLanguage());
+    }
+    if (!head.GetCacheControl().empty()) {
+        createRequest.SetCacheControl(head.GetCacheControl());
+    }
+    // The header is passed on as the server sent it. SetExpires() writes the
+    // names of the day and the month in the language of the process locale,
+    // and RustFS answers such a date with 400.
+    if (!head.GetExpiresString().empty()) {
+        createRequest.SetAdditionalCustomHeaderValue("expires", head.GetExpiresString());
+    }
+    if (!head.GetMetadata().empty()) {
+        createRequest.SetMetadata(head.GetMetadata());
+    }
+
+    Aws::S3::Model::GetObjectTaggingRequest taggingRequest;
+    taggingRequest.SetBucket(s3src.BucketName());
+    taggingRequest.SetKey(s3src.Key());
+    const auto taggingOutcome = client.GetObjectTagging(taggingRequest);
+    if (taggingOutcome.IsSuccess()) {
+        QByteArray tagging;
+        for (const auto &tag : taggingOutcome.GetResult().GetTagSet()) {
+            if (!tagging.isEmpty()) {
+                tagging += '&';
+            }
+            tagging += QByteArray(tag.GetKey().c_str(), tag.GetKey().size()).toPercentEncoding();
+            tagging += '=';
+            tagging += QByteArray(tag.GetValue().c_str(), tag.GetValue().size()).toPercentEncoding();
+        }
+        if (!tagging.isEmpty()) {
+            createRequest.SetTagging(Aws::String(tagging.constData(), tagging.size()));
+        }
+    } else {
+        qCWarning(S3) << "Could not read the tags of" << s3src << "- copying without them:" << taggingOutcome.GetError().GetMessage().c_str();
+    }
+
+    const auto createOutcome = client.CreateMultipartUpload(createRequest);
+    if (!createOutcome.IsSuccess()) {
+        qCWarning(S3) << "CreateMultipartUpload failed for" << s3dest << "-" << createOutcome.GetError().GetMessage().c_str();
+        return copyError(src, dest);
+    }
+    const Aws::String uploadId = createOutcome.GetResult().GetUploadId();
+    const QList<CopyPart> parts = copyParts(size);
+    qCDebug(S3) << "Started multipart copy of" << size << "bytes in" << parts.size() << "parts, uploadId:" << uploadId.c_str();
+
+    auto abortUpload = [&]() {
+        Aws::S3::Model::AbortMultipartUploadRequest abortRequest;
+        abortRequest.SetBucket(destBucket);
+        abortRequest.SetKey(destKey);
+        abortRequest.SetUploadId(uploadId);
+        const auto abortOutcome = client.AbortMultipartUpload(abortRequest);
+        if (abortOutcome.IsSuccess()) {
+            qCDebug(S3) << "Aborted multipart upload" << uploadId.c_str();
+        } else {
+            qCWarning(S3) << "Could not abort multipart upload" << uploadId.c_str() << "-" << abortOutcome.GetError().GetMessage().c_str();
+        }
+    };
+
+    struct RunningPart
+    {
+        qsizetype index = 0;
+        std::future<Aws::S3::Model::UploadPartCopyOutcome> reply;
+    };
+
+    const auto copyClient = cachedCopyClient(s3src.profileName());
+    QList<Aws::String> partETags(parts.size());
+    std::vector<RunningPart> running;
+    // Returns early on Cancel, so that AbortMultipartUpload goes out before KIO
+    // ends the worker.
+    auto waitForRunningParts = [&]() {
+        for (RunningPart &part : running) {
+            while (part.reply.wait_for(std::chrono::milliseconds(100)) != std::future_status::ready) {
+                if (q->wasKilled()) {
+                    return;
+                }
+            }
+        }
+    };
+    qsizetype nextPart = 0;
+    qsizetype copiedParts = 0;
+    qint64 copiedBytes = 0;
+    q->totalSize(size);
+    while (copiedParts < parts.size()) {
+        while (nextPart < parts.size() && static_cast<qsizetype>(running.size()) < MaxPartsInFlight) {
+            const CopyPart &part = parts.at(nextPart);
+            const QByteArray range = "bytes=" + QByteArray::number(part.first) + '-' + QByteArray::number(part.last);
+
+            Aws::S3::Model::UploadPartCopyRequest partRequest;
+            partRequest.SetBucket(destBucket);
+            partRequest.SetKey(destKey);
+            partRequest.SetUploadId(uploadId);
+            partRequest.SetPartNumber(static_cast<int>(nextPart + 1));
+            partRequest.SetCopySource(copySource);
+            partRequest.SetCopySourceRange(Aws::String(range.constData(), range.size()));
+            partRequest.SetCopySourceIfMatch(etag);
+
+            // On Cancel, KIO sends SIGTERM and ends the worker 5 s later. A part
+            // can take longer, so each part runs on its own thread while this one
+            // watches wasKilled() and stays free to send AbortMultipartUpload.
+            // A future of std::async waits for its thread when it is destroyed,
+            // so no part is left inside the SDK when the SDK is shut down, and
+            // on Cancel the wait starts after the abort. The thread holds the copy
+            // client, so a cleared client cache cannot destroy it during the
+            // request.
+            running.push_back(RunningPart{nextPart, std::async(std::launch::async, [copyClient, partRequest]() {
+                return copyClient->UploadPartCopy(partRequest);
+            })});
+            ++nextPart;
+        }
+
+        running.front().reply.wait_for(std::chrono::milliseconds(100));
+        if (q->wasKilled()) {
+            qCDebug(S3) << "Multipart copy canceled after" << copiedParts << "of" << parts.size() << "parts";
+            abortUpload();
+            return KIO::WorkerResult::fail(KIO::ERR_USER_CANCELED, src.toDisplayString());
+        }
+
+        for (auto it = running.begin(); it != running.end();) {
+            if (it->reply.wait_for(std::chrono::seconds(0)) != std::future_status::ready) {
+                ++it;
+                continue;
+            }
+            const qsizetype index = it->index;
+            const auto partOutcome = it->reply.get();
+            it = running.erase(it);
+            if (!partOutcome.IsSuccess()) {
+                const auto &error = partOutcome.GetError();
+                qCWarning(S3) << "UploadPartCopy" << index + 1 << "failed:" << error.GetMessage().c_str();
+                // The parts still running are waited for first. AWS documents
+                // that a part in progress during AbortMultipartUpload "might or
+                // might not succeed".
+                waitForRunningParts();
+                abortUpload();
+                if (error.GetResponseCode() == Aws::Http::HttpResponseCode::PRECONDITION_FAILED) {
+                    return sourceChangedError(src, dest);
+                }
+                return copyError(src, dest);
+            }
+            partETags[index] = partOutcome.GetResult().GetCopyPartResult().GetETag();
+            ++copiedParts;
+            copiedBytes += parts.at(index).last - parts.at(index).first + 1;
+        }
+        // KIO sends processedSize() at most every 100 ms and drops the calls in
+        // between, so the size goes out on every pass of this loop. Called
+        // once per part, the parts that finish together were shown only when
+        // the next part finished.
+        q->processedSize(copiedBytes);
+    }
+
+    Aws::S3::Model::CompletedMultipartUpload completedUpload;
+    for (qsizetype i = 0; i < parts.size(); ++i) {
+        Aws::S3::Model::CompletedPart completedPart;
+        completedPart.SetPartNumber(static_cast<int>(i + 1));
+        completedPart.SetETag(partETags.at(i));
+        completedUpload.AddParts(std::move(completedPart));
+    }
+
+    Aws::S3::Model::CompleteMultipartUploadRequest completeRequest;
+    completeRequest.SetBucket(destBucket);
+    completeRequest.SetKey(destKey);
+    completeRequest.SetUploadId(uploadId);
+    completeRequest.SetMultipartUpload(completedUpload);
+    const auto completeOutcome = copyClient->CompleteMultipartUpload(completeRequest);
+    if (!completeOutcome.IsSuccess()) {
+        qCWarning(S3) << "CompleteMultipartUpload failed for" << s3dest << "-" << completeOutcome.GetError().GetMessage().c_str();
+        abortUpload();
+        return copyError(src, dest);
+    }
+
+    qCDebug(S3) << "Copied" << size << "bytes in" << parts.size() << "parts to" << s3dest;
     return KIO::WorkerResult::pass();
 }
 
