@@ -74,6 +74,14 @@ static KIO::WorkerResult sourceChangedError(const QUrl &src, const QUrl &dest)
     return KIO::WorkerResult::fail(KIO::ERR_WORKER_DEFINED, i18nc("@info", "%1 changed while it was copied to %2.", src.toDisplayString(), dest.toDisplayString()));
 }
 
+// The URL of another key in the bucket and the profile of s3url.
+static S3Url withKey(const S3Url &s3url, const Aws::String &key)
+{
+    QUrl url = s3url.url();
+    url.setPath(QLatin1Char('/') + QString::fromUtf8(key.c_str(), key.size()));
+    return S3Url(url);
+}
+
 S3Backend::S3Backend(S3Worker *q)
     : q(q)
 {
@@ -812,14 +820,52 @@ KIO::WorkerResult S3Backend::copy(const QUrl &src, const QUrl &dest, int permiss
     request.SetBucket(s3dest.BucketName());
     request.SetKey(s3dest.Key());
 
-    m_objectInfoCache.remove(s3dest.objectId());
-    auto copyObjectOutcome = cachedCopyClient(s3src.profileName())->CopyObject(request);
-    if (!copyObjectOutcome.IsSuccess()) {
-        qCDebug(S3) << "Could not copy" << src << "to" << dest << "- " << copyObjectOutcome.GetError().GetMessage().c_str();
-        return KIO::WorkerResult::fail(KIO::ERR_WORKER_DEFINED, xi18nc("@info", "Could not copy <link>%1</link> to <link>%2</link>", src.toDisplayString(), dest.toDisplayString()));
+    std::optional<ObjectInfo> info = cachedObjectInfo(s3src);
+    if (!info) {
+        fillObjectInfoAround(client, s3src);
+        info = cachedObjectInfo(s3src);
     }
 
-    return KIO::WorkerResult::pass();
+    m_objectInfoCache.remove(s3dest.objectId());
+    // A cached ETag can be stale. The server then answers 412, and the second
+    // attempt reads the size and the ETag from the source.
+    for (int attempt = 1;; ++attempt) {
+        if (!info) {
+            qCDebug(S3) << "Reading the size and the ETag of" << s3src << "with HEAD";
+            const auto headOutcome = headObject(client, s3src);
+            if (!headOutcome.IsSuccess()) {
+                qCDebug(S3) << "Could not get HEAD object for" << s3src << "-" << headOutcome.GetError().GetMessage().c_str();
+                if (headOutcome.GetError().GetResponseCode() == Aws::Http::HttpResponseCode::NOT_FOUND) {
+                    return KIO::WorkerResult::fail(KIO::ERR_DOES_NOT_EXIST, src.toDisplayString());
+                }
+                return copyError(src, dest);
+            }
+            info = ObjectInfo{headOutcome.GetResult().GetContentLength(), headOutcome.GetResult().GetETag()};
+        }
+
+        if (needsMultipartCopy(info->size)) {
+            qCDebug(S3) << "Copying" << info->size << "bytes with a multipart copy";
+            return multipartCopy(client, s3src, s3dest);
+        }
+
+        qCDebug(S3) << "Copying" << info->size << "bytes with CopyObject";
+        request.SetCopySourceIfMatch(info->etag);
+        const auto copyObjectOutcome = cachedCopyClient(s3src.profileName())->CopyObject(request);
+        if (copyObjectOutcome.IsSuccess()) {
+            return KIO::WorkerResult::pass();
+        }
+
+        const auto &error = copyObjectOutcome.GetError();
+        qCDebug(S3) << "Could not copy" << src << "to" << dest << "- " << error.GetMessage().c_str();
+        if (error.GetResponseCode() != Aws::Http::HttpResponseCode::PRECONDITION_FAILED) {
+            return copyError(src, dest);
+        }
+        if (attempt == 2) {
+            return sourceChangedError(src, dest);
+        }
+        qCDebug(S3) << "The cached ETag of" << s3src << "is stale";
+        info.reset();
+    }
 }
 
 Aws::S3::Model::HeadObjectOutcome S3Backend::headObject(const Aws::S3::S3Client &client, const S3Url &s3url)
@@ -1206,22 +1252,32 @@ KIO::WorkerResult S3Backend::renamePrefix(const Aws::S3::S3Client &client, const
             const Aws::String &srcKey = object.GetKey();
             const Aws::String destKey = destPrefix + srcKey.substr(srcPrefix.size());
 
-            Aws::S3::Model::CopyObjectRequest copyRequest;
-            copyRequest.SetCopySource(srcBucket + "/" + srcKey);
-            copyRequest.SetBucket(destBucket);
-            copyRequest.SetKey(destKey);
-
-            // The destination is written now, the source is deleted in phase 2.
             m_objectInfoCache.remove(objectIdOf(profileName, destBucketName, destKey));
-            m_objectInfoCache.remove(objectIdOf(profileName, srcBucketName, srcKey));
-            const auto copyOutcome = copyClient->CopyObject(copyRequest);
-            if (!copyOutcome.IsSuccess()) {
-                qCWarning(S3) << "Could not copy object:" << srcKey.c_str()
-                              << "to" << destKey.c_str()
-                              << "-" << copyOutcome.GetError().GetMessage().c_str();
-                rollback();
-                return KIO::WorkerResult::fail(KIO::ERR_CANNOT_RENAME, s3src.url().toDisplayString());
+            if (needsMultipartCopy(object.GetSize())) {
+                const KIO::WorkerResult result = multipartCopy(client, withKey(s3src, srcKey), withKey(s3dest, destKey));
+                if (!result.success()) {
+                    rollback();
+                    return result;
+                }
+            } else {
+                Aws::S3::Model::CopyObjectRequest copyRequest;
+                copyRequest.SetCopySource(srcBucket + "/" + srcKey);
+                copyRequest.SetBucket(destBucket);
+                copyRequest.SetKey(destKey);
+                copyRequest.SetCopySourceIfMatch(object.GetETag());
+
+                const auto copyOutcome = copyClient->CopyObject(copyRequest);
+                if (!copyOutcome.IsSuccess()) {
+                    qCWarning(S3) << "Could not copy object:" << srcKey.c_str()
+                                  << "to" << destKey.c_str()
+                                  << "-" << copyOutcome.GetError().GetMessage().c_str();
+                    rollback();
+                    return KIO::WorkerResult::fail(KIO::ERR_CANNOT_RENAME, s3src.url().toDisplayString());
+                }
             }
+            // The source is deleted in phase 2. A multipart copy remembers it
+            // again when it reads its headers.
+            m_objectInfoCache.remove(objectIdOf(profileName, srcBucketName, srcKey));
 
             srcKeys.append(srcKey);
             destKeys.append(destKey);

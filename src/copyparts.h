@@ -25,6 +25,19 @@ constexpr qsizetype MaxPartsInFlight = 8;
 // parts of 512 MiB cannot use more than two of the eight.
 constexpr qint64 CopyPartSize = 128LL * 1024 * 1024;
 
+// Objects that need more than one part are copied in parts. The S3 API lets one
+// CopyObject copy up to 5 GiB, and on Cloudflare R2 a 4 GiB CopyObject took
+// 875 s. A multipart copy also shows progress after every part. A 256 MiB
+// object in two parts took half the time of CopyObject on R2, 0.88 of it on
+// RustFS and 1.5 times as long on DigitalOcean Spaces. A copy of one part took
+// longer than CopyObject on Spaces and RustFS.
+constexpr qint64 MultipartCopyThreshold = CopyPartSize;
+
+inline bool needsMultipartCopy(qint64 size)
+{
+    return size > MultipartCopyThreshold;
+}
+
 // The most parts one multipart upload can hold.
 constexpr qint64 MaxCopyPartCount = 10000;
 
