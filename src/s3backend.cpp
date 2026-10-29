@@ -52,9 +52,6 @@ static KIO::WorkerResult invalidUrlError() {
 S3Backend::S3Backend(S3Worker *q)
     : q(q)
 {
-    Aws::SDKOptions options;
-    Aws::InitAPI(options);
-
     m_configProfileName = Aws::Auth::GetConfigProfileName();
     qCDebug(S3) << "S3 backend initialized, config profile name:" << m_configProfileName.c_str();
     // Service-specific env var takes priority over global one.

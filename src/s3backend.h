@@ -20,6 +20,7 @@
 #include <mutex>
 #include <unordered_map>
 
+#include <aws/core/Aws.h>
 #include <aws/s3/S3Client.h>
 #include <aws/s3/S3ClientConfiguration.h>
 
@@ -85,6 +86,26 @@ private:
     const Aws::S3::S3ClientConfiguration &cachedClientConfiguration(const QString &profileName);
     std::shared_ptr<Aws::S3::S3Client> cachedS3Client(const QString &profileName);
     std::shared_ptr<Aws::S3::S3Client> cachedCopyClient(const QString &profileName);
+
+    // First member: InitAPI() runs before every client and ShutdownAPI() after them.
+    // Without ShutdownAPI() an SDK thread frees memory of the unloaded library at exit.
+    class AwsSdk
+    {
+    public:
+        AwsSdk()
+        {
+            Aws::InitAPI(m_options);
+        }
+        ~AwsSdk()
+        {
+            Aws::ShutdownAPI(m_options);
+        }
+
+    private:
+        Q_DISABLE_COPY(AwsSdk)
+        Aws::SDKOptions m_options;
+    };
+    AwsSdk m_awsSdk;
 
     mutable std::mutex m_clientCacheMutex;
     std::unordered_map<QString, Aws::S3::S3ClientConfiguration> m_configCache;
