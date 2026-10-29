@@ -16,6 +16,7 @@ class CopyPartsTest : public QObject
     Q_OBJECT
 
 private Q_SLOTS:
+    void testMultipartThreshold();
     void testPartsJustAboveThreshold();
     void testPartsJustAboveFiveGiB();
     void testPartSizeAtPartCountLimit();
@@ -24,14 +25,21 @@ private Q_SLOTS:
 
 QTEST_GUILESS_MAIN(CopyPartsTest)
 
+void CopyPartsTest::testMultipartThreshold()
+{
+    QVERIFY(!needsMultipartCopy(128 * MiB));
+    QVERIFY(needsMultipartCopy(128 * MiB + 1));
+    QVERIFY(needsMultipartCopy(5 * GiB));
+}
+
 void CopyPartsTest::testPartsJustAboveThreshold()
 {
-    const QList<CopyPart> parts = copyParts(512 * MiB + 1);
-    QCOMPARE(parts.size(), qsizetype(5));
+    const QList<CopyPart> parts = copyParts(128 * MiB + 1);
+    QCOMPARE(parts.size(), qsizetype(2));
     QCOMPARE(parts.first().first, qint64(0));
     QCOMPARE(parts.first().last, 128 * MiB - 1);
-    QCOMPARE(parts.last().first, 512 * MiB);
-    QCOMPARE(parts.last().last, 512 * MiB);
+    QCOMPARE(parts.last().first, 128 * MiB);
+    QCOMPARE(parts.last().last, 128 * MiB);
 }
 
 void CopyPartsTest::testPartsJustAboveFiveGiB()

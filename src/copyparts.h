@@ -16,6 +16,13 @@ constexpr qsizetype MaxPartsInFlight = 8;
 
 constexpr qint64 CopyPartSize = 128LL * 1024 * 1024;
 
+constexpr qint64 MultipartCopyThreshold = CopyPartSize;
+
+inline bool needsMultipartCopy(qint64 size)
+{
+    return size > MultipartCopyThreshold;
+}
+
 // The most parts one multipart upload can hold.
 constexpr qint64 MaxCopyPartCount = 10000;
 
