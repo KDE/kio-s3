@@ -987,6 +987,8 @@ KIO::WorkerResult S3Backend::multipartCopy(const Aws::S3::S3Client &client, cons
     qsizetype copiedParts = 0;
     qint64 copiedBytes = 0;
     q->totalSize(size);
+    const auto copyStart = std::chrono::steady_clock::now();
+    auto lastSpeedReport = copyStart;
     while (copiedParts < parts.size()) {
         while (nextPart < parts.size() && static_cast<qsizetype>(running.size()) < MaxPartsInFlight) {
             const CopyPart &part = parts.at(nextPart);
@@ -1040,6 +1042,15 @@ KIO::WorkerResult S3Backend::multipartCopy(const Aws::S3::S3Client &client, cons
         }
         // KIO drops processedSize() calls less than 100 ms apart.
         q->processedSize(copiedBytes);
+
+        // 0 until the first round ends, then the average: KIO's own speed jumps between parts.
+        const auto now = std::chrono::steady_clock::now();
+        if (now - lastSpeedReport >= std::chrono::seconds(1)) {
+            lastSpeedReport = now;
+            const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - copyStart).count();
+            const bool firstRoundDone = copiedParts >= std::min(MaxPartsInFlight, parts.size());
+            q->speed(firstRoundDone ? static_cast<unsigned long>(copiedBytes * 1000 / elapsed) : 0);
+        }
     }
 
     Aws::S3::Model::CompletedMultipartUpload completedUpload;
