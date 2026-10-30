@@ -33,6 +33,7 @@
 #include <aws/s3/model/CompletedPart.h>
 #include <aws/s3/model/CreateMultipartUploadRequest.h>
 #include <aws/s3/model/PutObjectRequest.h>
+#include <aws/s3/model/PutObjectTaggingRequest.h>
 #include <aws/s3/model/UploadPartCopyRequest.h>
 #include <aws/s3/model/UploadPartRequest.h>
 
@@ -936,9 +937,11 @@ KIO::WorkerResult S3Backend::multipartCopy(const Aws::S3::S3Client &client, cons
     taggingRequest.SetBucket(s3src.BucketName());
     taggingRequest.SetKey(s3src.Key());
     const auto taggingOutcome = client.GetObjectTagging(taggingRequest);
+    Aws::Vector<Aws::S3::Model::Tag> tags;
     if (taggingOutcome.IsSuccess()) {
+        tags = taggingOutcome.GetResult().GetTagSet();
         QByteArray tagging;
-        for (const auto &tag : taggingOutcome.GetResult().GetTagSet()) {
+        for (const auto &tag : tags) {
             if (!tagging.isEmpty()) {
                 tagging += '&';
             }
@@ -1084,6 +1087,21 @@ KIO::WorkerResult S3Backend::multipartCopy(const Aws::S3::S3Client &client, cons
         qCWarning(S3) << "CompleteMultipartUpload failed for" << s3dest << "-" << completeOutcome.GetError().GetMessage().c_str();
         abortUpload();
         return copyError(src, dest);
+    }
+
+    // DigitalOcean Spaces answers a CreateMultipartUpload with x-amz-tagging
+    // with 200 and leaves the finished object without tags.
+    if (!tags.empty()) {
+        Aws::S3::Model::Tagging tagging;
+        tagging.SetTagSet(tags);
+        Aws::S3::Model::PutObjectTaggingRequest putTaggingRequest;
+        putTaggingRequest.SetBucket(destBucket);
+        putTaggingRequest.SetKey(destKey);
+        putTaggingRequest.SetTagging(tagging);
+        const auto putTaggingOutcome = client.PutObjectTagging(putTaggingRequest);
+        if (!putTaggingOutcome.IsSuccess()) {
+            qCWarning(S3) << "Could not set the tags of" << s3dest << "-" << putTaggingOutcome.GetError().GetMessage().c_str();
+        }
     }
 
     qCDebug(S3) << "Copied" << size << "bytes in" << parts.size() << "parts to" << s3dest;
