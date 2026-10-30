@@ -197,7 +197,7 @@ std::shared_ptr<Aws::S3::S3Client> S3Backend::cachedCopyClient(const QString &pr
     // that takes longer than 3 seconds, and the SDK sends it again. lowSpeedLimit
     // keeps its default of 1 byte/s, so a stalled server still ends the request.
     auto config = cachedClientConfiguration(profileName);
-    config.requestTimeoutMs = 300000; // 5 minutes
+    config.requestTimeoutMs = 900000; // 15 minutes
     auto client = std::make_shared<Aws::S3::S3Client>(createS3Client(profileName, config));
     m_copyClientCache.emplace(profileName, client);
     return client;
