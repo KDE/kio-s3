@@ -195,12 +195,15 @@ std::shared_ptr<Aws::S3::S3Client> S3Backend::cachedCopyClient(const QString &pr
     if (it != m_copyClientCache.end()) {
         return it->second;
     }
-    // A server copies the data before it answers a CopyObject and sends nothing
-    // meanwhile. With the default requestTimeoutMs of 3000, curl aborts any copy
-    // that takes longer than 3 seconds, and the SDK sends it again. lowSpeedLimit
-    // keeps its default of 1 byte/s, so a stalled server still ends the request.
+    // A server copies the data before it answers a CopyObject or an
+    // UploadPartCopy and sends nothing meanwhile. With the default
+    // requestTimeoutMs of 3000, curl aborts any copy that takes longer than
+    // 3 seconds, and the SDK sends it again. On Cloudflare R2 one UploadPartCopy
+    // of 512 MiB took 733 s, and one of 128 MiB got no reply in 300 s.
+    // lowSpeedLimit keeps its default of 1 byte/s, so a stalled server still
+    // ends the request.
     auto config = cachedClientConfiguration(profileName);
-    config.requestTimeoutMs = 300000; // 5 minutes
+    config.requestTimeoutMs = 900000; // 15 minutes
     auto client = std::make_shared<Aws::S3::S3Client>(createS3Client(profileName, config));
     m_copyClientCache.emplace(profileName, client);
     return client;
