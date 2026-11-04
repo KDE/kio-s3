@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-28 01:00+0000\n"
+"POT-Creation-Date: 2026-11-04 01:02+0000\n"
 "PO-Revision-Date: 2026-10-22 12:19+0200\n"
 "Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -136,7 +136,7 @@ msgstr "Smazat profil"
 msgid "Are you sure you want to delete the profile \"%1\"?"
 msgstr "Opravdu chcete smazat profil \"%1\"?"
 
-#: s3backend.cpp:46
+#: s3backend.cpp:60
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -146,13 +146,27 @@ msgstr ""
 "Neplatná adresa S3 URI, v hostiteli chybí název úložiště.<nl/>Platná adresa "
 "S3 URI musí být zapsána v následujícím formátu: <link>s3://bucket/key</link>"
 
-#: s3backend.cpp:201 s3backend.cpp:210
+#: s3backend.cpp:68
+#, fuzzy, kde-format
+#| msgctxt "@info"
+#| msgid "Could not copy <link>%1</link> to <link>%2</link>"
+msgctxt "@info"
+msgid "Could not copy %1 to %2"
+msgstr "Nelze zkopírovat <link>%1</link> do <link>%2</link>"
+
+#: s3backend.cpp:73
+#, kde-format
+msgctxt "@info"
+msgid "%1 changed while it was copied to %2."
+msgstr ""
+
+#: s3backend.cpp:280 s3backend.cpp:289
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr "Nedařilo se najít úložiště S3, zkontrolujte prosím nastavení AWS."
 
-#: s3backend.cpp:686
+#: s3backend.cpp:767
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
@@ -160,19 +174,13 @@ msgstr ""
 "Kopírování mezi různými profily S3 není možné. Soubor nejprve zkopírujte do "
 "lokálního úložiště."
 
-#: s3backend.cpp:738
-#, kde-kuit-format
-msgctxt "@info"
-msgid "Could not copy <link>%1</link> to <link>%2</link>"
-msgstr "Nelze zkopírovat <link>%1</link> do <link>%2</link>"
-
-#: s3backend.cpp:811
+#: s3backend.cpp:1161
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "Nelze přejmenovat mezi různými profily S3."
 
-#: s3backend.cpp:937
+#: s3backend.cpp:1301
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -182,7 +190,7 @@ msgstr ""
 "Některé zdrojové soubory se po přejmenování nepodařilo odstranit. "
 "Přejmenovaná složka může stále obsahovat zbytkové soubory."
 
-#: s3backend.cpp:1001 s3backend.cpp:1063
+#: s3backend.cpp:1365 s3backend.cpp:1430
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -191,7 +199,7 @@ msgstr ""
 "Nepodařilo se načíst úplný seznam souborů. Některé soubory se nemusí "
 "zobrazit."
 
-#: s3backend.cpp:1160
+#: s3backend.cpp:1528
 #, kde-format
 msgctxt "@item"
 msgid "and %1 more object"
@@ -200,7 +208,7 @@ msgstr[0] "a %1 další objekt"
 msgstr[1] "a %1 další objekty"
 msgstr[2] "a %1 dalších objektů"
 
-#: s3backend.cpp:1164
+#: s3backend.cpp:1532
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"

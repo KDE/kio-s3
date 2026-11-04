@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-28 01:00+0000\n"
+"POT-Creation-Date: 2026-11-04 01:02+0000\n"
 "PO-Revision-Date: 2026-10-22 07:33+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -137,7 +137,7 @@ msgstr "Zbriši profil"
 msgid "Are you sure you want to delete the profile \"%1\"?"
 msgstr "Ali ste prepričani, da želite izbrisati profil \"%1\"?"
 
-#: s3backend.cpp:46
+#: s3backend.cpp:60
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -147,13 +147,27 @@ msgstr ""
 "Neveljaven naslov S3, pri gostitelju manjka ime vedra.<nl/>Veljaven naslov "
 "S3 mora biti napisano v obliki: <link>s3://vedro/ključ</link>"
 
-#: s3backend.cpp:201 s3backend.cpp:210
+#: s3backend.cpp:68
+#, fuzzy, kde-format
+#| msgctxt "@info"
+#| msgid "Could not copy <link>%1</link> to <link>%2</link>"
+msgctxt "@info"
+msgid "Could not copy %1 to %2"
+msgstr "Ni bilo mogoče kopirati <link>%1</link> v <link>%2</link>"
+
+#: s3backend.cpp:73
+#, kde-format
+msgctxt "@info"
+msgid "%1 changed while it was copied to %2."
+msgstr ""
+
+#: s3backend.cpp:280 s3backend.cpp:289
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr "Ni bilo mogoč najti vedra S3, preverite vašo konfiguracijo AWS."
 
-#: s3backend.cpp:686
+#: s3backend.cpp:767
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
@@ -161,19 +175,13 @@ msgstr ""
 "Kopiranje med različnimi profili S3 ni mogoče. Najprej kopirajte datoteko "
 "lokalno."
 
-#: s3backend.cpp:738
-#, kde-kuit-format
-msgctxt "@info"
-msgid "Could not copy <link>%1</link> to <link>%2</link>"
-msgstr "Ni bilo mogoče kopirati <link>%1</link> v <link>%2</link>"
-
-#: s3backend.cpp:811
+#: s3backend.cpp:1161
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "Preimenovanje med različnimi profili S3 ni mogoče."
 
-#: s3backend.cpp:937
+#: s3backend.cpp:1301
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -183,7 +191,7 @@ msgstr ""
 "Nekaterih izvornih datotek po preimenovanju ni bilo mogoče izbrisati. "
 "Preimenovana mapa lahko še vedno vsebuje preostale datoteke."
 
-#: s3backend.cpp:1001 s3backend.cpp:1063
+#: s3backend.cpp:1365 s3backend.cpp:1430
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -192,7 +200,7 @@ msgstr ""
 "Celotnega seznama datotek ni bilo mogoče pridobiti. Nekatere datoteke morda "
 "niso prikazane."
 
-#: s3backend.cpp:1160
+#: s3backend.cpp:1528
 #, kde-format
 msgctxt "@item"
 msgid "and %1 more object"
@@ -202,7 +210,7 @@ msgstr[1] "in še %1 predmet"
 msgstr[2] "in še %1 predmeta"
 msgstr[3] "in še %1 predmeti"
 
-#: s3backend.cpp:1164
+#: s3backend.cpp:1532
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"

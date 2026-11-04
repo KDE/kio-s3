@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-28 01:00+0000\n"
+"POT-Creation-Date: 2026-11-04 01:02+0000\n"
 "PO-Revision-Date: 2024-04-23 19:31\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -135,7 +135,7 @@ msgstr "删除配置方案"
 msgid "Are you sure you want to delete the profile \"%1\"?"
 msgstr "您确定要删除“%1”配置方案吗？"
 
-#: s3backend.cpp:46
+#: s3backend.cpp:60
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -145,31 +145,39 @@ msgstr ""
 "无效的 S3 URI，主机缺少存储桶名称。<nl/>一个有效的 S3 URI 必须按照此格式填"
 "写：<link>s3://bucket/key</link>"
 
-#: s3backend.cpp:201 s3backend.cpp:210
+#: s3backend.cpp:68
+#, fuzzy, kde-format
+#| msgctxt "@info"
+#| msgid "Could not copy <link>%1</link> to <link>%2</link>"
+msgctxt "@info"
+msgid "Could not copy %1 to %2"
+msgstr "无法复制 <link>%1</link> 到 <link>%2</link>"
+
+#: s3backend.cpp:73
+#, kde-format
+msgctxt "@info"
+msgid "%1 changed while it was copied to %2."
+msgstr ""
+
+#: s3backend.cpp:280 s3backend.cpp:289
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr "无法找到 S3 存储桶，请检查您的 AWS 配置。"
 
-#: s3backend.cpp:686
+#: s3backend.cpp:767
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
 msgstr "无法在不同的 S3 配置方案之间复制。请先复制本地文件。"
 
-#: s3backend.cpp:738
-#, kde-kuit-format
-msgctxt "@info"
-msgid "Could not copy <link>%1</link> to <link>%2</link>"
-msgstr "无法复制 <link>%1</link> 到 <link>%2</link>"
-
-#: s3backend.cpp:811
+#: s3backend.cpp:1161
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "无法在不同的 S3 配置文件之间重命名。"
 
-#: s3backend.cpp:937
+#: s3backend.cpp:1301
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -177,21 +185,21 @@ msgid ""
 "may still contain leftover files."
 msgstr "重命名后无法删除某些源文件。重命名的文件夹可能仍然包含剩余文件。"
 
-#: s3backend.cpp:1001 s3backend.cpp:1063
+#: s3backend.cpp:1365 s3backend.cpp:1430
 #, kde-format
 msgctxt "@info"
 msgid ""
 "Could not retrieve the complete file listing. Some files may not be shown."
 msgstr "无法检索完整的文件列表。一些文件可能无法显示。"
 
-#: s3backend.cpp:1160
+#: s3backend.cpp:1528
 #, kde-format
 msgctxt "@item"
 msgid "and %1 more object"
 msgid_plural "and %1 more objects"
 msgstr[0] ""
 
-#: s3backend.cpp:1164
+#: s3backend.cpp:1532
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"

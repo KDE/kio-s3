@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-28 01:00+0000\n"
-"PO-Revision-Date: 2026-03-08 21:32+0200\n"
+"POT-Creation-Date: 2026-11-04 01:02+0000\n"
+"PO-Revision-Date: 2026-11-03 20:23+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 25.12.2\n"
+"X-Generator: Lokalize 26.08.1\n"
 
 #: kcm/ui/main.qml:25
 #, kde-format
@@ -136,7 +136,7 @@ msgstr "מחיקת פרופיל"
 msgid "Are you sure you want to delete the profile \"%1\"?"
 msgstr "למחוק את הפרופיל „%1”?"
 
-#: s3backend.cpp:46
+#: s3backend.cpp:60
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -146,32 +146,40 @@ msgstr ""
 "כתובת ה־S3 המלאה שגויה, שם הדלי חסר במארח.<nl/>כתובת S3 מלאה תקפה יש לכתוב "
 "בצורה: <link>s3://bucket/key</link>"
 
-#: s3backend.cpp:201 s3backend.cpp:210
+#: s3backend.cpp:68
+#, fuzzy, kde-format
+#| msgctxt "@info"
+#| msgid "Could not copy <link>%1</link> to <link>%2</link>"
+msgctxt "@info"
+msgid "Could not copy %1 to %2"
+msgstr "לא ניתן להעתיק את <link>%1</link> אל <link>%2</link>"
+
+#: s3backend.cpp:73
+#, kde-format
+msgctxt "@info"
+msgid "%1 changed while it was copied to %2."
+msgstr ""
+
+#: s3backend.cpp:280 s3backend.cpp:289
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not find S3 buckets, please check your AWS configuration."
 msgstr "לא ניתן למצוא דליים של S3, נא לבדוק שהגדרות ה־AWS שלך תקינות."
 
-#: s3backend.cpp:686
+#: s3backend.cpp:767
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot copy between different S3 profiles. Copy the file locally first."
 msgstr ""
 "לא ניתן להעתיק בין פרופילים שונים של S3. יש להעתיק את הקבצים מקומית תחילה."
 
-#: s3backend.cpp:738
-#, kde-kuit-format
-msgctxt "@info"
-msgid "Could not copy <link>%1</link> to <link>%2</link>"
-msgstr "לא ניתן להעתיק את <link>%1</link> אל <link>%2</link>"
-
-#: s3backend.cpp:811
+#: s3backend.cpp:1161
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Cannot rename between different S3 profiles."
 msgstr "לא ניתן לשנות שם בין פרופילים שונים של S3."
 
-#: s3backend.cpp:937
+#: s3backend.cpp:1301
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -181,28 +189,28 @@ msgstr ""
 "את חלק מקובצי המקור לא ניתן למחוק לאחר שינוי שם. התיקייה ששמה השתנה עלולה "
 "עדיין להכיל קבצים שנותרו מאחור."
 
-#: s3backend.cpp:1001 s3backend.cpp:1063
+#: s3backend.cpp:1365 s3backend.cpp:1430
 #, kde-format
 msgctxt "@info"
 msgid ""
 "Could not retrieve the complete file listing. Some files may not be shown."
 msgstr "לא ניתן למשוך את רשימת הקבצים המלאה. יכול להיות שיש קבצים שלא יופיעו."
 
-#: s3backend.cpp:1160
+#: s3backend.cpp:1528
 #, kde-format
 msgctxt "@item"
 msgid "and %1 more object"
 msgid_plural "and %1 more objects"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "ועצם נוסף"
+msgstr[1] "ושני עצמים נוספים"
+msgstr[2] "ו־%1 עצמים נוספים"
+msgstr[3] "ו־%1 עצמים נוספים"
 
-#: s3backend.cpp:1164
+#: s3backend.cpp:1532
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Failed to delete %1 of %2 objects. Affected keys: %3"
-msgstr ""
+msgstr "מחיקת %1 מתוך %2 עצמים נכשלה. המפתחות שהושפעו: %3"
 
 #~ msgid "Advanced"
 #~ msgstr "מתקדם"
