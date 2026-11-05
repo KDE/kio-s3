@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-04 01:02+0000\n"
-"PO-Revision-Date: 2026-10-22 05:43+0200\n"
+"PO-Revision-Date: 2026-11-04 07:45+0200\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
@@ -149,18 +149,16 @@ msgstr ""
 "bucket/key</link>"
 
 #: s3backend.cpp:68
-#, fuzzy, kde-format
-#| msgctxt "@info"
-#| msgid "Could not copy <link>%1</link> to <link>%2</link>"
+#, kde-format
 msgctxt "@info"
 msgid "Could not copy %1 to %2"
-msgstr "Не удалось скопировать <link>%1</link> в <link>%2</link>"
+msgstr "Не удалось скопировать %1 в %2"
 
 #: s3backend.cpp:73
 #, kde-format
 msgctxt "@info"
 msgid "%1 changed while it was copied to %2."
-msgstr ""
+msgstr "Объект %1 изменился во время копирования в %2."
 
 #: s3backend.cpp:280 s3backend.cpp:289
 #, kde-kuit-format
