@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-04 01:02+0000\n"
-"PO-Revision-Date: 2026-10-22 19:26+0300\n"
+"PO-Revision-Date: 2026-11-04 22:07+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 26.08.0\n"
+"X-Generator: Lokalize 26.08.2\n"
 
 #: kcm/ui/main.qml:25
 #, kde-format
@@ -146,18 +146,16 @@ msgstr ""
 "şöyle yazılmalıdır: <link>s3://bucket/key</link>."
 
 #: s3backend.cpp:68
-#, fuzzy, kde-format
-#| msgctxt "@info"
-#| msgid "Could not copy <link>%1</link> to <link>%2</link>"
+#, kde-format
 msgctxt "@info"
 msgid "Could not copy %1 to %2"
-msgstr "<link>%1</link>, <link>%2</link> konumuna kopyalanamadı."
+msgstr "%1 ögesi, %2 konumuna kopyalanamadı."
 
 #: s3backend.cpp:73
 #, kde-format
 msgctxt "@info"
 msgid "%1 changed while it was copied to %2."
-msgstr ""
+msgstr "%1, %2 konumuna kopyalanırken değiştirildi."
 
 #: s3backend.cpp:280 s3backend.cpp:289
 #, kde-kuit-format
