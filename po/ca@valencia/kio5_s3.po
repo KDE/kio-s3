@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-04 01:02+0000\n"
-"PO-Revision-Date: 2026-10-22 09:06+0200\n"
+"PO-Revision-Date: 2026-11-05 08:49+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -152,18 +152,16 @@ msgstr ""
 "clau</link>"
 
 #: s3backend.cpp:68
-#, fuzzy, kde-format
-#| msgctxt "@info"
-#| msgid "Could not copy <link>%1</link> to <link>%2</link>"
+#, kde-format
 msgctxt "@info"
 msgid "Could not copy %1 to %2"
-msgstr "No s'ha pogut copiar <link>%1</link> en <link>%2</link>"
+msgstr "No s'ha pogut copiar %1 a %2"
 
 #: s3backend.cpp:73
 #, kde-format
 msgctxt "@info"
 msgid "%1 changed while it was copied to %2."
-msgstr ""
+msgstr "%1 ha canviat mentre s'estava copiant a %2."
 
 #: s3backend.cpp:280 s3backend.cpp:289
 #, kde-kuit-format
