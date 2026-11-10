@@ -1,13 +1,13 @@
 # Copyright (C) 2026 This file is copyright:
 # This file is distributed under the same license as the kio-s3 package.
-# SPDX-FileCopyrightText: 2021, 2022, 2026 Vincenzo Reale <smart2128vr@gmail.com>
+# SPDX-FileCopyrightText: 2021-2022, 2026 Vincenzo Reale <smart2128vr@gmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-04 01:02+0000\n"
-"PO-Revision-Date: 2026-10-22 14:28+0200\n"
+"PO-Revision-Date: 2026-11-04 14:20+0100\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.10\n"
+"X-Generator: Lokalize 26.08.2\n"
 
 #: kcm/ui/main.qml:25
 #, kde-format
@@ -148,18 +148,16 @@ msgstr ""
 "deve essere scritto nella forma: <link>s3://bucket/key</link>"
 
 #: s3backend.cpp:68
-#, fuzzy, kde-format
-#| msgctxt "@info"
-#| msgid "Could not copy <link>%1</link> to <link>%2</link>"
+#, kde-format
 msgctxt "@info"
 msgid "Could not copy %1 to %2"
-msgstr "Impossibile copiare <link>%1</link> in <link>%2</link>"
+msgstr "Impossibile copiare %1 in %2"
 
 #: s3backend.cpp:73
 #, kde-format
 msgctxt "@info"
 msgid "%1 changed while it was copied to %2."
-msgstr ""
+msgstr "%1 è stato modificato mentre veniva copiato in %2."
 
 #: s3backend.cpp:280 s3backend.cpp:289
 #, kde-kuit-format
