@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kio-s3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-04 01:02+0000\n"
-"PO-Revision-Date: 2026-11-03 19:54+0900\n"
+"PO-Revision-Date: 2026-11-12 19:31+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -149,18 +149,16 @@ msgstr ""
 "<link>s3://儲存貯體/金鑰</link>"
 
 #: s3backend.cpp:68
-#, fuzzy, kde-format
-#| msgctxt "@info"
-#| msgid "Could not copy <link>%1</link> to <link>%2</link>"
+#, kde-format
 msgctxt "@info"
 msgid "Could not copy %1 to %2"
-msgstr "無法複製 <link>%1</link> 到 <link>%2</link>。"
+msgstr "無法複製 %1 到 %2"
 
 #: s3backend.cpp:73
 #, kde-format
 msgctxt "@info"
 msgid "%1 changed while it was copied to %2."
-msgstr ""
+msgstr "%1 在複製到 %2 時被變更了。"
 
 #: s3backend.cpp:280 s3backend.cpp:289
 #, kde-kuit-format

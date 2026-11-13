@@ -1,0 +1,503 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % addindex "IGNORE">
+<!ENTITY % Arabic "INCLUDE">
+]>
+<!--
+    SPDX-License-Identifier: CC0-1.0
+    SPDX-FileCopyrightText: 2020 Elvis Angelaccio <elvis.angelaccio@kde.org>
+-->
+<article lang="&language;" id="s3">
+<title
+>kio-s3</title>
+
+<articleinfo>
+
+<authorgroup>
+  <author
+><firstname
+>Elvis</firstname
+><surname
+>Angelaccio</surname
+> <affiliation
+> <address
+> <email
+>elvis.angelaccio@kde.org</email>
+      </address>
+    </affiliation>
+  </author>
+<othercredit role="translator"
+><firstname
+>زايد</firstname
+><surname
+>السعيدي</surname
+><affiliation
+><address
+><email
+>zayed.alsaidi@gmail.com</email
+></address
+></affiliation
+><contrib
+>التّرجمة العربيّة</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>2026-03-13</date>
+<releaseinfo
+>kio-s3 1.0.0</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>مقدمة</title>
+
+<para
+>KIO S3 هو عامل KIO يتيح لك تصفح وإدارة الملفات المخزنة في أمازون S3 وخدمات التخزين المتوافقة مع S3 (مثل Cloudflare R2 وDigitalOcean Spaces وMinIO وغيرها) مباشرةً من <application
+>دولفين</application
+> وتطبيقات كيدي الأخرى.</para>
+
+<para
+>مع KIO S3، يمكنك:</para>
+<itemizedlist>
+  <listitem
+><para
+>تصفح الحاويات والمجلدات</para
+></listitem>
+  <listitem
+><para
+>رفع وتنزيل الملفات</para
+></listitem>
+  <listitem
+><para
+>نسخ وإعادة تسمية وحذف الملفات والمجلدات</para
+></listitem>
+  <listitem
+><para
+>إنشاء مجلدات داخل الحاويات</para
+></listitem>
+  <listitem
+><para
+>الاتصال بخدمات متعددة متوافقة مع S3 في الوقت نفسه باستخدام تشكيلات مسماة</para
+></listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="configuration">
+<title
+>ضبط التشكيلات</title>
+
+<para
+>يدعم KIO S3 الاتصال بخدمات تخزين متعددة متوافقة مع S3 عبر تشكيلات مسماة. تخزّن كل تشكيلة إعدادات الاتصال لخدمة واحدة. يمكنك إدارة التشكيلات في <menuchoice
+><guimenu
+>إعدادات النظام</guimenu
+> <guisubmenu
+>الشبكة</guisubmenu
+> <guimenuitem
+>النهايات الخلفية لـ S3</guimenuitem
+></menuchoice
+>.</para>
+
+<sect2 id="configuration-adding">
+<title
+>إضافة تشكيلة</title>
+
+<para
+>انقر زر <guibutton
+>أضف تشكيلة...</guibutton
+> واملأ الحقول التالية:</para>
+
+<variablelist>
+  <varlistentry>
+    <term
+><guilabel
+>الاسم</guilabel
+></term>
+    <listitem
+><para
+>اسم وصفي لهذه التشكيلة (مطلوب)، مثل <userinput
+>تخزيني السحابي</userinput
+>.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>عنوان نقطة النهاية</guilabel
+></term>
+    <listitem
+><para
+>عنوان URL للخدمة المتوافقة مع S3، مثل <userinput
+>https://s3.example.com</userinput
+>. اتركه فارغًا لاستخدام نقطة نهاية أمازون S3 المبدئية.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>المنطقة</guilabel
+></term>
+    <listitem
+><para
+>منطقة التخزين، مثل <userinput
+>us-east-1</userinput
+> أو <userinput
+>تلقائي</userinput
+>. اتركها فارغة لاستخدام المنطقة من ضبط AWS الخاص بك.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>تشكيلة AWS</guilabel
+></term>
+    <listitem
+><para
+>اسم تشكيلة بيانات الاعتماد من <filename
+>~/.aws/credentials</filename
+>. إذا تُرك فارغًا، يُستخدم معرّف التشكيلة كاسم تشكيلة بيانات الاعتماد.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><guilabel
+>استخدم عناوين URL بنمط المسار S3</guilabel
+></term>
+    <listitem
+><para
+>فعّل هذا للخدمات التي لا تدعم العنونة بنمط المضيف الافتراضي، مثل MinIO أو بعض نشرات Ceph. معظم الخدمات، بما فيها Amazon S3 وCloudflare R2، لا تحتاج هذا.</para
+></listitem>
+  </varlistentry>
+</variablelist>
+
+<para
+>بعد إضافة تشكيلة، انقر <guibutton
+>طبّق</guibutton
+> للحفظ. ستظهر التشكيلة الجديدة كاختصار في لوحة <application
+>الدولفين</application
+> للأماكن.</para>
+
+</sect2>
+
+<sect2 id="configuration-editing">
+<title
+>تحرير التشكيلات وحذفها</title>
+
+<para
+>لكل تشكيلة في القائمة إجراء تحرير وإجراء حذف. يفتح التحرير نفس الحوار مع القيم الحالية مملوءة مسبقًا. يطلب الحذف تأكيدًا قبل إزالة التشكيلة. تذكّر النقر على <guibutton
+>طبّق</guibutton
+> لحفظ تغييراتك.</para>
+
+</sect2>
+
+</sect1>
+
+<sect1 id="credentials">
+<title
+>بيانات اعتماد AWS</title>
+
+<para
+>يستخدم KIO S3 سلسلة بيانات اعتماد AWS القياسية للاستيثاق مع خدمات S3. تُقرأ بيانات الاعتماد من <filename
+>~/.aws/credentials</filename
+>، والتي قد تحتوي على تشكيلات مسماة متعددة:</para>
+
+<programlisting
+>[default]
+aws_access_key_id = YOUR_KEY
+aws_secret_access_key = YOUR_SECRET
+
+[mycloud]
+aws_access_key_id = YOUR_CLOUD_KEY
+aws_secret_access_key = YOUR_CLOUD_SECRET
+</programlisting>
+
+<para
+>تستخدم كل تشكيلة KIO S3 حقل <guilabel
+>تشكيلة AWS</guilabel
+> لاختيار قسم بيانات الاعتماد المراد استخدامه. مثلًا، تشكيلة مع تعيين <guilabel
+>تشكيلة AWS</guilabel
+> إلى <userinput
+>mycloud</userinput
+> ستستخدم بيانات الاعتماد من القسم <literal
+>[mycloud]</literal
+> أعلاه.</para>
+
+<para
+>إذا لم تُضبط أي تشكيلات، يستخدم KIO S3 سلسلة بيانات اعتماد AWS المبدئية، والتي تتضمن متغيرات البيئة (<envar
+>AWS_ACCESS_KEY_ID</envar
+>، <envar
+>AWS_SECRET_ACCESS_KEY</envar
+>)، والقسم <literal
+>[default]</literal
+> في <filename
+>~/.aws/credentials</filename
+>، وأدوار مثيلات EC2.</para>
+
+<para
+>يمكنك اختياريًا ضبط المنطقة باستخدام <filename
+>~/.aws/config</filename
+>:</para>
+
+<programlisting
+>[default]
+region = eu-west-1
+
+[profile mycloud]
+region = auto
+</programlisting>
+
+<note
+><para
+>في <filename
+>~/.aws/config</filename
+>، تستخدم التشكيلات المسماة البادئة <literal
+>profile</literal
+> (مثل <literal
+>[profile mycloud]</literal
+>)، بينما في <filename
+>~/.aws/credentials</filename
+> لا تُستخدم البادئة (مثل <literal
+>[mycloud]</literal
+>). هذه اصطلاح من AWS SDK.</para
+></note>
+
+</sect1>
+
+<sect1 id="urls">
+<title
+>مخطط URL</title>
+
+<para
+>يستخدم KIO S3 مخطط URL <literal
+>s3://</literal
+>. يمكنك كتابة هذه العناوين مباشرة في شريط الموقع في <application
+>الدولفين</application
+> أو استخدامها مع أدوات سطر الأوامر مثل <command
+>kioclient</command
+>.</para>
+
+<variablelist>
+  <varlistentry>
+    <term
+><userinput
+>s3://</userinput
+></term>
+    <listitem
+><para
+>يسرد كل الدلاء المتاحة ببيانات اعتماد AWS المبدئية.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>mybucket</replaceable
+>/</userinput
+></term>
+    <listitem
+><para
+>يسرد محتويات <replaceable
+>دلوي</replaceable
+>.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>mybucket</replaceable
+>/<replaceable
+>path/to/file.txt</replaceable
+></userinput
+></term>
+    <listitem
+><para
+>يصل إلى ملف معين في الدلو.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://@<replaceable
+>profile</replaceable
+>/</userinput
+></term>
+    <listitem
+><para
+>يسرد كل الدلاء المتاحة على التشكيلة المسماة.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>mybucket</replaceable
+>@<replaceable
+>profile</replaceable
+>/</userinput
+></term>
+    <listitem
+><para
+>يسرد محتويات <replaceable
+>دلوي</replaceable
+> على التشكيلة المسماة.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+><userinput
+>s3://<replaceable
+>mybucket</replaceable
+>@<replaceable
+>profile</replaceable
+>/<replaceable
+>path/to/file.txt</replaceable
+></userinput
+></term>
+    <listitem
+><para
+>يصل إلى ملف معين على التشكيلة المسماة.</para
+></listitem>
+  </varlistentry>
+</variablelist>
+
+<tip
+><para
+>عند إضافة تشكيلة في <guilabel
+>إعدادات النظام</guilabel
+>، يُنشأ اختصار آليًا في لوحة <application
+>الدولفين</application
+> للأماكن. يمكنك ببساطة النقر عليه لتصفح دلاء تلك التشكيلة.</para
+></tip>
+
+</sect1>
+
+<sect1 id="browsing">
+<title
+>تصفح الملفات</title>
+
+<para
+>افتح <application
+>الدولفين</application
+> واكتب <userinput
+>s3://</userinput
+> في شريط الموقع لرؤية دلاء S3 الخاصة بك. انقر على دلو لتصفح محتوياته. تظهر المجلدات والملفات تمامًا كما في نظام ملفات محلي.</para>
+
+<para
+>لتصفح تشكيلة معينة، اكتب <userinput
+>s3://@<replaceable
+>تشكيلة</replaceable
+>/</userinput
+> أو انقر على اختصار التشكيلة في لوحة الأماكن.</para>
+
+<para
+>تعمل التصفح كما هو متوقع: يمكنك استخدام شريط فتات الخبز، وأزرار الرجوع والتقدم، وشريط الموقع. يمكنك أيضًا فتح مواقع S3 في ألسنة جديدة.</para>
+
+</sect1>
+
+<sect1 id="operations">
+<title
+>عمليات الملف</title>
+
+<sect2 id="operations-upload">
+<title
+>رفع الملفات</title>
+<para
+>اسحب الملفات من نظام ملفاتك المحلي وأفلتها في مجلد S3 في <application
+>دولفين</application
+>. يمكنك أيضًا استخدام النسخ واللصق. تُرفع الملفات الكبيرة آليًا باستخدام الرفع متعدد الأجزاء لتجنب الاستخدام المفرط للذاكرة.</para>
+</sect2>
+
+<sect2 id="operations-download">
+<title
+>تنزيل الملفات</title>
+<para
+>اسحب الملفات من مجلد S3 إلى مجلد محلي، أو استخدم النسخ واللصق. يمكنك أيضًا فتح ملفات S3 مباشرة في التطبيقات — سيُحمل الملف إلى موقع مؤقت ويُفتح.</para>
+</sect2>
+
+<sect2 id="operations-copy">
+<title
+>النسخ</title>
+<para
+>يمكنك نسخ الملفات داخل خدمة S3 نفسها باستخدام النسخ واللصق أو السحب والإفلات. يُجرى النسخ من جانب الخادم، لذا لا يتطلب تحميل الملف وإعادة رفعه.</para>
+</sect2>
+
+<sect2 id="operations-rename">
+<title
+>إعادة تسمية</title>
+<para
+>اضغط <keycap
+>F2</keycap
+> في <application
+>دولفين</application
+> لإعادة تسمية ملف أو مجلد. نظرًا لأن S3 لا يحتوي على عملية إعادة تسمية أصلية، يُجري KIO S3 نسخة من جانب الخادم إلى الاسم الجديد ثم يحذف الأصل. بالنسبة للمجلدات، تُنسخ جميع الملفات داخل المجلد وتُحذف بشكل فردي.</para>
+</sect2>
+
+<sect2 id="operations-delete">
+<title
+>الحذف</title>
+<para
+>حدد الملفات أو المجلدات واضغط <keycap
+>حذف</keycap
+>. عند حذف مجلد، تُحذف جميع الملفات والمجلدات الفرعية داخله بشكل تكراري.</para>
+</sect2>
+
+<sect2 id="operations-mkdir">
+<title
+>إنشاء المجلدات</title>
+<para
+>اضغط <keycap
+>F10</keycap
+> أو استخدم <menuchoice
+><guimenu
+>إنشاء جديد</guimenu
+> <guimenuitem
+>مجلد...</guimenuitem
+></menuchoice
+> لإنشاء مجلد جديد داخل دلو.</para>
+</sect2>
+
+</sect1>
+
+<sect1 id="multiprofile">
+<title
+>العمل مع تشكيلات متعددة</title>
+
+<para
+>إذا كنت تستخدم عدة خدمات متوافقة مع S3 (على سبيل المثال، واحدة للنسخ الاحتياطي وأخرى لأصول موقع الويب)، يمكنك ضبط تشكيلة لكل منها والتبديل بينها دون تغيير أي ملفات ضبط أو متغيرات بيئة.</para>
+
+<para
+>تظهر كل تشكيلة كاختصار منفصل في لوحة الأماكن في <application
+>دولفين</application
+>. يُظهر النقر على اختصار تشكيلة الدلاء المتاحة على تلك الخدمة. تعمل جميع العمليات (رفع، تحميل، نسخ، إعادة تسمية، حذف) بشكل مستقل داخل كل تشكيلة.</para>
+
+<note
+><para
+>لا يُدعم نسخ أو إعادة تسمية الملفات بين تشكيلات مختلفة. تعمل النسخة من جانب الخادم في S3 فقط داخل خدمة واحدة. لنقل الملفات بين التشكيلات، انسخها إلى مجلد محلي أولًا، ثم ارفعها إلى التشكيلة الأخرى.</para
+></note>
+
+</sect1>
+
+<sect1 id="limitations">
+<title
+>القيود المعروفة</title>
+
+<itemizedlist>
+  <listitem
+><para
+>لا يُدعم إنشاء الدلاء وحذفها. استخدم وحدة التحكم الويب للمزود أو أدوات سطر الأوامر لإدارة الدلاء.</para
+></listitem>
+  <listitem
+><para
+>أذون الملفات المعروضة في <application
+>دولفين</application
+> تجميلية. يستخدم S3 نموذج التحكم بالوصول الخاص به (سياسات IAM وسياسات الدلاء)، الذي لا يُطابق أذون يونكس.</para
+></listitem>
+</itemizedlist>
+
+</sect1>
+
+</article>
