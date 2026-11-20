@@ -145,18 +145,16 @@ msgstr ""
 "zapísané vo formáte:  <link>s3://bucket/key</link>"
 
 #: s3backend.cpp:68
-#, fuzzy, kde-format
-#| msgctxt "@info"
-#| msgid "Could not copy <link>%1</link> to <link>%2</link>"
+#, kde-format
 msgctxt "@info"
 msgid "Could not copy %1 to %2"
-msgstr "Nemôžem skopírovať <link>%1</link> do <link>%2</link>"
+msgstr "Nemôžem skopírovať %1 do %2"
 
 #: s3backend.cpp:73
 #, kde-format
 msgctxt "@info"
 msgid "%1 changed while it was copied to %2."
-msgstr ""
+msgstr "%1 sa zmenil počas kopírovania do %2."
 
 #: s3backend.cpp:280 s3backend.cpp:289
 #, kde-kuit-format
